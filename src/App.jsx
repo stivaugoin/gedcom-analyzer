@@ -86,6 +86,11 @@ class App extends Component {
     });
   }
 
+  peopleWithErrors() {
+    const persons = new Persons(this.state.persons);
+    return persons.getErrors();
+  }
+
   renderLongestLife() {
     const persons = new Persons(this.state.persons);
     const person = persons.getLongestLife();
@@ -198,6 +203,20 @@ class App extends Component {
                     <hr />
                     <div><strong>Average age:</strong> {this.renderAverageAge()}</div>
                     <div><strong>Median age:</strong> {this.renderMedianAge()}</div>
+                    <hr />
+
+                    <h3>People with error</h3>
+                    {this.peopleWithErrors.length > 0 && (
+                      <List>
+                        {this.peopleWithErrors().map((p) => {
+                          const person = new Person(p);
+                          return <ListItem>{person.format}</ListItem>;
+                        })}
+                      </List>
+                    )}
+                    {this.peopleWithErrors.length === 0 && (
+                      <p><strong>No people with errors found</strong></p>
+                    )}
                   </div>
                 </div>
               </TabPanel>

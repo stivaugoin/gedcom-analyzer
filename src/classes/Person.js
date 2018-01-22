@@ -77,6 +77,18 @@ class Person {
 
     return null;
   }
+
+  isError() {
+    if (!this.birthDate || !this.deathDate) {
+      return false;
+    }
+
+    if (moment(this.birthDate).isSameOrAfter(moment(this.deathDate))) {
+      return true;
+    }
+
+    return false;
+  }
 }
 
 export default Person;

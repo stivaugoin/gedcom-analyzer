@@ -59,6 +59,10 @@ class Persons {
 
     return (ages[half - 1] + ages[half]) / 2.0;
   }
+
+  getErrors() {
+    return this.persons.filter(person => new Person(person).isError());
+  }
 }
 
 export default Persons;
