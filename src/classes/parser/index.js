@@ -3,7 +3,7 @@ import PersonParser from './PersonParser';
 import TreeParser from './TreeParser';
 
 export {
-	FamilyParser,
-	PersonParser,
-	TreeParser,
+  FamilyParser,
+  PersonParser,
+  TreeParser,
 };
