@@ -19,9 +19,7 @@ module.exports = {
     "expect": false
   },
   rules: {
-    "indent": ["error", "space"],
-    "react/jsx-indent": [2, "tab"],
-    "react/jsx-indent-props": [2, "tab"],
+    "indent": ["error", 2],
     "quotes": ["error", "single"],
     "function-paren-newline": 0
   }
