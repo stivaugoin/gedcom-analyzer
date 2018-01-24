@@ -215,7 +215,7 @@ class App extends Component {
                       </List>
                     )}
                     {this.peopleWithErrors.length === 0 && (
-                      <p><strong>No people with errors found</strong></p>
+                      <p><strong>No error found</strong></p>
                     )}
                   </div>
                 </div>
