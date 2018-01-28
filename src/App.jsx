@@ -98,7 +98,7 @@ class App extends Component {
         <div id="wrapper" className="wrapper">
           <Navbar />
           <div className="content-wrapper">
-            <Sidebar />
+            <Sidebar hide={!this.state.filename} />
             <main className="main-wrapper clearfix">
               {this.state.filename ? [
                 <CurrentFile key={1} filename={this.state.filename} onClickClose={this.clearFile} />,
