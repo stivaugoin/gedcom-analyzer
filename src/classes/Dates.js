@@ -108,20 +108,24 @@ class Date {
       }
     });
 
-    const date = moment().month(0).date(1);
-    [year, month, day].forEach((element, index) => {
-      if (index === 0 && element) {
-        date.year(element);
-      }
-      if (index === 1 && element) {
-        date.month(element);
-      }
-      if (index === 2 && element) {
-        date.date(element);
-      }
-    });
+    if (year) {
+      const date = moment().month(0).date(1);
+      [year, month, day].forEach((element, index) => {
+        if (index === 0 && element) {
+          date.year(element);
+        }
+        if (index === 1 && element) {
+          date.month(element);
+        }
+        if (index === 2 && element) {
+          date.date(element);
+        }
+      });
 
-    return date.format('YYYY-MM-DD');
+      return date.format('YYYY-MM-DD');
+    }
+
+    return null;
   }
 
   isJanuary(month) {

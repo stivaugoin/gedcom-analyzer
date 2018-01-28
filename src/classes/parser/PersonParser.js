@@ -96,7 +96,7 @@ class PersonParser extends TreeParser {
 
   get sex() {
     const tags = this.findTags(this.person.tree, 'SEX');
-    if (!tags || tags.length === 0) {
+    if (!tags || tags.length === 0 || !tags[0] || !tags[0].data) {
       return '';
     }
 
@@ -105,7 +105,7 @@ class PersonParser extends TreeParser {
 
   get birth() {
     const tags = this.findTags(this.person.tree, 'BIRT');
-    if (!tags || tags.length === 0) {
+    if (!tags || tags.length === 0 || !tags[0].tree) {
       return {};
     }
 
@@ -114,7 +114,7 @@ class PersonParser extends TreeParser {
 
   get death() {
     const tags = this.findTags(this.person.tree, 'DEAT');
-    if (!tags || tags.length === 0) {
+    if (!tags || tags.length === 0 || !tags[0].tree) {
       return {};
     }
 
@@ -127,7 +127,12 @@ class PersonParser extends TreeParser {
       return [];
     }
 
-    return tags.map(tag => this.getPlaceDate(tag.tree));
+    return tags.map((tag) => {
+      if (tag.tree) {
+        return this.getPlaceDate(tag.tree);
+      }
+      return tag.data;
+    });
   }
 
   get weddings() {

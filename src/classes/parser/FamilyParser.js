@@ -28,7 +28,7 @@ class FamilyParser extends TreeParser {
   get wedding() {
     const weddings = this.findTags(this.family.tree, 'MARR')[0];
 
-    if (!weddings || weddings.length === 0) {
+    if (!weddings || Object.keys(weddings).length === 0) {
       return {};
     }
 
