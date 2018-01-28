@@ -101,8 +101,8 @@ class App extends Component {
             <Sidebar />
             <main className="main-wrapper clearfix">
               {this.state.filename ? [
-                <CurrentFile filename={this.state.filename} onClickClose={this.clearFile} />,
-                <Home people={this.state.people} />,
+                <CurrentFile key={1} filename={this.state.filename} onClickClose={this.clearFile} />,
+                <Home key={2} people={this.state.people} />,
               ] : (
                 <input type="file" onChange={this.onFileLoaded} />
               )}

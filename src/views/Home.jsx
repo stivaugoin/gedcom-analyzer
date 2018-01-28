@@ -11,8 +11,9 @@ const propTypes = {
   people: PropTypes.shape({
     getLongestLife: PropTypes.func.isRequired,
     getMostPopularPlace: PropTypes.func.isRequired,
+    getPlacesCount: PropTypes.func.isRequired,
     getShortestLife: PropTypes.func.isRequired,
-    persons: PropTypes.arrayOf(PropTypes.shape).isRequired,
+    people: PropTypes.arrayOf(PropTypes.shape).isRequired,
     size: PropTypes.number.isRequired,
   }).isRequired,
 };

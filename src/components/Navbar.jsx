@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/anchor-is-valid, no-script-url */
+
 import React from 'react';
 
 const Navbar = () => (
