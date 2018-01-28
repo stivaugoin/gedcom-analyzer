@@ -1,43 +1,49 @@
+/* eslint-disable jsx-a11y/anchor-is-valid, no-script-url */
+
 import React, { Component } from 'react';
 import gedcom from 'parse-gedcom';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
-import 'react-tabs/style/react-tabs.css';
+import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar';
+import CurrentFile from './components/CurrentFile';
+import Home from './views/Home';
 
-import { PersonParser, TreeParser } from './classes/parser';
-import { Person, Persons } from './classes';
-import List from './components/List';
-import ListItem from './components/ListItem';
+import './styles/style.css';
+import './styles/vendors/feather-icons/feather.css';
+import TreeParser from './classes/parser/TreeParser';
+import PersonParser from './classes/parser/PersonParser';
+import { People } from './classes';
 
+// eslint-disable-next-line
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       filename: '',
-      persons: [],
+      people: {},
     };
 
     this.localStorage = window.localStorage;
-
-    this.onFileLoaded = this.onFileLoaded.bind(this);
-    this.clear = this.clear.bind(this);
-  }
-
-  componentWillMount() {
-    const dataParsed = this.localStorage.getItem('dataParsed');
     const filename = this.localStorage.getItem('filename');
+    const treeRaw = window.localStorage.getItem('dataParsed');
 
-    if (filename && dataParsed !== 'undefined') {
-      const data = JSON.parse(dataParsed);
+    if (treeRaw) {
+      const data = JSON.parse(treeRaw);
 
-      const myTree = new TreeParser(data);
+      const tree = new TreeParser(data);
+      const people = tree.getPersons().map(
+        person => new PersonParser(data, person).format(),
+      );
 
-      this.setState({
-        persons: myTree.getPersons().map(person => new PersonParser(data, person).format()),
+      this.state = {
         filename,
-      });
+        people: new People(people),
+      };
     }
+
+    this.clearFile = this.clearFile.bind(this);
+    this.onFileLoaded = this.onFileLoaded.bind(this);
   }
 
   onFileLoaded(event) {
@@ -64,164 +70,44 @@ class App extends Component {
 
         const myTree = new TreeParser(dataParsed);
 
-        const persons = myTree.getPersons().map(
+        const people = myTree.getPersons().map(
           person => new PersonParser(dataParsed, person).format(),
         );
 
         this.setState({
           filename,
-          persons,
+          people: new People(people),
         });
       };
       fileReader.readAsText(file);
     }
   }
 
-  clear() {
+  clearFile() {
     this.localStorage.clear();
 
     this.setState({
       filename: '',
-      persons: [],
+      people: {},
     });
-  }
-
-  peopleWithErrors() {
-    const persons = new Persons(this.state.persons);
-    return persons.getErrors();
-  }
-
-  renderLongestLife() {
-    const persons = new Persons(this.state.persons);
-    const person = persons.getLongestLife();
-    const { format } = new Person(person);
-    return `${format} - ${person.age} years`;
-  }
-
-  renderShortestLife() {
-    const persons = new Persons(this.state.persons);
-    const person = persons.getShortestLife();
-    const { format } = new Person(person);
-    return `${format} - ${person.age} years`;
-  }
-
-  renderAverageAge() {
-    const persons = new Persons(this.state.persons);
-    const age = persons.getAverageAge();
-    return `${age} years`;
-  }
-
-  renderMedianAge() {
-    const persons = new Persons(this.state.persons);
-    const age = persons.getMedianAge();
-    return `${age} years`;
-  }
-
-  renderOldestAncestor() {
-    const persons = new Persons(this.state.persons);
-    const oldest = persons.getOldestAncestor();
-    const { format } = new Person(oldest);
-    if (oldest.age) {
-      return `${format} - ${oldest.age} years`;
-    }
-
-    return format;
   }
 
   render() {
     return (
-      <div>
-        <div>
-          {!this.state.filename ? (
-            <input type="file" onChange={this.onFileLoaded} />
-          ) : (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                margin: '1em 2em',
-              }}
-            >
-              <div style={{ flex: 1 }}>
-                <h3>{this.state.filename}</h3>
-              </div>
-              <div style={{ flex: 1, textAlign: 'right' }}>
-                <button onClick={this.clear}>Clear</button>
-              </div>
-            </div>
-          )}
-        </div>
-        <div style={{ margin: '1em 2em', fontSize: '12px' }}>
-          {!!this.state.filename && (
-            <Tabs defaultIndex={1}>
-              <TabList>
-                <Tab>Raw data</Tab>
-                <Tab>Persons</Tab>
-              </TabList>
-
-              <TabPanel>
-                <div>
-                  <h3>Persons</h3>
-                  <hr />
-                  {this.state.persons.map(d => (
-                    <div key={d.pointer}>
-                      <p><strong>{d.pointer} - {d.names[0].complete}</strong></p>
-                      <pre>{JSON.stringify(d, null, 2)}</pre>
-                      <hr />
-                    </div>
-                  ))}
-                </div>
-              </TabPanel>
-              <TabPanel>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-around',
-                  }}
-                >
-                  <div>
-                    <h3>List of people</h3>
-                    <hr />
-                    <List>
-                      {this.state.persons.map((p) => {
-                        const person = new Person(p);
-                        return <ListItem>{person.format}</ListItem>;
-                      })}
-                    </List>
-                  </div>
-
-                  <div>
-                    <h3>Statistics</h3>
-                    <hr />
-                    <div><strong>Amount of people:</strong> {this.state.persons.length}</div>
-                    <hr />
-                    <div><strong>Longest life:</strong> {this.renderLongestLife()}</div>
-                    <div><strong>Shortest life:</strong> {this.renderShortestLife()}</div>
-                    <div><strong>Oldest ancestor:</strong> {this.renderOldestAncestor()}</div>
-                    <hr />
-                    <div><strong>Average age:</strong> {this.renderAverageAge()}</div>
-                    <div><strong>Median age:</strong> {this.renderMedianAge()}</div>
-                    <hr />
-
-                    <h3>People with error</h3>
-                    {this.peopleWithErrors.length > 0 && (
-                      <List>
-                        {this.peopleWithErrors().map((p) => {
-                          const person = new Person(p);
-                          return <ListItem>{person.format}</ListItem>;
-                        })}
-                      </List>
-                    )}
-                    {this.peopleWithErrors.length === 0 && (
-                      <p><strong>No error found</strong></p>
-                    )}
-                  </div>
-                </div>
-              </TabPanel>
-            </Tabs>
-          )}
+      <div className="header-dark sidebar-light sidebar-expand">
+        <div id="wrapper" className="wrapper">
+          <Navbar />
+          <div className="content-wrapper">
+            <Sidebar />
+            <main className="main-wrapper clearfix">
+              {this.state.filename ? [
+                <CurrentFile filename={this.state.filename} onClickClose={this.clearFile} />,
+                <Home people={this.state.people} />,
+              ] : (
+                <input type="file" onChange={this.onFileLoaded} />
+              )}
+            </main>
+          </div>
         </div>
       </div>
     );

@@ -21,6 +21,7 @@ module.exports = {
   rules: {
     "indent": ["error", 2],
     "quotes": ["error", "single"],
-    "function-paren-newline": 0
+    "function-paren-newline": 0,
+    "object-curly-newline": 0
   }
 };

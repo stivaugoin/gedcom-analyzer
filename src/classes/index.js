@@ -1,9 +1,9 @@
 import Dates from './Dates';
 import Person from './Person';
-import Persons from './Persons';
+import People from './People';
 
 export {
   Dates,
   Person,
-  Persons,
+  People,
 };
