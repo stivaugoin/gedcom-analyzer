@@ -5801,6 +5801,10 @@ remove-accents-diacritics@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/remove-accents-diacritics/-/remove-accents-diacritics-1.0.2.tgz#35aee1077d6a9d500a91b523bd6b0cc1bc4e5de1"
 
+remove-accents@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/remove-accents/-/remove-accents-0.4.2.tgz#0a43d3aaae1e80db919e07ae254b285d9e1c7bb5"
+
 remove-trailing-separator@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/remove-trailing-separator/-/remove-trailing-separator-1.1.0.tgz#c24bce2a283adad5bc3f58e0d48249b92379d8ef"

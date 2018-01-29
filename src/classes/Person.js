@@ -10,6 +10,10 @@ class Person {
     this.person = person;
   }
 
+  get pointer() {
+    return this.person.pointer;
+  }
+
   /**
    * Get the prefered complete name
    *
@@ -18,6 +22,10 @@ class Person {
    */
   get name() {
     return this.person.names[0].complete;
+  }
+
+  get sex() {
+    return this.person.sex;
   }
 
   /**
@@ -44,6 +52,14 @@ class Person {
 
   get birthPlace() {
     return this.person.birth && this.person.birth.place;
+  }
+
+  get weddingDate() {
+    return this.person.weddings && this.person.weddings[0] && this.person.weddings[0].date;
+  }
+
+  get weddingPlace() {
+    return this.person.weddings && this.person.weddings[0] && this.person.weddings[0].place;
   }
 
   get deathDate() {

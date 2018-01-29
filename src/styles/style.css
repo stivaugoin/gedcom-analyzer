@@ -947,7 +947,8 @@ pre {
   background-color: #fdfcff; }
 
 .table-hover tbody tr:hover {
-  background-color: #f3eefd; }
+  background-color: #f3eefd;
+  cursor: pointer; }
 
 .table-color-scheme,
 .table-color-scheme > th,

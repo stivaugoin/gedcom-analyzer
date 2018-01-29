@@ -3,16 +3,17 @@
 import React, { Component } from 'react';
 import gedcom from 'parse-gedcom';
 
-import Navbar from './components/Navbar';
-import Sidebar from './components/Sidebar';
-import CurrentFile from './components/CurrentFile';
-import Home from './views/Home';
-
 import './styles/style.css';
 import './styles/vendors/feather-icons/feather.css';
 import TreeParser from './classes/parser/TreeParser';
 import PersonParser from './classes/parser/PersonParser';
 import { People } from './classes';
+
+import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar';
+import CurrentFile from './components/CurrentFile';
+import Home from './views/Home';
+import PeopleList from './views/PeopleList';
 
 // eslint-disable-next-line
 class App extends Component {
@@ -102,7 +103,8 @@ class App extends Component {
             <main className="main-wrapper clearfix">
               {this.state.filename ? [
                 <CurrentFile key={1} filename={this.state.filename} onClickClose={this.clearFile} />,
-                <Home key={2} people={this.state.people} />,
+                // <Home key={2} people={this.state.people} />,
+                <PeopleList key={2} people={this.state.people} />,
               ] : (
                 <input type="file" onChange={this.onFileLoaded} />
               )}
