@@ -1,7 +1,6 @@
-/* eslint-disable jsx-a11y/anchor-is-valid, no-script-url */
-
 import React, { Component } from 'react';
 import gedcom from 'parse-gedcom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import './styles/style.css';
 import './styles/vendors/feather-icons/feather.css';
@@ -95,23 +94,39 @@ class App extends Component {
 
   render() {
     return (
-      <div className="header-dark sidebar-light sidebar-expand">
-        <div id="wrapper" className="wrapper">
-          <Navbar />
-          <div className="content-wrapper">
-            <Sidebar hide={!this.state.filename} />
-            <main className="main-wrapper clearfix">
-              {this.state.filename ? [
-                <CurrentFile key={1} filename={this.state.filename} onClickClose={this.clearFile} />,
-                // <Home key={2} people={this.state.people} />,
-                <PeopleList key={2} people={this.state.people} />,
-              ] : (
-                <input type="file" onChange={this.onFileLoaded} />
-              )}
-            </main>
+      <Router>
+        <div className="header-dark sidebar-light sidebar-expand">
+          <div id="wrapper" className="wrapper">
+            <Navbar />
+            <div className="content-wrapper">
+              <Sidebar hide={!this.state.filename} />
+              <main className="main-wrapper clearfix">
+                {this.state.filename ? (
+                  <div>
+                    <CurrentFile filename={this.state.filename} onClickClose={this.clearFile} />
+
+                    <Route
+                      path="/"
+                      render={routeProps => (
+                        <Home {...routeProps} people={this.state.people} />
+                      )}
+                      exact
+                    />
+                    <Route
+                      path="/people/list"
+                      render={routeProps => (
+                        <PeopleList {...routeProps} people={this.state.people} />
+                      )}
+                    />
+                  </div>
+                ) : (
+                  <input type="file" onChange={this.onFileLoaded} />
+                )}
+              </main>
+            </div>
           </div>
         </div>
-      </div>
+      </Router>
     );
   }
 }
