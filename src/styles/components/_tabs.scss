@@ -79,12 +79,6 @@ Tabs
     flex: 1;
     padding: 0 0 0 em(20);
   }
-
-  body.rtl & {
-    .tab-content {
-      padding: 0 em(20) 0 0;
-    }
-  }
 }
 
 .tabs-vertical-right {
@@ -163,12 +157,6 @@ Tabs
       background: $color-scheme;
     }
   }
-
-  body.rtl & {
-    li:first-child {
-      margin-left: em(10);
-    }
-  }
 }
 
 /* Page Tabs
@@ -194,8 +182,5 @@ Tabs
       margin-left: em(5);
       margin-right: em(5);
     }
-  }
-
-  body.rtl & {
   }
 }

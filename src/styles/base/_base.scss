@@ -12,21 +12,8 @@ html {
   @extend .badge;
 }
 
-body.rtl {
-  direction: rtl;
-  ol, ul { padding-right: rem(35)  }
-  .text-right-rtl { text-align: left !important }
-  .text-left-rtl { text-align: left !important }
-  .btn-group { direction: ltr }
-  .pagination,
-  .pager { padding-right: 0 }
-}
-
 .ltr {
   direction: ltr !important;
-  body.rtl & {
-    text-align: right;
-  }
 }
 
 .badge {
@@ -147,17 +134,6 @@ blockquote {
     border: 1px solid #eee;
     border-right: 5px solid $primary;
   }
-
-  body.rtl & {
-    border-right: 5px solid $primary;
-    border-left: 0;
-
-    &.blockquote-reverse {
-      text-align: left;
-      border-left: 5px solid $primary;
-      border-right: 0;
-    }
-  }
 }
 
 dd {
@@ -267,18 +243,8 @@ dd {
     margin-left: $sidebar-width;
   }
 
-  body.rtl.sidebar-expand & {
-    margin-left: auto;
-    margin-right: $sidebar-width;
-  }
-
   .sidebar-collapse & {
     margin-left: $collapse-sidebar-width;
-  }
-
-  body.rtl.sidebar-collapse & {
-    margin-left: auto;
-    margin-right: $collapse-sidebar-width;
   }
 }
 
@@ -291,14 +257,6 @@ dd {
   .content-wrapper .main-wrapper,
   body .wrapper .footer {
     margin-left: 0;
-  }
-  body.rtl.sidebar-expand .main-wrapper {
-    width: 100%;
-    margin-right: 0;
-  }
-  body.rtl.sidebar-collapse .main-wrapper {
-    width: 100%;
-    margin-right: 0;
   }
 }
 
@@ -327,16 +285,6 @@ dd {
 
   .sidebar-collapse & {
     margin-left: $collapse-sidebar-width;
-  }
-
-  body.rtl.sidebar-expand & {
-    margin-left: 0;
-    margin-right: $sidebar-width;
-  }
-
-  body.rtl.sidebar-collapse & {
-    margin-left: 0;
-    margin-right: $collapse-sidebar-width;
   }
 }
 
@@ -487,10 +435,6 @@ img {
     left: auto;
     right: 0;
   }
-  
-  body.rtl & {
-    text-align: right;
-  }
 }
 
 .dropdown-menu > .selected > a,
@@ -504,11 +448,6 @@ img {
 
 .dropdown-item {
   @include padding( em(5,$font-size-base-px) null );
-}
-
-body.rtl {
-  .dropdown-menu-left-rtl {
-  }
 }
 
 /* User Avatar List
@@ -548,7 +487,7 @@ body.rtl {
   box-shadow: 0 1px 2px rgba(0,0,0,0.075);
 }
 
-/* Hover Helper 
+/* Hover Helper
 ========================*/
 .hover-item {
   display: none;
@@ -560,7 +499,7 @@ body.rtl {
   display: block;
 }
 
-/* Title Seperator 
+/* Title Seperator
 ========================*/
 .title-seperator {
   display: flex;
@@ -581,7 +520,7 @@ body.rtl {
   }
 }
 
-/* Icons 
+/* Icons
 ========================*/
 [class*='size-icon'] {
   display: flex;
@@ -597,7 +536,7 @@ body.rtl {
 .size-icon-80 { @include size( rem(80) ); }
 .size-icon-90 { @include size( rem(90) ); }
 
-/* Star Ratings 
+/* Star Ratings
 ========================*/
 .star-ratings {
   position: relative;
@@ -637,21 +576,11 @@ body.rtl {
   }
 }
 
-/* Featured Figure Tag 
+/* Featured Figure Tag
 ========================*/
 figure {
   position: relative;
   .featured {
     @include position(absolute, 1em null null -.5em);
-  }
-}
-
-/* Scrollbar Styling for RTL 
-========================*/
-body.rtl .scrollbar-enabled {
-  direction: ltr;
-
-  > * {
-    direction: rtl;
   }
 }

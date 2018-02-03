@@ -24,13 +24,6 @@
 
     &:hover { background-color: $primary; }
   }
-
-  body.rtl & {
-    .close {
-      right: auto;
-      left: em(-18,21);
-    }
-  }
 }
 
 .modal-footer,

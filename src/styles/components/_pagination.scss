@@ -18,23 +18,3 @@ Pagination
   padding-left: 0;
   li.spacer { flex: 1 }
 }
-
-.pagination {
-  body.rtl & {
-    .page-item{
-      &:last-child .page-link {
-        border-top-left-radius: $border-radius;
-        border-bottom-left-radius: $border-radius;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-      }
-      &:first-child .page-link {
-        border-top-right-radius: $border-radius;
-        border-bottom-right-radius: $border-radius;
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-        border-left: 0;
-      }
-    }
-  }
-}

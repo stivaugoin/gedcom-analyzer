@@ -286,10 +286,6 @@ $font-sizes: 10;
 %border-top, .border-top { border-top: $border-width solid $theme-border-color }
 %border-right, .border-right { border-right: $border-width solid $theme-border-color }
 %border-bottom, .border-bottom{ border-bottom: $border-width solid $theme-border-color }
-%border-left-rtl, body.rtl .border-left-rtl { border-left: $border-width solid $theme-border-color }
-%border-top-rtl, body.rtl .border-top-rtl { border-top: $border-width solid $theme-border-color }
-%border-right-rtl, body.rtl .border-right-rtl { border-right: $border-width solid $theme-border-color }
-%border-bottom-rtl, body.rtl .border-bottom-rtl { border-bottom: $border-width solid $theme-border-color }
 %border-all, .border-all {
   @extend .border-left;
   @extend .border-right;
@@ -381,36 +377,21 @@ $font-sizes: 10;
   %bw-t-#{$i},
   .bw-y-#{$i},
   .bw-t-#{$i},
-  body.rtl .bw-y-#{$i}-rtl,
-  body.rtl .bw-t-#{$i}-rtl {
-    border-top-width: #{$i}px !important;
-  }
   %bw-y-#{$i},
   %bw-b-#{$i},
   .bw-y-#{$i},
   .bw-b-#{$i},
-  body.rtl .bw-y-#{$i}-rtl,
-  body.rtl .bw-b-#{$i}-rtl {
-    border-bottom-width: #{$i}px !important;
-  }
   %bw-x-#{$i},
   %bw-r-#{$i},
   .bw-x-#{$i},
   .bw-r-#{$i},
-  body.rtl .bw-x-#{$i}-rtl,
-  body.rtl .bw-r-#{$i}-rtl {
-    border-right-width: #{$i}px !important;
-  }
   %bw-y-#{$i},
   %bw-l-#{$i},
   .bw-y-#{$i},
-  .bw-l-#{$i},
-  body.rtl .bw-y-#{$i}-rtl,
-  body.rtl .bw-l-#{$i}-rtl {
+  .bw-l-#{$i}{
     border-left-width: #{$i}px !important;
   }
   %bw-#{$i},
-	body.rtl .bw-#{$i}-rtl,
 	.bw-#{$i} {
     @extend .bw-x-#{$i};
     @extend .bw-y-#{$i};
@@ -440,8 +421,6 @@ $font-sizes: 10;
 $num-list: 0 5 10 20 30 40 50 60 70 80 90 100 150 200;
 @each $current-num in $num-list {
 
-	body.rtl .pd-t-#{$current-num}-rtl,
-	body.rtl .pd-tb-#{$current-num}-rtl,
 	%pd-t-#{$current-num},
 	%pd-tb-#{$current-num},
 	.pd-t-#{$current-num},
@@ -449,8 +428,6 @@ $num-list: 0 5 10 20 30 40 50 60 70 80 90 100 150 200;
 		padding-top: #{$current-num/16}rem !important;
 	}
 
-	body.rtl .pd-b-#{$current-num}-rtl,
-	body.rtl .pd-tb-#{$current-num}-rtl,
 	%pd-b-#{$current-num},
 	%pd-tb-#{$current-num},
 	.pd-b-#{$current-num},
@@ -458,14 +435,11 @@ $num-list: 0 5 10 20 30 40 50 60 70 80 90 100 150 200;
 		padding-bottom: #{$current-num/16}rem !important;
 	}
 
-	body.rtl .pd-#{$current-num}-rtl,
 	%pd-#{$current-num},
 	.pd-#{$current-num} {
 		padding: #{$current-num/16}rem !important;
 	}
 
-	body.rtl .mr-t-#{$current-num}-rtl,
-	body.rtl .mr-tb-#{$current-num}-rtl,
 	%mr-t-#{$current-num},
 	%mr-tb-#{$current-num},
 	.mr-t-#{$current-num},
@@ -473,8 +447,6 @@ $num-list: 0 5 10 20 30 40 50 60 70 80 90 100 150 200;
 		margin-top: #{$current-num/16}rem !important;
 	}
 
-	body.rtl .mr-b-#{$current-num}-rtl,
-	body.rtl .mr-tb-#{$current-num}-rtl,
 	%mr-b-#{$current-num},
 	%mr-tb-#{$current-num},
 	.mr-b-#{$current-num},
@@ -482,7 +454,6 @@ $num-list: 0 5 10 20 30 40 50 60 70 80 90 100 150 200;
 		margin-bottom: #{$current-num/16}rem !important;
 	}
 
-	body.rtl .mr-#{$current-num}-rtl,
 	%mr-#{$current-num},
 	.mr-#{$current-num} {
 		margin: #{$current-num/16}rem !important;
@@ -492,8 +463,6 @@ $num-list: 0 5 10 20 30 40 50 60 70 80 90 100 150 200;
 $num-list: 0 5 10 15 20 30 40 50 60 70 80 90;
 @each $current-num in $num-list {
 
-	body.rtl .pd-l-#{$current-num}-rtl,
-	body.rtl .pd-lr-#{$current-num}-rtl,
 	%pd-l-#{$current-num},
 	%pd-lr-#{$current-num},
 	.pd-l-#{$current-num},
@@ -501,8 +470,6 @@ $num-list: 0 5 10 15 20 30 40 50 60 70 80 90;
 		padding-left: #{$current-num/16}rem !important;
 	}
 
-	body.rtl .pd-r-#{$current-num}-rtl,
-	body.rtl .pd-lr-#{$current-num}-rtl,
 	%pd-r-#{$current-num},
 	%pd-lr-#{$current-num},
 	.pd-r-#{$current-num},
@@ -510,8 +477,6 @@ $num-list: 0 5 10 15 20 30 40 50 60 70 80 90;
 		padding-right: #{$current-num/16}rem !important;
 	}
 
-	body.rtl .mr-l-#{$current-num}-rtl,
-	body.rtl .mr-lr-#{$current-num}-rtl,
 	%mr-l-#{$current-num},
 	%mr-lr-#{$current-num},
 	.mr-l-#{$current-num},
@@ -519,8 +484,6 @@ $num-list: 0 5 10 15 20 30 40 50 60 70 80 90;
 		margin-left: #{$current-num/16}rem !important;
 	}
 
-	body.rtl .mr-r-#{$current-num}-rtl,
-	body.rtl .mr-lr-#{$current-num}-rtl,
 	%mr-r-#{$current-num},
 	%mr-lr-#{$current-num},
 	.mr-r-#{$current-num},
@@ -528,82 +491,6 @@ $num-list: 0 5 10 15 20 30 40 50 60 70 80 90;
 		margin-right: #{$current-num/16}rem !important;
 	}
 }
-
-/* RTL Margin Helpers
-=========================*/
-body.rtl {
-  @each $i,$val in $spacers {
-    .ml-#{$i}-rtl { margin-left: $val !important }
-    .mr-#{$i}-rtl { margin-right: $val !important }
-    .mt-#{$i}-rtl { margin-top: $val !important }
-    .mb-#{$i}-rtl { margin-bottom: $val !important }
-    .mx-#{$i}-rtl {
-      @extend .ml-#{$i}-rtl;
-      @extend .mr-#{$i}-rtl;
-    }
-    .my-#{$i}-rtl {
-      @extend .mt-#{$i}-rtl;
-      @extend .mb-#{$i}-rtl;
-    }
-    .m-#{$i}-rtl {
-      @extend .my-#{$i}-rtl;
-      @extend .mx-#{$i}-rtl;
-    }
-  }
-
-  .mr-auto-rtl { margin-right: auto !important }
-  .ml-auto-rtl { margin-left: auto !important }
-  .mt-auto-rtl { margin-top: auto !important }
-  .mb-auto-rtl { margin-bottom: auto !important }
-  .mx-auto-rtl {
-    @extend .ml-auto-rtl;
-    @extend .mr-auto-rtl;
-  }
-  .my-auto-rtl {
-    @extend .ml-auto-rtl;
-    @extend .mr-auto-rtl;
-  }
-  .m-auto-rtl {
-    @extend .my-auto-rtl;
-    @extend .mx-auto-rtl;
-  }
-}
-
-/* RTL Padding Helpers
-=========================*/
-body.rtl {
-  @each $i,$val in $spacers {
-    .pl-#{$i}-rtl { padding-left: $val !important }
-    .pr-#{$i}-rtl { padding-right: $val !important }
-    .pt-#{$i}-rtl { padding-top: $val !important }
-    .pb-#{$i}-rtl { padding-bottom: $val !important }
-    .px-#{$i}-rtl {
-      @extend .pl-#{$i}-rtl;
-      @extend .pr-#{$i}-rtl;
-    }
-    .py-#{$i}-rtl {
-      @extend .pt-#{$i}-rtl;
-      @extend .pb-#{$i}-rtl;
-    }
-    .p-#{$i}-rtl {
-      @extend .py-#{$i}-rtl;
-      @extend .px-#{$i}-rtl;
-    }
-  }
-}
-
-/* Float RTL Helpers
-=========================*/
-body.rtl {
-  .float-right-rtl { float: right !important }
-  .float-left-rtl { float: left !important }
-  .float-none-rtl { float: none !important }
-  @each $i, $val in $grid-breakpoints {
-    .float-#{$i}-right-rtl { float: right !important }
-    .float-#{$i}-left-rtl { float: left !important }
-  }
-}
-
 
 /* Width Helpers
 =========================*/

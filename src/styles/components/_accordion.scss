@@ -39,13 +39,6 @@ Accordions
       color: #fff;
     }
   }
-
-  body.rtl & {
-    .card .card-header a:after {
-      right: auto;
-      left: rem(15);
-    }
-  }
 }
 
 .accordion-minimal {

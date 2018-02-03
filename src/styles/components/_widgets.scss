@@ -48,13 +48,6 @@ Widgets
   .single-user-name {
     font-family: $headings-font-family;
   }
-
-  body.rtl & {
-    .single-user-avatar {
-      margin-left: 1.5em;
-      margin-right: 0;
-    }
-  }
 }
 
 /* Latest Transactions
@@ -187,16 +180,6 @@ Widgets
       }
     }
   }
-  body.rtl & {
-    .single-event-icon {
-      margin-right: 0;
-      margin-left: 1.5em;
-    }
-    .single-users-list a.more {
-      margin-left: 0;
-      margin-right: 1em;
-    }
-  }
 }
 
 /* Chat Activities
@@ -276,43 +259,6 @@ Widgets
       .message-body {
         align-items: flex-start;
         order: 2;
-      }
-    }
-  }
-
-  body.rtl & {
-    .message {
-      p:first-child::before,
-      p:first-child::after {
-        border-width: 6px 7px 6px 0;
-        border-color: transparent $color-scheme transparent transparent;
-      }
-
-      p:first-child:after,
-      p:first-child:before {
-        right: auto;
-        left: -7px;
-      }
-
-      &.reply p:first-child::after,
-      &.reply p:first-child::before {
-        border-width: 6px 0 6px 7px;
-        border-color: transparent transparent transparent $color-scheme;
-      }
-
-      &.reply p:first-child:after,
-      &.reply p:first-child:before {
-        left: auto;
-        right: -7px;
-      }
-
-      &.reply p:first-child:before {
-        border-left-color: $theme-border-color;
-        right: -8px;
-      }
-
-      &.reply p:first-child:after {
-        border-left-color: #fff;
       }
     }
   }
@@ -457,11 +403,6 @@ Widgets
       background: #fff;
     }
   }
-  body.rtl & {
-    .post-details {
-      direction: rtl;
-    }
-  }
 }
 
 /* User Profile
@@ -562,13 +503,6 @@ Widgets
   .add-btn {
     @include position(absolute, null 50% 0 null);
     transform: translateY(50%) translateX(50%);
-  }
-
-  body.rtl & {
-    .dropdown-item .list-icon {
-      margin-right: 0;
-      margin-left: em(6);
-    }
   }
 }
 
@@ -683,10 +617,6 @@ ul.widget-user-list {
         background-color: #e4e7ea;
        }
     }
-  }
-
-  body.rtl & {
-    @include padding(em(10) $card-spacer-x null);
   }
 
   @media (max-width: 480px) {
@@ -933,12 +863,6 @@ ul.widget-user-list {
   p {
     margin-bottom: 0;
     font-family: $headings-font-family;
-  }
-  body.rtl & {
-    .user-profile-picture {
-      margin-right: 0;
-      margin-left: em(10);
-    }
   }
 }
 
@@ -1608,7 +1532,7 @@ Light Box Gallery
   }
 }
 
-/* Project Index 
+/* Project Index
 ============================*/
 .widget-project-index {
   .card {
@@ -1672,18 +1596,6 @@ Light Box Gallery
       text-align: center;
       border-radius: 100%;
       margin-top: .2em;
-    }
-  }
-
-  body.rtl & {
-    .list-group {
-      .list-group-item.active {
-        box-shadow: inset -4px 0 0 0 $primary;
-      }
-      .list-icon {
-        margin-right: 0;
-        margin-left: 1em;
-      }
     }
   }
 }

@@ -205,17 +205,6 @@ label {
       }
     }
   }
-
-  body.rtl & {
-    .label-text {
-      padding-left: 0;
-      padding-right: em(30);
-      &:after {
-        left: auto;
-        right: 0;
-      }
-    }
-  }
 }
 
 .radiobox {
@@ -319,24 +308,6 @@ label {
       input[type=radio]:checked + span.label-text::before {
         border-color: $val;
       }
-    }
-  }
-
-  body.rtl & {
-    .label-text {
-      padding-left: 0;
-      padding-right: em(30);
-      &:before,
-      &:after {
-        left: auto;
-        right: 0;
-      }
-      &:after {
-        transform: translateY(-50%) translateX(-50%) scale(0)
-      }
-    }
-    input[type="radio"]:checked + span.label-text:after {
-      transform: translateY(-50%) translateX(-50%) scale(1)
     }
   }
 }
@@ -487,13 +458,6 @@ label {
     background-size: 100% 2px, 100% 1px;
     outline: 0 none;
     transition-duration: 0.3s;
-  }
-
-  body.rtl & {
-    .form-group > label {
-      left: auto;
-      right: 0;
-    }
   }
 }
 
@@ -649,12 +613,6 @@ label {
 
   .input-mini.active {
     border-color: $color-scheme;
-  }
-
-  body.rtl & {
-    .ranges ul {
-      padding-right: 0;
-    }
   }
 }
 
@@ -842,13 +800,6 @@ label {
   }
 }
 
-body.rtl {
-  .select2-results__options {
-    padding-right: 0;
-  }
-}
-
-
 /* SelectPicker Select Dropdown
 ========================*/
 .bootstrap-select{
@@ -1033,16 +984,6 @@ body.rtl {
       }
     }
   }
-
-  body.rtl & {
-    .ms-optgroup {
-      padding-right: 0;
-    }
-
-    .ms-optgroup-label {
-      padding-right: 5px;
-    }
-  }
 }
 
 .multi-step-signup {
@@ -1149,13 +1090,6 @@ body.rtl {
       }
     }
   }
-
-  body.rtl & {
-    .steps-tab li::before {
-      left: auto;
-      right: calc(-50% - 10px);
-    }
-  }
 }
 
 
@@ -1185,13 +1119,6 @@ ul.wysihtml5-toolbar {
       &:focus {
         background: none;
       }
-    }
-  }
-
-  body.rtl & {
-    > li .btn .glyphicon {
-      margin-right: 0;
-      margin-left: 1em;
     }
   }
 }
@@ -1224,56 +1151,6 @@ ul.wysihtml5-toolbar > li .modal {
         content: 'check';
       }
 
-    }
-  }
-}
-
-.input-group {
-  body.rtl & {
-    .input-group-btn-vertical:first-child:last-child .btn,
-    .input-group-btn-vertical .btn,
-    .input-group-btn:first-child:last-child .btn,
-    .input-group-btn .btn,
-    .input-group-addon:first-child:last-child,
-    .input-group-addon {
-      border-radius: $border-radius;
-    }
-    .input-group-btn-vertical:first-child .btn,
-    .input-group-btn:first-child .btn,
-    .input-group-addon:first-child {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-      border-right: 1px solid $theme-border-color;
-      border-left: 0;
-    }
-    .input-group-btn-vertical:last-child .btn,
-    .input-group-btn:last-child .btn,
-    .input-group-addon:last-child {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-      border-left: 1px solid $theme-border-color;
-      border-right: 0;
-    }
-    .input-group-btn-vertical:not(:first-child):not(:last-child) .btn,
-    .input-group-btn:not(:first-child):not(:last-child) .btn,
-    .input-group-addon:not(:first-child):not(:last-child) {
-      border-radius: 0;
-    }
-
-    .form-control:first-child:last-child,
-    .form-control {
-      border-radius: $border-radius;
-    }
-    .form-control:first-child {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-    .form-control:last-child {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-    .form-control:not(:first-child):not(:last-child) {
-      border-radius: 0;
     }
   }
 }

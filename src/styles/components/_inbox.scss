@@ -9,7 +9,7 @@ Inbox
 ========================*/
 .mail-inbox {
   position: relative;
-  
+
   @include mobile {
     height: auto !important;
   }
@@ -58,11 +58,6 @@ Inbox
     top: -5px;
     padding: 0 !important;
     margin-right: em(20);
-
-    body.rtl & {
-      margin-right: 0;
-      margin-left: em(20);
-    }
   }
 
   &:nth-child(odd) {
@@ -138,12 +133,8 @@ Inbox
 
 /* Mail Compose
 ========================*/
-.mail-sidebar { 
-  border-right: 1px solid $theme-border-color; 
-  body.rtl & {
-    border-right: 0;
-    border-left: 1px solid $theme-border-color; 
-  }
+.mail-sidebar {
+  border-right: 1px solid $theme-border-color;
 }
 
 .mail-compose {

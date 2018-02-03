@@ -259,11 +259,6 @@ ul.wysihtml5-toolbar {
   > .active {
     color: $color-scheme;
   }
-
-  body.rtl & {
-    direction: ltr;
-    text-align: right;
-  }
 }
 
 
@@ -430,11 +425,6 @@ ul.wysihtml5-toolbar {
     justify-content: center;
     align-items: center;
     @include padding(null rem(15));
-
-    body.rtl & {
-      right: auto;
-      left: 0;
-    }
   }
 }
 

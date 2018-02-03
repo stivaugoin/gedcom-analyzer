@@ -46,17 +46,6 @@
       height: auto;
     }
   }
-
-  body.rtl & {
-    left: 0;
-    right: auto;
-    transform: translateX(-100%);
-    border-left: 0;
-    border-right: 1px solid $theme-border-color;
-  }
-  body.rtl.right-sidebar-expand & {
-    transform: translateX(0);
-  }
 }
 
 .sidebar-chat-info {
@@ -225,11 +214,6 @@
     overflow-y: scroll;
     @include margin(em(-15) em(-15) null em(-15));
     @include padding(em(15) em(15) null em(15));
-  }
-
-  body.rtl & {
-    right: auto;
-    left: calc(#{$right-sidebar-width} + 15px;
   }
 }
 

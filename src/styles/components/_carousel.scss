@@ -89,10 +89,6 @@ Carousel
     left: 50%;
     right: auto;
   }
-  
-  body.rtl & {
-    direction: ltr;
-  }
 }
 
 .multi-slide-carousel {
@@ -180,12 +176,6 @@ Carousel
       .content-caption {
         bottom: 0;
       }
-    }
-  }
-
-  body.rtl & {
-    .item-image .content-caption {
-      direction: rtl;
     }
   }
 }

@@ -67,14 +67,6 @@ E-Commerce Products
       }
     }
   }
-  
-  body.rtl & {
-    .card .card-footer div {
-      border-right: 0;
-      border-left: 1px solid $theme-border-color;
-      &:last-child { border: none; }
-    }
-  }
 }
 
 .invoice-sum {

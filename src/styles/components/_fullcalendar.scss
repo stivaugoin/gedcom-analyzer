@@ -180,10 +180,4 @@
     margin-right: $spacer * 1.25;
     background: inherit;
   }
-  body.rtl & {
-    i {
-      margin-right: 0;
-      margin-left: $spacer * 1.25;
-    }
-  }
 }

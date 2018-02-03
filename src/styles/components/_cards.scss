@@ -169,13 +169,6 @@ Card
       i { font-size: em(16); }
     }
   }
-
-  body.rtl & {
-    .card-header .user-image {
-      right: auto;
-      left: em(40);
-    }
-  }
 }
 
 .listing-card {
