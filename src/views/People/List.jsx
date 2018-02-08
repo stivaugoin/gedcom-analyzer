@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import accents from 'remove-accents';
 
-import { Person } from '../classes';
+import { Person } from '../../classes';
 
 const propTypes = {
   people: PropTypes.shape({
@@ -11,7 +11,7 @@ const propTypes = {
   }).isRequired,
 };
 
-class PeopleList extends Component {
+class List extends Component {
   constructor(props) {
     super(props);
 
@@ -78,7 +78,12 @@ class PeopleList extends Component {
                       const person = new Person(p);
 
                       return (
-                        <tr key={person.pointer}>
+                        <tr
+                          key={person.pointer}
+                          onClick={() => {
+                            this.props.history.push(`/person/${person.pointer}`);
+                          }}
+                        >
                           <td>
                             {person.name}
                             <br />
@@ -111,6 +116,6 @@ class PeopleList extends Component {
   }
 }
 
-PeopleList.propTypes = propTypes;
+List.propTypes = propTypes;
 
-export default PeopleList;
+export default List;

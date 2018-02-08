@@ -11,7 +11,8 @@ class Person {
   }
 
   get pointer() {
-    return this.person.pointer;
+    // Remove "@"
+    return this.person.pointer.slice(1, -1);
   }
 
   /**
@@ -78,6 +79,16 @@ class Person {
     return `${this.name} (${this.birthYear || ''}${this.deathYear ? '-' : ''}${this.deathYear || ''})`;
   }
 
+  get mother() {
+    return this.person.parents && this.person.parents.length > 0 &&
+      this.person.parents.find(parent => parent.relation === 'mother');
+  }
+
+  get father() {
+    return this.person.parents && this.person.parents.length > 0 &&
+      this.person.parents.find(parent => parent.relation === 'father');
+  }
+
   age(precision = 'year') {
     if (!this.birthDate || !this.deathDate) {
       return null;
@@ -104,6 +115,23 @@ class Person {
     }
 
     return false;
+  }
+
+  events() {
+    const events = [];
+    Object.keys(this.person)
+      .filter(key => ['birth', 'death', 'weddings'].includes(key))
+      .forEach((key) => {
+        if (key === 'weddings') {
+          this.person.weddings.forEach((event) => {
+            events.push({ name: 'wedding', ...event });
+          });
+        } else {
+          events.push({ name: key, ...this.person[key] });
+        }
+      });
+
+    return events.sort((a, b) => new Date(a.date) - new Date(b.date));
   }
 }
 

@@ -48,6 +48,23 @@ Widgets
   .single-user-name {
     font-family: $headings-font-family;
   }
+  .single-event-name {
+    font-family: $headings-font-family;
+    line-height: 1.7;
+    font-weight: 600;
+    color: $headings-color;
+    display: block;
+    font-size: 1.3em;
+  }
+  .single-event-place {
+    font-family: $headings-font-family;
+    font-size: 1.1em;
+  }
+  .single-event-date {
+    font-family: $headings-font-family;
+    font-size: 1.1em;
+    color: #8253eb;
+  }
 }
 
 /* Latest Transactions

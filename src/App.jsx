@@ -12,9 +12,9 @@ import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import CurrentFile from './components/CurrentFile';
 import Home from './views/Home';
-import PeopleList from './views/PeopleList';
+import { List as PeopleList } from './views/People';
+import { Profile as PersonProfile } from './views/Person';
 
-// eslint-disable-next-line
 class App extends Component {
   constructor(props) {
     super(props);
@@ -74,6 +74,8 @@ class App extends Component {
           person => new PersonParser(dataParsed, person).format(),
         );
 
+        this.localStorage.setItem('people', JSON.stringify(new People(people)));
+
         this.setState({
           filename,
           people: new People(people),
@@ -118,6 +120,7 @@ class App extends Component {
                         <PeopleList {...routeProps} people={this.state.people} />
                       )}
                     />
+                    <Route path="/person/:pointer" component={PersonProfile} />
                   </div>
                 ) : (
                   <input type="file" onChange={this.onFileLoaded} />

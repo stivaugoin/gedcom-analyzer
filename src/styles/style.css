@@ -16391,7 +16391,8 @@ Tabs
   position: relative; }
   .nav-tabs li a {
     font-weight: 600;
-    color: #313a46; }
+    color: #313a46;
+    cursor: pointer; }
     .nav-tabs li a:hover {
       background: rgba(0, 0, 0, 0.03); }
   .nav-tabs li.active a,
@@ -19014,6 +19015,35 @@ Widgets
 .widget-latest-transactions .single-user-name,
 .widget-user-activities .single-user-name {
   font-family: "Montserrat", sans-serif; }
+
+.widget-holder .single-event-name,
+.widget-latest-comments .single-event-name,
+.widget-todo .single-event-name,
+.widget-latest-transactions .single-event-name,
+.widget-user-activities .single-event-name {
+  font-family: "Montserrat", sans-serif;
+  line-height: 1.7;
+  font-weight: 600;
+  color: #444;
+  display: block;
+  font-size: 1.3em; }
+
+.widget-holder .single-event-place,
+.widget-latest-comments .single-event-place,
+.widget-todo .single-event-place,
+.widget-latest-transactions .single-event-place,
+.widget-user-activities .single-event-place {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.1em; }
+
+.widget-holder .single-event-date,
+.widget-latest-comments .single-event-date,
+.widget-todo .single-event-date,
+.widget-latest-transactions .single-event-date,
+.widget-user-activities .single-event-date {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.1em;
+  color: #8253eb; }
 
 /* Latest Transactions
 ========================*/
