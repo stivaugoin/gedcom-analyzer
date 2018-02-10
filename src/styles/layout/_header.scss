@@ -79,27 +79,15 @@
   font-family: $headings-font-family;
   font-weight: 600;
   background: #fff;
-  // color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid $theme-border-color;
-  .logo-bon { color: $color-scheme; }
-  .logo-vue { color: $text-muted; }
-  &:hover { color: #fff; }
-  .logo-light & { background: #fff }
-  .logo-dark & { background: $color-scheme-dark }
   p {
     margin-bottom: 0;
     margin-right: 0.2em;
   }
-  img {
-    display: inline-block;
-    margin: 0 auto;
-  }
 }
-
-.navbar .logo-collapse { display: none }
 
 @media (min-width: #{$theme-breakpoint + 1px}) {
   .sidebar-collapse {

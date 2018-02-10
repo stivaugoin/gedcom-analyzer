@@ -17926,25 +17926,9 @@ body .close-jq-toast-single {
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid #eef1f2; }
-  .navbar-brand .logo-bon {
-    color: #6CB273; }
-  .navbar-brand .logo-vue {
-    color: #bbb; }
-  .navbar-brand:hover {
-    color: #fff; }
-  .logo-light .navbar-brand {
-    background: #fff; }
-  .logo-dark .navbar-brand {
-    background: #4F8254; }
   .navbar-brand p {
     margin-bottom: 0;
     margin-right: 0.2em; }
-  .navbar-brand img {
-    display: inline-block;
-    margin: 0 auto; }
-
-.navbar .logo-collapse {
-  display: none; }
 
 @media (min-width: 961px) {
   .sidebar-collapse .logo-expand {

@@ -113,12 +113,6 @@ const Profile = class extends React.Component {
                       {indicator(motherLink, 'Mother', 'col-12')}
                     </div>
                   )}
-
-                  <div className="row columns-border-bw border-top">
-                    {indicator('--', 'Unique Place', 'col-4')}
-                    {indicator('--', 'Sources', 'col-4')}
-                    {indicator('--', 'Accuracy', 'col-4')}
-                  </div>
                 </div>
               </div>
             </div>
