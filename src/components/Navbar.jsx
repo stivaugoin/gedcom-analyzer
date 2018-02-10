@@ -11,23 +11,6 @@ const Navbar = () => (
           <p><small>analyzer</small></p>
         </a>
       </div>
-      <ul className="nav navbar-nav">
-        <li>
-          <a href="javascript:void(0);" className="ripple">
-            Pricing
-          </a>
-        </li>
-        <li>
-          <a href="javascript:void(0);" className="ripple">
-            About
-          </a>
-        </li>
-        <li>
-          <a href="javascript:void(0);" className="ripple">
-            Help
-          </a>
-        </li>
-      </ul>
     </nav>
   </div>
 );
