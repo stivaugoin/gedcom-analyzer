@@ -13,7 +13,7 @@ const defaultProps = {
 };
 
 const Header = ({ dark, icon, title }) => (
-  <div className={`widget-heading ${!!dark && 'bg-purple'}`}>
+  <div className={`widget-heading ${!!dark && 'bg-color-scheme'}`}>
     <span className="widget-title my-0 fs-12 fw-600">
       {title}
     </span>

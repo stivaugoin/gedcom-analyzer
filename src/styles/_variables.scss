@@ -1,5 +1,4 @@
 // main: style.scss
-// @import 'color-schemes/lms';
 @import 'vendors/bootstrap/functions';
 
 // Variables
@@ -93,23 +92,23 @@ $footer-padding-y: 20px !default;
 //
 
 // Theme Colors
-$color-scheme: #8253eb !default;
-$color-scheme-hover: #9165f4 !default;
-$color-scheme-dark: #835c9e !default;
-$color-scheme-dark-hover: #8253eb !default;
+$color-scheme: #01a8f6;
+$color-scheme-hover: #00a0ee;
+$color-scheme-dark: #00a0ee;
+$color-scheme-dark-hover: darken($color-scheme-dark, 7%);
 $content-color: #999 !default;
 $theme-border-color: #eef1f2 !default;
 $footer-color: #fff !default;
 
 $widget-bg: #fff !default;
-$navbar-bg: linear-gradient(90deg, #835c9e, #8253eb) !default;
-$navbar-border: none !default;
-$footer-bg: linear-gradient(90deg, #835c9e, #8253eb) !default;
+$navbar-bg: $color-scheme;
+$navbar-border: 1px solid rgba(255,255,255,.05);
+$footer-bg: $color-scheme;
 $sidebar-bg: #fff !default;
 
 $nav-link-color: $color-scheme !default;
 $nav-heading-link-color: #3e4b5b !default;
-$nav-link-hover-color: lighten($color-scheme, 37%) !default;
+$nav-link-hover-color: lighten($color-scheme, 49%);
 $nav-sub-link-color: #888 !default;
 $nav-sub-link-hover-color: #514d6a !default;
 $nav-icon-color: $color-scheme !default;
