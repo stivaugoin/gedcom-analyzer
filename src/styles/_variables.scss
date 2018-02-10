@@ -1,5 +1,5 @@
 // main: style.scss
-//@import 'color-schemes/lms';
+// @import 'color-schemes/lms';
 @import 'vendors/bootstrap/functions';
 
 // Variables
@@ -71,7 +71,7 @@ $nav-height: 5rem !default; // 100px
 
 // Sidebar
 $sidebar-width: 14.0625rem !default; // 225px
-$collapse-sidebar-width: 3.75rem !default; // 60px 
+$collapse-sidebar-width: 3.75rem !default; // 60px
 
 //Right Sidebar
 $right-sidebar-width: $sidebar-width !default;
