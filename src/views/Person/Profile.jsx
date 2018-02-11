@@ -81,6 +81,10 @@ const Profile = class extends React.Component {
       mother.deathYear,
     );
 
+    const icon = this.person.sex === 'M' ?
+      require('../../assets/men.jpg') :
+      require('../../assets/women.jpg');
+
     return (
       <div className="widget-list">
         <div className="row">
@@ -89,12 +93,12 @@ const Profile = class extends React.Component {
               <div className="widget-body clearfix">
                 <div className="widget-user-profile">
                   <figure className="profile-wall-img">
-                    <img src={require('../../assets/user-widget-bg.jpeg')} alt="User Wall" />
+                    <img src={require('../../assets/profile-bg.jpg')} alt="User Wall" />
                   </figure>
 
                   <div className="profile-body pd-b-20">
                     <figure className="profile-user-avatar thumb-md">
-                      <img src={require('../../assets/user1.jpg')} alt={this.person.sex} />
+                      <img src={icon} alt={this.person.sex} />
                     </figure>
                     <h6 className="h3 profile-user-name">{this.person.name}</h6>
                     <small>
