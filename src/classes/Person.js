@@ -1,5 +1,7 @@
 import moment from 'moment';
 
+import { getPerson } from '../helpers/classes';
+
 /**
  *
  *
@@ -79,13 +81,17 @@ class Person {
   }
 
   get mother() {
-    return this.person.parents && this.person.parents.length > 0 &&
+    const mother = this.person.parents && this.person.parents.length > 0 &&
       this.person.parents.find(parent => parent.relation === 'mother');
+
+    return getPerson(mother.pointer);
   }
 
   get father() {
-    return this.person.parents && this.person.parents.length > 0 &&
+    const father = this.person.parents && this.person.parents.length > 0 &&
       this.person.parents.find(parent => parent.relation === 'father');
+
+    return getPerson(father.pointer);
   }
 
   age(precision = 'year') {
