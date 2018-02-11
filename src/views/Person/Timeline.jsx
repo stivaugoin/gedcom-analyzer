@@ -12,15 +12,7 @@ const propTypes = {
 
 const renderEvent = (eventName, place, date) => (
   <div key={eventName} className="single media">
-    <figure className="single-user-avatar thumb-xs2">
-      <a href="">
-        <img
-          className="rounded-circle"
-          src={require('../../assets/user-widget-bg.jpeg')}
-          alt={eventName}
-        />
-      </a>
-    </figure>
+    <i className="feather feather-chevron-right fs-40 mr-r-10 text-primary" />
     <div className="media-body">
       <div className="single-header clearfix">
         <div className="float-left">
