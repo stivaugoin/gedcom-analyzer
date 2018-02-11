@@ -68,10 +68,6 @@ class PersonParser extends TreeParser {
     return this.raw.find(r => r.tag === 'FAM' && r.pointer === pointer);
   }
 
-  get pointer() {
-    return this.person.pointer;
-  }
-
   get names() {
     const tags = this.findTags(this.person.tree, 'NAME');
     if (!tags || tags.length === 0) {
