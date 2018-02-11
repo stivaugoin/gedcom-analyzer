@@ -65,7 +65,7 @@ const Profile = class extends React.Component {
   }
 
   render() {
-    const father = this.person.father && getPerson(this.person.father.pointer);
+    const { father } = this.person;
     const fatherLink = father && renderParentInfo(
       father.pointer,
       father.name,
@@ -73,7 +73,7 @@ const Profile = class extends React.Component {
       father.deathYear,
     );
 
-    const mother = this.person.mother && getPerson(this.person.mother.pointer);
+    const { mother } = this.person;
     const motherLink = mother && renderParentInfo(
       mother.pointer,
       mother.name,
