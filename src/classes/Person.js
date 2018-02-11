@@ -11,8 +11,7 @@ class Person {
   }
 
   get pointer() {
-    // Remove "@"
-    return this.person.pointer.slice(1, -1);
+    return this.person.pointer;
   }
 
   /**
