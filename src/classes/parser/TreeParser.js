@@ -6,9 +6,7 @@ class TreeParser {
   }
 
   getPersons() {
-    return this.raw
-      .filter(r => r.tag === 'INDI')
-      .map(r => ({ ...r, pointer: r.pointer.slice(1, -1) }));
+    return this.raw.filter(r => r.tag === 'INDI');
   }
 
   findTags(data, tag) {
