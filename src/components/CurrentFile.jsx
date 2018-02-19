@@ -7,16 +7,21 @@ import Button from './Button';
 
 const propTypes = {
   filename: PropTypes.string.isRequired,
+  isLoading: PropTypes.bool,
   onClickClose: PropTypes.func.isRequired,
 };
 
-const CurrentFile = ({ filename, onClickClose }) => (
+const defaultProps = {
+  isLoading: false,
+};
+
+const CurrentFile = ({ filename, isLoading, onClickClose }) => (
   <div className="row page-title clearfix">
     <div className="page-title-left">
       <p className="page-title-description mr-0 mr-r-20 d-none d-md-inline-block">
         Current file
       </p>
-      <h6 className="page-title-heading mr-0">{filename}</h6>
+      <h6 className="page-title-heading mr-0">{isLoading ? 'Loading...' : filename}</h6>
     </div>
     <div className="page-title-right d-none d-sm-inline-flex">
       <div className="d-none d-md-inline-flex justify-center align-items-center">
@@ -33,5 +38,6 @@ const CurrentFile = ({ filename, onClickClose }) => (
 );
 
 CurrentFile.propTypes = propTypes;
+CurrentFile.defaultProps = defaultProps;
 
 export default CurrentFile;
