@@ -1,26 +1,25 @@
-/* eslint-disable global-require */
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import classnames from 'classnames';
+import {
+  Tab,
+  Tabs,
+  TabList,
+  TabPanel,
+} from 'react-tabs';
 import { Link } from 'react-router-dom';
+import classnames from 'classnames';
 
-import { getPerson } from '../../helpers/classes';
+import { getPerson } from '../../helpers/localstorage';
 
-import Timeline from './Timeline';
+import Timeline from './Timelime';
 
-const propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      pointer: PropTypes.string,
-    }),
-  }).isRequired,
-};
+import profileBg from '../../assets/profile-bg.jpg';
+import iconMen from '../../assets/men.jpg';
+import iconWomen from '../../assets/women.jpg';
 
 const renderParentInfo = (pointer, name, birthYear = '????', deathYear = '????') => (
   <div>
-    <Link to={`/person/${pointer}`}>
+    <Link to={`/people/profile/${pointer}`}>
       {name}
     </Link>
     <small className="mr-l-5">({birthYear} - {deathYear})</small>
@@ -36,24 +35,36 @@ const indicator = (title, subtitle, size) => (
   </div>
 );
 
-const Profile = class extends React.Component {
+const propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      pointer: PropTypes.string,
+    }),
+  }).isRequired,
+};
+
+class Profile extends React.Component {
   constructor(props) {
     super(props);
-
-    this.person = getPerson(props.match.params.pointer);
 
     this.tabItems = ['History'];
 
     this.state = {
+      isLoading: true,
       selectedTab: 0,
     };
 
     this.onChangeTab = this.onChangeTab.bind(this);
     this.isTabSelected = this.isTabSelected.bind(this);
+    this.fetchData = this.fetchData.bind(this);
+  }
+
+  componentWillMount() {
+    this.fetchData();
   }
 
   componentWillReceiveProps(nextProps) {
-    this.person = getPerson(nextProps.match.params.pointer);
+    this.setState({ person: getPerson(nextProps.match.params.pointer) });
   }
 
   onChangeTab(index) {
@@ -64,8 +75,30 @@ const Profile = class extends React.Component {
     return tabIndex === this.state.selectedTab;
   }
 
+  async fetchData() {
+    const { pointer } = this.props.match.params;
+
+    const person = await getPerson(pointer);
+
+    this.setState({
+      isLoading: false,
+      person,
+    });
+  }
+
   render() {
-    const { father } = this.person;
+    const {
+      isLoading,
+      person,
+    } = this.state;
+
+    if (isLoading) {
+      return <h1>Loading...</h1>;
+    }
+
+    const icon = person.sex === 'M' ? iconMen : iconWomen;
+
+    const { father } = person;
     const fatherLink = father && renderParentInfo(
       father.pointer,
       father.name,
@@ -73,17 +106,13 @@ const Profile = class extends React.Component {
       father.deathYear,
     );
 
-    const { mother } = this.person;
+    const { mother } = person;
     const motherLink = mother && renderParentInfo(
       mother.pointer,
       mother.name,
       mother.birthYear,
       mother.deathYear,
     );
-
-    const icon = this.person.sex === 'M' ?
-      require('../../assets/men.jpg') :
-      require('../../assets/women.jpg');
 
     return (
       <div className="widget-list">
@@ -93,26 +122,26 @@ const Profile = class extends React.Component {
               <div className="widget-body clearfix">
                 <div className="widget-user-profile">
                   <figure className="profile-wall-img">
-                    <img src={require('../../assets/profile-bg.jpg')} alt="User Wall" />
+                    <img src={profileBg} alt="profile" />
                   </figure>
 
                   <div className="profile-body pd-b-20">
                     <figure className="profile-user-avatar thumb-md">
-                      <img src={icon} alt={this.person.sex} />
+                      <img src={icon} alt={person.sex} />
                     </figure>
-                    <h6 className="h3 profile-user-name">{this.person.name}</h6>
+                    <h6 className="h3 profile-user-name">{person.name}</h6>
                     <small>
-                      ({this.person.birthYear || '????'} - {this.person.deathYear || '????'})
+                      ({person.birthYear || '????'} - {person.deathYear || '????'})
                     </small>
                   </div>
 
-                  {this.person.father && (
+                  {person.father && (
                     <div className="row columns-border-bw border-top">
                       {indicator(fatherLink, 'Father', 'col-12')}
                     </div>
                   )}
 
-                  {this.person.mother && (
+                  {person.mother && (
                     <div className="row columns-border-bw border-top">
                       {indicator(motherLink, 'Mother', 'col-12')}
                     </div>
@@ -135,7 +164,7 @@ const Profile = class extends React.Component {
               </TabList>
 
               <TabPanel>
-                <Timeline person={this.person} />
+                <Timeline person={person} />
               </TabPanel>
             </Tabs>
           </div>
@@ -143,7 +172,7 @@ const Profile = class extends React.Component {
       </div>
     );
   }
-};
+}
 
 Profile.propTypes = propTypes;
 

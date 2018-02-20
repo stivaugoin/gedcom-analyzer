@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { getPerson } from '../helpers/classes';
+import { getPerson } from '../helpers/localstorage';
 
 /**
  *
@@ -84,14 +84,14 @@ class Person {
     const mother = this.person.parents && this.person.parents.length > 0 &&
       this.person.parents.find(parent => parent.relation === 'mother');
 
-    return getPerson(mother.pointer);
+    return mother && getPerson(mother.pointer);
   }
 
   get father() {
     const father = this.person.parents && this.person.parents.length > 0 &&
       this.person.parents.find(parent => parent.relation === 'father');
 
-    return getPerson(father.pointer);
+    return father && getPerson(father.pointer);
   }
 
   age(precision = 'year') {

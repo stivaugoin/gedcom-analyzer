@@ -22,7 +22,7 @@ const Sidebar = ({ hide }) => {
       <nav className="sidebar-nav">
         <ul className="nav in side-menu">
           <li className="current-page">
-            <Link to="/">
+            <Link to="/dashboard">
               <i className="list-icon feather feather-home" />
               <span>Dashboard</span>
             </Link>

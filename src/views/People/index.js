@@ -1,5 +1,7 @@
 import List from './List';
+import Profile from './Profile';
 
 export {
-  List, // eslint-disable-line import/prefer-default-export
+  List,
+  Profile,
 };
