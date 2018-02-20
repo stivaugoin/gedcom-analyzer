@@ -2,7 +2,7 @@ import gedcom from 'parse-gedcom';
 
 import TreeParser from '../classes/parser/TreeParser';
 import PersonParser from '../classes/parser/PersonParser';
-import { People } from '../classes';
+import { People, Person } from '../classes';
 
 export const uploadFile = (event, callback) => {
   if (typeof window.FileReader !== 'function') {
@@ -27,7 +27,6 @@ export const uploadFile = (event, callback) => {
       const { result } = fileContent.currentTarget;
       const dataParsed = gedcom.parse(result);
 
-      window.localStorage.setItem('dataParsed', JSON.stringify(dataParsed));
       window.localStorage.setItem('filename', filename);
 
       const myTree = new TreeParser(dataParsed);
@@ -47,8 +46,13 @@ export const uploadFile = (event, callback) => {
 export const getFilename = () => window.localStorage.getItem('filename');
 
 export const getPeople = () => {
-  const localStoragePeople = window.localStorage.getItem('people');
-  return JSON.parse(localStoragePeople);
+  const peopleRaw = window.localStorage.getItem('people');
+  return new People(JSON.parse(peopleRaw));
+};
+
+export const getPerson = (pointer) => {
+  const peopleRaw = window.localStorage.getItem('people');
+  return new Person(JSON.parse(peopleRaw).find(p => p.pointer === pointer));
 };
 
 export const clearLocalstorage = () => window.localStorage.clear();

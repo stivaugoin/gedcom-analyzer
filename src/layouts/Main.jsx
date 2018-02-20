@@ -12,7 +12,9 @@ import Sidebar from '../components/Sidebar';
 
 const propTypes = {
   component: PropTypes.node.isRequired,
-  history: PropTypes.shape().isRequired,
+  history: PropTypes.shape({
+    replace: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 const Main = class extends React.Component {
@@ -49,7 +51,7 @@ const Main = class extends React.Component {
     }
 
     return (
-      <div>
+      <React.Fragment>
         <Sidebar />
 
         <main className="main-wrapper clearfix">
@@ -61,7 +63,7 @@ const Main = class extends React.Component {
 
           {React.cloneElement(component, otherProps)}
         </main>
-      </div>
+      </React.Fragment>
     );
   }
 };

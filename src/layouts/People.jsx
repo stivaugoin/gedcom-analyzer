@@ -20,13 +20,11 @@ const defaultProps = {
 };
 
 const People = ({ match }) => (
-  <div>
-    <Switch>
-      <Route path={`${match.path}/list`} component={List} />
-      <Route path={`${match.path}/profile/:pointer`} component={Profile} />
-      <Redirect to="/" />
-    </Switch>
-  </div>
+  <Switch>
+    <Route path={`${match.path}/list`} component={List} />
+    <Route path={`${match.path}/profile/:pointer`} component={Profile} />
+    <Redirect to="/" />
+  </Switch>
 );
 
 People.propTypes = propTypes;
