@@ -1,6 +1,6 @@
-import moment from 'moment';
+import moment from "moment";
 
-import { getPerson } from '../helpers/localstorage';
+import { getPerson } from "../helpers/localstorage";
 
 /**
  *
@@ -49,7 +49,7 @@ class Person {
    * @memberof Person
    */
   get birthYear() {
-    return this.birthDate && moment(this.birthDate).format('YYYY');
+    return this.birthDate && moment(this.birthDate).format("YYYY");
   }
 
   get birthPlace() {
@@ -69,7 +69,7 @@ class Person {
   }
 
   get deathYear() {
-    return this.deathDate && moment(this.deathDate).format('YYYY');
+    return this.deathDate && moment(this.deathDate).format("YYYY");
   }
 
   get deathPlace() {
@@ -77,24 +77,29 @@ class Person {
   }
 
   get format() {
-    return `${this.name} (${this.birthYear || ''}${this.deathYear ? '-' : ''}${this.deathYear || ''})`;
+    return `${this.name} (${this.birthYear || ""}${this.deathYear ? "-" : ""}${this.deathYear ||
+      ""})`;
   }
 
   get mother() {
-    const mother = this.person.parents && this.person.parents.length > 0 &&
-      this.person.parents.find(parent => parent.relation === 'mother');
+    const mother =
+      this.person.parents &&
+      this.person.parents.length > 0 &&
+      this.person.parents.find(parent => parent.relation === "mother");
 
     return mother && getPerson(mother.pointer);
   }
 
   get father() {
-    const father = this.person.parents && this.person.parents.length > 0 &&
-      this.person.parents.find(parent => parent.relation === 'father');
+    const father =
+      this.person.parents &&
+      this.person.parents.length > 0 &&
+      this.person.parents.find(parent => parent.relation === "father");
 
     return father && getPerson(father.pointer);
   }
 
-  age(precision = 'year') {
+  age(precision = "year") {
     if (!this.birthDate || !this.deathDate) {
       return null;
     }
@@ -103,8 +108,8 @@ class Person {
       return null;
     }
 
-    if (precision === 'year') {
-      return moment(this.deathDate).diff(this.birthDate, 'year');
+    if (precision === "year") {
+      return moment(this.deathDate).diff(this.birthDate, "year");
     }
 
     return null;
@@ -125,11 +130,11 @@ class Person {
   events() {
     const events = [];
     Object.keys(this.person)
-      .filter(key => ['birth', 'death', 'weddings'].includes(key))
-      .forEach((key) => {
-        if (key === 'weddings') {
-          this.person.weddings.forEach((event) => {
-            events.push({ name: 'wedding', ...event });
+      .filter(key => ["birth", "death", "weddings"].includes(key))
+      .forEach(key => {
+        if (key === "weddings") {
+          this.person.weddings.forEach(event => {
+            events.push({ name: "wedding", ...event });
           });
         } else {
           events.push({ name: key, ...this.person[key] });

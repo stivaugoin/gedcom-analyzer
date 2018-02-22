@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classnames from 'classnames';
+import React from "react";
+import PropTypes from "prop-types";
+import classnames from "classnames";
 
 const propTypes = {
   color: PropTypes.string,
@@ -12,23 +12,19 @@ const propTypes = {
 };
 
 const defaultProps = {
-  color: 'default',
-  icon: '',
+  color: "default",
+  icon: "",
   rounded: false,
   small: false,
-  title: '',
+  title: "",
 };
 
 const Button = ({ color, icon, onClick, rounded, small, title }) => {
-  const smallClass = 'btn-sm fs-11 fw-400';
+  const smallClass = "btn-sm fs-11 fw-400";
 
-  const classNames = classnames(
-    `btn btn-${color}`,
-    small && smallClass,
-    {
-      'btn-rounded': rounded,
-    },
-  );
+  const classNames = classnames(`btn btn-${color}`, small && smallClass, {
+    "btn-rounded": rounded,
+  });
 
   return (
     <button className={classNames} onClick={onClick}>

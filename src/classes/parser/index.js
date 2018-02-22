@@ -1,9 +1,5 @@
-import FamilyParser from './FamilyParser';
-import PersonParser from './PersonParser';
-import TreeParser from './TreeParser';
+import FamilyParser from "./FamilyParser";
+import PersonParser from "./PersonParser";
+import TreeParser from "./TreeParser";
 
-export {
-  FamilyParser,
-  PersonParser,
-  TreeParser,
-};
+export { FamilyParser, PersonParser, TreeParser };

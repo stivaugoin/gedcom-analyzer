@@ -33,7 +33,9 @@
   },
   "devDependencies": {
     "eslint": "^4.15.0",
-    "eslint-config-classcraft": "^1.1.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "prettier": "1.10.2",
     "redux-devtools": "^3.4.1"
   }
 }

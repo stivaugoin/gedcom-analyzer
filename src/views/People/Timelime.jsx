@@ -1,10 +1,10 @@
 /* eslint-disable global-require */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import moment from 'moment';
+import React from "react";
+import PropTypes from "prop-types";
+import moment from "moment";
 
-import { capitalize } from '../../helpers/string';
+import { capitalize } from "../../helpers/string";
 
 const propTypes = {
   person: PropTypes.shape().isRequired,
@@ -20,7 +20,7 @@ const renderEvent = (eventName, place, date) => (
           <span className="single-event-place">{place}</span>
         </div>
         <span className="single-event-date float-right">
-          <span>{moment(date).format('LL')}</span>
+          <span>{moment(date).format("LL")}</span>
         </span>
       </div>
     </div>
@@ -31,9 +31,7 @@ const Timeline = ({ person }) => (
   <div className="tab-content">
     <div className="tab-pane active">
       <div className="widget-user-activities">
-        {person.events().map(event => (
-          renderEvent(event.name, event.place, event.date)
-        ))}
+        {person.events().map(event => renderEvent(event.name, event.place, event.date))}
       </div>
     </div>
   </div>

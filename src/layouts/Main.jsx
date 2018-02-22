@@ -1,14 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import React from "react";
+import PropTypes from "prop-types";
+import { Redirect } from "react-router-dom";
 
-import {
-  clearLocalstorage,
-  getFilename,
-} from '../helpers/localstorage';
+import { clearLocalstorage, getFilename } from "../helpers/localstorage";
 
-import CurrentFile from '../components/CurrentFile';
-import Sidebar from '../components/Sidebar';
+import CurrentFile from "../components/CurrentFile";
+import Sidebar from "../components/Sidebar";
 
 const propTypes = {
   component: PropTypes.node.isRequired,
@@ -22,7 +19,7 @@ const Main = class extends React.Component {
     super(props);
 
     this.state = {
-      filename: '',
+      filename: "",
       isLoading: true,
     };
 
@@ -37,9 +34,9 @@ const Main = class extends React.Component {
   }
 
   clearFile() {
-    this.setState({ filename: '' });
+    this.setState({ filename: "" });
     clearLocalstorage();
-    this.props.history.replace('/');
+    this.props.history.replace("/");
   }
 
   render() {
@@ -55,11 +52,7 @@ const Main = class extends React.Component {
         <Sidebar />
 
         <main className="main-wrapper clearfix">
-          <CurrentFile
-            filename={filename}
-            isLoading={isLoading}
-            onClickClose={this.clearFile}
-          />
+          <CurrentFile filename={filename} isLoading={isLoading} onClickClose={this.clearFile} />
 
           {React.cloneElement(component, otherProps)}
         </main>

@@ -1,10 +1,10 @@
-import React from 'react';
-import CountUp from 'react-countup';
+import React from "react";
+import CountUp from "react-countup";
 
-import { Person } from '../classes';
-import { getPeople } from '../helpers/localstorage';
+import { Person } from "../classes";
+import { getPeople } from "../helpers/localstorage";
 
-import Widget from '../components/Widget';
+import Widget from "../components/Widget";
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -43,13 +43,7 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    const {
-      isLoading,
-      longestLife,
-      mostPopularPlace,
-      people,
-      shortestLife,
-    } = this.state;
+    const { isLoading, longestLife, mostPopularPlace, people, shortestLife } = this.state;
 
     if (isLoading) {
       return <h1>Loading...</h1>;
@@ -102,11 +96,7 @@ class Dashboard extends React.Component {
 
         {/* LONGEST LIFETIME */}
         <Widget size="col-md-3">
-          <Widget.Header
-            title="Longest lifetime"
-            icon="feather feather-user"
-            dark
-          />
+          <Widget.Header title="Longest lifetime" icon="feather feather-user" dark />
           <Widget.Body>
             <Widget.Title>
               <span className="counter">
@@ -118,21 +108,16 @@ class Dashboard extends React.Component {
                   useGrouping
                   separator=" "
                 />
-              </span> years
+              </span>{" "}
+              years
             </Widget.Title>
-            <Widget.Subtitle>
-              {longestLife.name}
-            </Widget.Subtitle>
+            <Widget.Subtitle>{longestLife.name}</Widget.Subtitle>
           </Widget.Body>
         </Widget>
 
         {/* SHORTEST LIFETIME */}
         <Widget size="col-md-3">
-          <Widget.Header
-            title="Shortest lifetime"
-            icon="feather feather-user"
-            dark
-          />
+          <Widget.Header title="Shortest lifetime" icon="feather feather-user" dark />
           <Widget.Body>
             <Widget.Title>
               <span className="counter">
@@ -144,28 +129,19 @@ class Dashboard extends React.Component {
                   useGrouping
                   separator=" "
                 />
-              </span> years
+              </span>{" "}
+              years
             </Widget.Title>
-            <Widget.Subtitle>
-              {shortestLife.name}
-            </Widget.Subtitle>
+            <Widget.Subtitle>{shortestLife.name}</Widget.Subtitle>
           </Widget.Body>
         </Widget>
 
         {/* POPULAR PLACE */}
         <Widget size="col-md-6">
-          <Widget.Header
-            title="Most popular place"
-            icon="feather feather-map-pin"
-            dark
-          />
+          <Widget.Header title="Most popular place" icon="feather feather-map-pin" dark />
           <Widget.Body>
-            <Widget.Title>
-              {mostPopularPlace.name}
-            </Widget.Title>
-            <Widget.Subtitle>
-              {mostPopularPlace.count} events took place there
-            </Widget.Subtitle>
+            <Widget.Title>{mostPopularPlace.name}</Widget.Title>
+            <Widget.Subtitle>{mostPopularPlace.count} events took place there</Widget.Subtitle>
           </Widget.Body>
         </Widget>
       </div>

@@ -1,4 +1,4 @@
-import Date from '../Dates';
+import Date from "../Dates";
 
 class TreeParser {
   constructor(raw) {
@@ -6,14 +6,14 @@ class TreeParser {
   }
 
   getPersons() {
-    return this.raw.filter(r => r.tag === 'INDI');
+    return this.raw.filter(r => r.tag === "INDI");
   }
 
   findTags(data, tag) {
     const d = data.filter(el => el.tag === tag);
 
     if (d.length > 0) {
-      return d.map((el) => {
+      return d.map(el => {
         const result = {};
         if (el.data) result.data = el.data;
         if (el.tree && el.tree.length > 0) result.tree = el.tree;
@@ -24,8 +24,8 @@ class TreeParser {
   }
 
   getPlaceDate(tree) {
-    const place = this.findTags(tree, 'PLAC');
-    const date = this.findTags(tree, 'DATE');
+    const place = this.findTags(tree, "PLAC");
+    const date = this.findTags(tree, "DATE");
 
     if (!place.length && !date.length) {
       return {};
@@ -50,19 +50,19 @@ class TreeParser {
       return [];
     }
 
-    const tags = this.findTags(individual.tree, 'FAMS');
+    const tags = this.findTags(individual.tree, "FAMS");
     if (!tags || tags.length === 0) {
       return [];
     }
 
     const children = [];
-    tags.forEach((tag) => {
+    tags.forEach(tag => {
       const familyPointer = tag.data;
       const family = this.getFamily(familyPointer);
-      const childs = this.findTags(family.tree, 'CHIL');
+      const childs = this.findTags(family.tree, "CHIL");
 
       if (childs && childs.length > 0) {
-        childs.forEach((child) => {
+        childs.forEach(child => {
           children.push({
             pointer: child.data,
             ...this.getName(child.data)[0],
@@ -78,8 +78,8 @@ class TreeParser {
     const tree = this;
 
     function getTree(data) {
-      data.forEach((d) => {
-        const place = tree.findTags(data, 'PLAC');
+      data.forEach(d => {
+        const place = tree.findTags(data, "PLAC");
         if (place && place.length > 0) {
           places.push(place[0].data);
         } else if (d.tree && d.tree.length > 0) {
@@ -88,21 +88,20 @@ class TreeParser {
       });
     }
 
-    this.raw.forEach((r) => {
+    this.raw.forEach(r => {
       getTree(r.tree);
     });
 
     if (unique) {
       const placesMap = new Map();
       const uniquePlace = [];
-      places.forEach((place) => {
+      places.forEach(place => {
         if (placesMap.get(place)) {
           placesMap.set(place, placesMap.get(place) + 1);
         } else {
           placesMap.set(place, 1);
         }
       });
-
 
       placesMap.forEach((value, key) => {
         uniquePlace.push({ name: key, count: value });

@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 const propTypes = {
   dark: PropTypes.bool,
@@ -9,17 +9,13 @@ const propTypes = {
 
 const defaultProps = {
   dark: false,
-  icon: '',
+  icon: "",
 };
 
 const Header = ({ dark, icon, title }) => (
-  <div className={`widget-heading ${!!dark && 'bg-color-scheme'}`}>
-    <span className="widget-title my-0 fs-12 fw-600">
-      {title}
-    </span>
-    {!!icon && (
-      <i className={`widget-heading-icon ${icon}`} />
-    )}
+  <div className={`widget-heading ${!!dark && "bg-color-scheme"}`}>
+    <span className="widget-title my-0 fs-12 fw-600">{title}</span>
+    {!!icon && <i className={`widget-heading-icon ${icon}`} />}
   </div>
 );
 

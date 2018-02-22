@@ -1,7 +1,4 @@
-import Main from './Main';
-import People from './People';
+import Main from "./Main";
+import People from "./People";
 
-export {
-  Main,
-  People,
-};
+export { Main, People };

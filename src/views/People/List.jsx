@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import moment from 'moment';
-import accents from 'remove-accents';
+import React from "react";
+import PropTypes from "prop-types";
+import moment from "moment";
+import accents from "remove-accents";
 
-import { Person } from '../../classes';
-import { getPeople } from '../../helpers/localstorage';
+import { Person } from "../../classes";
+import { getPeople } from "../../helpers/localstorage";
 
 const propTypes = {
   history: PropTypes.shape({
@@ -32,16 +32,18 @@ class List extends React.Component {
     const filter = accents.remove(event.target.value.toLowerCase());
 
     if (filter) {
-      const list = this.people.filter((p) => {
+      const list = this.people.filter(p => {
         const person = new Person(p);
 
         const name = accents.remove(person.name.toLowerCase());
         const birthPlace = person.birthPlace && accents.remove(person.birthPlace.toLowerCase());
         const deathPlace = person.deathPlace && accents.remove(person.deathPlace.toLowerCase());
 
-        return name.includes(filter) ||
+        return (
+          name.includes(filter) ||
           (birthPlace && birthPlace.includes(filter)) ||
-          (deathPlace && deathPlace.includes(filter));
+          (deathPlace && deathPlace.includes(filter))
+        );
       });
 
       this.setState({ list });
@@ -62,10 +64,7 @@ class List extends React.Component {
   }
 
   render() {
-    const {
-      isLoading,
-      list,
-    } = this.state;
+    const { isLoading, list } = this.state;
 
     if (isLoading) {
       return <h1>Loading...</h1>;
@@ -80,7 +79,6 @@ class List extends React.Component {
             </div>
 
             <div className="widget-body clearfix">
-
               <div className="form-group row">
                 <div className="col-md-4">
                   <input
@@ -99,7 +97,7 @@ class List extends React.Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {list.map((p) => {
+                  {list.map(p => {
                     const person = new Person(p);
 
                     return (
@@ -113,17 +111,17 @@ class List extends React.Component {
                           {person.name}
                           <br />
                           <span className="text-muted">
-                            {person.sex === 'M' ? 'Men' : 'Women'}
+                            {person.sex === "M" ? "Men" : "Women"}
                             {person.age() && ` - ${person.age()} years`}
                           </span>
                         </td>
                         <td>
-                          {person.birthDate && moment(person.birthDate).format('LL')}
+                          {person.birthDate && moment(person.birthDate).format("LL")}
                           <br />
                           <span className="text-muted">{person.birthPlace}</span>
                         </td>
                         <td>
-                          {person.deathDate && moment(person.deathDate).format('LL')}
+                          {person.deathDate && moment(person.deathDate).format("LL")}
                           <br />
                           <span className="text-muted">{person.deathPlace}</span>
                         </td>

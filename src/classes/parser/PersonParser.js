@@ -1,5 +1,5 @@
-import TreeParser from './TreeParser';
-import FamilyParser from './FamilyParser';
+import TreeParser from "./TreeParser";
+import FamilyParser from "./FamilyParser";
 
 class PersonParser extends TreeParser {
   constructor(raw, person) {
@@ -14,21 +14,11 @@ class PersonParser extends TreeParser {
   }
 
   isPerson() {
-    return this.person.tag === 'INDI';
+    return this.person.tag === "INDI";
   }
 
   format() {
-    const {
-      birth,
-      children,
-      death,
-      names,
-      parents,
-      person,
-      residences,
-      sex,
-      weddings,
-    } = this;
+    const { birth, children, death, names, parents, person, residences, sex, weddings } = this;
     const { pointer } = person;
 
     const information = {
@@ -65,21 +55,21 @@ class PersonParser extends TreeParser {
   }
 
   findFamily(pointer) {
-    return this.raw.find(r => r.tag === 'FAM' && r.pointer === pointer);
+    return this.raw.find(r => r.tag === "FAM" && r.pointer === pointer);
   }
 
   get names() {
-    const tags = this.findTags(this.person.tree, 'NAME');
+    const tags = this.findTags(this.person.tree, "NAME");
     if (!tags || tags.length === 0) {
       return [];
     }
 
-    return tags.map((tag) => {
+    return tags.map(tag => {
       // TODO: Handle all possibility of the structure of name
-      const nameSplitted = tag.data.split('/').map(n => n.trim());
+      const nameSplitted = tag.data.split("/").map(n => n.trim());
 
       return {
-        complete: `${nameSplitted[0]} ${nameSplitted[1] || ''}`.trim(),
+        complete: `${nameSplitted[0]} ${nameSplitted[1] || ""}`.trim(),
         first: nameSplitted[0],
         last: nameSplitted[1],
       };
@@ -91,16 +81,16 @@ class PersonParser extends TreeParser {
   }
 
   get sex() {
-    const tags = this.findTags(this.person.tree, 'SEX');
+    const tags = this.findTags(this.person.tree, "SEX");
     if (!tags || tags.length === 0 || !tags[0] || !tags[0].data) {
-      return '';
+      return "";
     }
 
     return tags[0].data;
   }
 
   get birth() {
-    const tags = this.findTags(this.person.tree, 'BIRT');
+    const tags = this.findTags(this.person.tree, "BIRT");
     if (!tags || tags.length === 0 || !tags[0].tree) {
       return {};
     }
@@ -109,7 +99,7 @@ class PersonParser extends TreeParser {
   }
 
   get death() {
-    const tags = this.findTags(this.person.tree, 'DEAT');
+    const tags = this.findTags(this.person.tree, "DEAT");
     if (!tags || tags.length === 0 || !tags[0].tree) {
       return {};
     }
@@ -118,12 +108,12 @@ class PersonParser extends TreeParser {
   }
 
   get residences() {
-    const tags = this.findTags(this.person.tree, 'RESI');
+    const tags = this.findTags(this.person.tree, "RESI");
     if (!tags || tags.length === 0) {
       return [];
     }
 
-    return tags.map((tag) => {
+    return tags.map(tag => {
       if (tag.tree) {
         return this.getPlaceDate(tag.tree);
       }
@@ -132,12 +122,12 @@ class PersonParser extends TreeParser {
   }
 
   get weddings() {
-    const tags = this.findTags(this.person.tree, 'FAMS');
+    const tags = this.findTags(this.person.tree, "FAMS");
     if (!tags || tags.length === 0) {
       return [];
     }
 
-    return tags.map((tag) => {
+    return tags.map(tag => {
       const familyPointer = tag.data;
       const { wedding } = new FamilyParser(this.raw, this.findFamily(familyPointer));
 
@@ -161,13 +151,13 @@ class PersonParser extends TreeParser {
   }
 
   get children() {
-    const tags = this.findTags(this.person.tree, 'FAMS');
+    const tags = this.findTags(this.person.tree, "FAMS");
     if (!tags || tags.length === 0) {
       return [];
     }
 
     const allChild = [];
-    tags.forEach((tag) => {
+    tags.forEach(tag => {
       const familyPointer = tag.data;
       const { children } = new FamilyParser(this.raw, this.findFamily(familyPointer));
       children.forEach(child => allChild.push(child));
@@ -176,7 +166,7 @@ class PersonParser extends TreeParser {
   }
 
   get parents() {
-    const tags = this.findTags(this.person.tree, 'FAMC');
+    const tags = this.findTags(this.person.tree, "FAMC");
     if (!tags || tags.length === 0) {
       return [];
     }
