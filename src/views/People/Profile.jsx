@@ -1,28 +1,23 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {
-  Tab,
-  Tabs,
-  TabList,
-  TabPanel,
-} from 'react-tabs';
-import { Link } from 'react-router-dom';
-import classnames from 'classnames';
+import React from "react";
+import PropTypes from "prop-types";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import { Link } from "react-router-dom";
+import classnames from "classnames";
 
-import { getPerson } from '../../helpers/localstorage';
+import { getPerson } from "../../helpers/localstorage";
 
-import Timeline from './Timelime';
+import Timeline from "./Timelime";
 
-import profileBg from '../../assets/profile-bg.jpg';
-import iconMen from '../../assets/men.jpg';
-import iconWomen from '../../assets/women.jpg';
+import profileBg from "../../assets/profile-bg.jpg";
+import iconMen from "../../assets/men.jpg";
+import iconWomen from "../../assets/women.jpg";
 
-const renderParentInfo = (pointer, name, birthYear = '????', deathYear = '????') => (
+const renderParentInfo = (pointer, name, birthYear = "????", deathYear = "????") => (
   <div>
-    <Link to={`/people/profile/${pointer}`}>
-      {name}
-    </Link>
-    <small className="mr-l-5">({birthYear} - {deathYear})</small>
+    <Link to={`/people/profile/${pointer}`}>{name}</Link>
+    <small className="mr-l-5">
+      ({birthYear} - {deathYear})
+    </small>
   </div>
 );
 
@@ -47,7 +42,7 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
 
-    this.tabItems = ['History'];
+    this.tabItems = ["History"];
 
     this.state = {
       isLoading: true,
@@ -87,32 +82,21 @@ class Profile extends React.Component {
   }
 
   render() {
-    const {
-      isLoading,
-      person,
-    } = this.state;
+    const { isLoading, person } = this.state;
 
     if (isLoading) {
       return <h1>Loading...</h1>;
     }
 
-    const icon = person.sex === 'M' ? iconMen : iconWomen;
+    const icon = person.sex === "M" ? iconMen : iconWomen;
 
     const { father } = person;
-    const fatherLink = father && renderParentInfo(
-      father.pointer,
-      father.name,
-      father.birthYear,
-      father.deathYear,
-    );
+    const fatherLink =
+      father && renderParentInfo(father.pointer, father.name, father.birthYear, father.deathYear);
 
     const { mother } = person;
-    const motherLink = mother && renderParentInfo(
-      mother.pointer,
-      mother.name,
-      mother.birthYear,
-      mother.deathYear,
-    );
+    const motherLink =
+      mother && renderParentInfo(mother.pointer, mother.name, mother.birthYear, mother.deathYear);
 
     return (
       <div className="widget-list">
@@ -131,19 +115,19 @@ class Profile extends React.Component {
                     </figure>
                     <h6 className="h3 profile-user-name">{person.name}</h6>
                     <small>
-                      ({person.birthYear || '????'} - {person.deathYear || '????'})
+                      ({person.birthYear || "????"} - {person.deathYear || "????"})
                     </small>
                   </div>
 
                   {person.father && (
                     <div className="row columns-border-bw border-top">
-                      {indicator(fatherLink, 'Father', 'col-12')}
+                      {indicator(fatherLink, "Father", "col-12")}
                     </div>
                   )}
 
                   {person.mother && (
                     <div className="row columns-border-bw border-top">
-                      {indicator(motherLink, 'Mother', 'col-12')}
+                      {indicator(motherLink, "Mother", "col-12")}
                     </div>
                   )}
                 </div>
@@ -156,7 +140,7 @@ class Profile extends React.Component {
               <TabList className="nav nav-tabs contact-details-tab">
                 {this.tabItems.map((tab, index) => (
                   <Tab key={tab} className="nav-item">
-                    <a className={classnames('nav-link', { active: this.isTabSelected(index) })}>
+                    <a className={classnames("nav-link", { active: this.isTabSelected(index) })}>
                       {tab}
                     </a>
                   </Tab>

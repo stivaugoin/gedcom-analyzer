@@ -1,4 +1,4 @@
-import Person from './Person';
+import Person from "./Person";
 
 class People {
   constructor(people) {
@@ -14,7 +14,7 @@ class People {
       .filter(person => person.birth && person.birth.date)
       .map(person => ({
         ...person,
-        age: new Person(person).age('year'),
+        age: new Person(person).age("year"),
       }))
       .sort((a, b) => new Date(a.birth.date) - new Date(b.birth.date));
 
@@ -22,27 +22,32 @@ class People {
   }
 
   getLongestLife() {
-    const people = this.people.map(person => ({
-      ...person,
-      age: new Person(person).age('year'),
-    })).sort((a, b) => b.age - a.age);
+    const people = this.people
+      .map(person => ({
+        ...person,
+        age: new Person(person).age("year"),
+      }))
+      .sort((a, b) => b.age - a.age);
 
     return people[0];
   }
 
   getShortestLife() {
-    const people = this.people.map(person => ({
-      ...person,
-      age: new Person(person).age('year'),
-    })).filter(p => p.age).sort((a, b) => a.age - b.age);
+    const people = this.people
+      .map(person => ({
+        ...person,
+        age: new Person(person).age("year"),
+      }))
+      .filter(p => p.age)
+      .sort((a, b) => a.age - b.age);
 
     return people[0];
   }
 
   getAverageAge() {
-    const ages = this.people.map((p) => {
+    const ages = this.people.map(p => {
       const person = new Person(p);
-      return person.age('year');
+      return person.age("year");
     });
     const total = ages.reduce((a, b) => a + b, 0);
 
@@ -50,10 +55,12 @@ class People {
   }
 
   getMedianAge() {
-    const ages = this.people.map((p) => {
-      const person = new Person(p);
-      return person.age('year');
-    }).sort((a, b) => a - b);
+    const ages = this.people
+      .map(p => {
+        const person = new Person(p);
+        return person.age("year");
+      })
+      .sort((a, b) => a - b);
 
     const half = Math.floor(ages.length / 2);
 
@@ -71,10 +78,10 @@ class People {
   getPlacesCount() {
     const placesMap = new Map();
 
-    this.people.forEach((person) => {
-      Object.keys(person).forEach((event) => {
-        Object.keys(person[event]).forEach((key) => {
-          if (key === 'place') {
+    this.people.forEach(person => {
+      Object.keys(person).forEach(event => {
+        Object.keys(person[event]).forEach(key => {
+          if (key === "place") {
             const place = person[event][key];
             const existingPlace = placesMap.get(place);
             if (existingPlace >= 0) {

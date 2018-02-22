@@ -1,7 +1,4 @@
-import List from './List';
-import Profile from './Profile';
+import List from "./List";
+import Profile from "./Profile";
 
-export {
-  List,
-  Profile,
-};
+export { List, Profile };

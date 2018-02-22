@@ -1,15 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {
-  Redirect,
-  Route,
-  Switch,
-} from 'react-router-dom';
+import React from "react";
+import PropTypes from "prop-types";
+import { Redirect, Route, Switch } from "react-router-dom";
 
-import {
-  List,
-  Profile,
-} from '../views/People';
+import { List, Profile } from "../views/People";
 
 const propTypes = {
   match: PropTypes.shape(),
