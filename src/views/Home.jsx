@@ -23,10 +23,21 @@ const Home = ({ history }) => {
   }
 
   return (
-    <div>
-      <h1>Home</h1>
-      <input type="file" onChange={(event) => { onFileLoaded(event, history); }} />
-    </div>
+    <main className="main-wrapper clearfix" style={{ marginLeft: 0 }}>
+      <div className="widget-list" style={{ marginTop: '35px' }}>
+        <div className="row">
+          <div className="col-md-12 widget-holder">
+            <div className="widget-bg">
+              <div className="widget-body clearfix">
+                <h5 className="box-title mr-b-0">Import your GEDCOM file</h5>
+                <p className="text-muted">Choose a .ged file</p>
+                <input type="file" onChange={(event) => { onFileLoaded(event, history); }} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
   );
 };
 
