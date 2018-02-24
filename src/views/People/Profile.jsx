@@ -61,8 +61,8 @@ class Profile extends React.Component {
     this.fetchData = this.fetchData.bind(this);
   }
 
-  componentWillMount() {
-    this.fetchData();
+  async componentDidMount() {
+    await this.fetchData();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -81,7 +81,6 @@ class Profile extends React.Component {
     const { pointer } = this.props.match.params;
 
     const person = await getPerson(pointer);
-
     this.setState({
       isLoading: false,
       person,

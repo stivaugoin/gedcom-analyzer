@@ -47,20 +47,17 @@ export const uploadFile = (event, callback) => {
 
 export const getFilename = () => window.localStorage.getItem("filename");
 
-export const getPeople = () => {
-  return new Promise(resolve => {
+export const getPeople = () =>
+  new Promise(resolve => {
     setTimeout(() => {
       const peopleRaw = window.localStorage.getItem("people");
       resolve(new People(JSON.parse(peopleRaw)));
     }, 100);
   });
-};
 
 export const getPerson = pointer => {
-  return new Promise(resolve => {
-    const peopleRaw = window.localStorage.getItem("people");
-    resolve(new Person(JSON.parse(peopleRaw).find(p => p.pointer === pointer)));
-  });
+  const peopleRaw = window.localStorage.getItem("people");
+  return new Person(JSON.parse(peopleRaw).find(p => p.pointer === pointer));
 };
 
 export const clearLocalstorage = () => window.localStorage.clear();
