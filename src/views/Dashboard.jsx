@@ -1,4 +1,5 @@
-import React from "react";
+// @flow
+import * as React from "react";
 import CountUp from "react-countup";
 
 import { Person } from "../classes";
@@ -6,19 +7,27 @@ import { getPeople } from "../helpers/localstorage";
 
 import Widget from "../components/Widget";
 
-class Dashboard extends React.Component {
-  constructor(props) {
-    super(props);
+type State = {
+  isLoading: boolean,
+  people: { list: Array<{}>, count: number },
+  placeCount: number,
+  longestLife: { name: string, age: number },
+  shortestLife: { name: string, age: number },
+  mostPopularPlace: { name: string, count: number }
+};
 
-    this.state = {
-      isLoading: true,
-    };
+class Dashboard extends React.Component<{}, State> {
+  state = {
+    isLoading: true,
+    people: { list: [], count: 0 },
+    placeCount: 0,
+    longestLife: { name: "", age: 0 },
+    shortestLife: { name: "", age: 0 },
+    mostPopularPlace: { name: "", count: 0 }
+  };
 
-    this.fetchData = this.fetchData.bind(this);
-  }
-
-  componentWillMount() {
-    this.fetchData();
+  async componentDidMount() {
+    await this.fetchData();
   }
 
   async fetchData() {
@@ -26,24 +35,35 @@ class Dashboard extends React.Component {
 
     this.setState({
       isLoading: false,
-      people,
+      people: {
+        list: people.people,
+        count: people.people.length
+      },
+      placeCount: people.getPlacesCount().length,
       longestLife: {
         name: new Person(people.getLongestLife()).format,
-        age: people.getLongestLife().age,
+        age: people.getLongestLife().age
       },
       shortestLife: {
         name: new Person(people.getShortestLife()).format,
-        age: people.getShortestLife().age,
+        age: people.getShortestLife().age
       },
       mostPopularPlace: {
         name: people.getMostPopularPlace().name,
-        count: people.getMostPopularPlace().count,
-      },
+        count: people.getMostPopularPlace().count
+      }
     });
   }
 
   render() {
-    const { isLoading, longestLife, mostPopularPlace, people, shortestLife } = this.state;
+    const {
+      isLoading,
+      longestLife,
+      mostPopularPlace,
+      placeCount,
+      people,
+      shortestLife
+    } = this.state;
 
     if (isLoading) {
       return <h1>Loading...</h1>;
@@ -59,7 +79,7 @@ class Dashboard extends React.Component {
                   <span className="counter">
                     <CountUp
                       start={0}
-                      end={people.size}
+                      end={people.count}
                       duration={1.5}
                       useEasing
                       useGrouping
@@ -80,7 +100,7 @@ class Dashboard extends React.Component {
                   <span className="counter">
                     <CountUp
                       start={0}
-                      end={people.getPlacesCount().length}
+                      end={placeCount}
                       duration={1.5}
                       useEasing
                       useGrouping
@@ -96,7 +116,11 @@ class Dashboard extends React.Component {
 
         {/* LONGEST LIFETIME */}
         <Widget size="col-md-3">
-          <Widget.Header title="Longest lifetime" icon="feather feather-user" dark />
+          <Widget.Header
+            title="Longest lifetime"
+            icon="feather feather-user"
+            dark
+          />
           <Widget.Body>
             <Widget.Title>
               <span className="counter">
@@ -117,7 +141,11 @@ class Dashboard extends React.Component {
 
         {/* SHORTEST LIFETIME */}
         <Widget size="col-md-3">
-          <Widget.Header title="Shortest lifetime" icon="feather feather-user" dark />
+          <Widget.Header
+            title="Shortest lifetime"
+            icon="feather feather-user"
+            dark
+          />
           <Widget.Body>
             <Widget.Title>
               <span className="counter">
@@ -138,10 +166,16 @@ class Dashboard extends React.Component {
 
         {/* POPULAR PLACE */}
         <Widget size="col-md-6">
-          <Widget.Header title="Most popular place" icon="feather feather-map-pin" dark />
+          <Widget.Header
+            title="Most popular place"
+            icon="feather feather-map-pin"
+            dark
+          />
           <Widget.Body>
             <Widget.Title>{mostPopularPlace.name}</Widget.Title>
-            <Widget.Subtitle>{mostPopularPlace.count} events took place there</Widget.Subtitle>
+            <Widget.Subtitle>
+              {mostPopularPlace.count} events took place there
+            </Widget.Subtitle>
           </Widget.Body>
         </Widget>
       </div>

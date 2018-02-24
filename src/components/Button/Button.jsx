@@ -1,14 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
+// @flow
+import * as React from "react";
 import classnames from "classnames";
 
-const propTypes = {
-  color: PropTypes.string,
-  icon: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
-  rounded: PropTypes.bool,
-  small: PropTypes.bool,
-  title: PropTypes.string,
+type Props = {
+  color?: string,
+  icon?: string,
+  onClick: Function,
+  rounded?: boolean,
+  small?: boolean,
+  title?: string,
 };
 
 const defaultProps = {
@@ -19,7 +19,9 @@ const defaultProps = {
   title: "",
 };
 
-const Button = ({ color, icon, onClick, rounded, small, title }) => {
+const Button = (props: Props) => {
+  const { color = "default", icon, onClick, rounded, small, title } = props;
+
   const smallClass = "btn-sm fs-11 fw-400";
 
   const classNames = classnames(`btn btn-${color}`, small && smallClass, {
@@ -34,7 +36,6 @@ const Button = ({ color, icon, onClick, rounded, small, title }) => {
   );
 };
 
-Button.propTypes = propTypes;
 Button.defaultProps = defaultProps;
 
 export default Button;

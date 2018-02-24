@@ -1,12 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// @flow
+import * as React from "react";
 
-const propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-const ListItem = ({ children }) => <li>{children}</li>;
-
-ListItem.propTypes = propTypes;
+const ListItem = (props: { children: React.Node }) => <li>{props.children}</li>;
 
 export default ListItem;

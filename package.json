@@ -8,7 +8,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "flow": "flow",
+    "flow:coverage":
+      "flow-coverage-report -i 'src/**/*.js' -i 'src/**/*.jsx' -x 'src/test/**' -t html -t json -t text --threshold 50"
   },
   "dependencies": {
     "bootstrap": "4.0.0-beta.2",
@@ -29,12 +32,18 @@
     "reactstrap": "^5.0.0-alpha.4",
     "redux": "^3.7.2",
     "remove-accents": "^0.4.2",
-    "remove-accents-diacritics": "^1.0.2"
+    "styled-components": "^3.1.6"
   },
   "devDependencies": {
+    "babel-eslint": "^8.2.2",
     "eslint": "^4.15.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-flowtype": "^2.46.1",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-react": "^7.7.0",
     "prettier": "1.10.2",
     "redux-devtools": "^3.4.1"
   }

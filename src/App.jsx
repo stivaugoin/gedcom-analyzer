@@ -1,17 +1,14 @@
-import React from 'react';
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-} from 'react-router-dom';
+// @flow
+import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import { Main, People } from './layouts';
-import Dashboard from './views/Dashboard';
-import Home from './views/Home';
-import Navbar from './components/Navbar';
+import { Main, People } from "./layouts";
+import Dashboard from "./views/Dashboard";
+import Home from "./views/Home";
+import Navbar from "./components/Navbar";
 
-import './styles/style.css';
-import './styles/vendors/feather-icons/feather.css';
+import "./styles/style.css";
+import "./styles/vendors/feather-icons/feather.css";
 
 const App = () => (
   <BrowserRouter>
@@ -22,11 +19,15 @@ const App = () => (
           <Switch>
             <Route
               path="/dashboard"
-              render={routeProps => <Main {...routeProps} component={<Dashboard />} />}
+              render={routeProps => (
+                <Main {...routeProps} component={<Dashboard />} />
+              )}
             />
             <Route
               path="/people"
-              render={routeProps => <Main {...routeProps} component={<People />} />}
+              render={routeProps => (
+                <Main {...routeProps} component={<People />} />
+              )}
             />
             <Route path="/" component={Home} />
           </Switch>

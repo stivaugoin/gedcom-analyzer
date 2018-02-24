@@ -6,13 +6,18 @@ import classnames from "classnames";
 
 import { getPerson } from "../../helpers/localstorage";
 
-import Timeline from "./Timelime";
+import Timeline from "../../components/Timeline";
 
 import profileBg from "../../assets/profile-bg.jpg";
 import iconMen from "../../assets/men.jpg";
 import iconWomen from "../../assets/women.jpg";
 
-const renderParentInfo = (pointer, name, birthYear = "????", deathYear = "????") => (
+const renderParentInfo = (
+  pointer,
+  name,
+  birthYear = "????",
+  deathYear = "????"
+) => (
   <div>
     <Link to={`/people/profile/${pointer}`}>{name}</Link>
     <small className="mr-l-5">
@@ -22,7 +27,9 @@ const renderParentInfo = (pointer, name, birthYear = "????", deathYear = "????")
 );
 
 const indicator = (title, subtitle, size) => (
-  <div className={`${size} d-flex flex-column justify-content-center align-items-center py-4`}>
+  <div
+    className={`${size} d-flex flex-column justify-content-center align-items-center py-4`}
+  >
     <h6 className="my-0">
       <span className="counter">{title}</span>
     </h6>
@@ -54,8 +61,8 @@ class Profile extends React.Component {
     this.fetchData = this.fetchData.bind(this);
   }
 
-  componentWillMount() {
-    this.fetchData();
+  async componentDidMount() {
+    await this.fetchData();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -74,7 +81,6 @@ class Profile extends React.Component {
     const { pointer } = this.props.match.params;
 
     const person = await getPerson(pointer);
-
     this.setState({
       isLoading: false,
       person,
@@ -92,11 +98,23 @@ class Profile extends React.Component {
 
     const { father } = person;
     const fatherLink =
-      father && renderParentInfo(father.pointer, father.name, father.birthYear, father.deathYear);
+      father &&
+      renderParentInfo(
+        father.pointer,
+        father.name,
+        father.birthYear,
+        father.deathYear
+      );
 
     const { mother } = person;
     const motherLink =
-      mother && renderParentInfo(mother.pointer, mother.name, mother.birthYear, mother.deathYear);
+      mother &&
+      renderParentInfo(
+        mother.pointer,
+        mother.name,
+        mother.birthYear,
+        mother.deathYear
+      );
 
     return (
       <div className="widget-list">
@@ -115,7 +133,8 @@ class Profile extends React.Component {
                     </figure>
                     <h6 className="h3 profile-user-name">{person.name}</h6>
                     <small>
-                      ({person.birthYear || "????"} - {person.deathYear || "????"})
+                      ({person.birthYear || "????"} -{" "}
+                      {person.deathYear || "????"})
                     </small>
                   </div>
 
@@ -140,7 +159,11 @@ class Profile extends React.Component {
               <TabList className="nav nav-tabs contact-details-tab">
                 {this.tabItems.map((tab, index) => (
                   <Tab key={tab} className="nav-item">
-                    <a className={classnames("nav-link", { active: this.isTabSelected(index) })}>
+                    <a
+                      className={classnames("nav-link", {
+                        active: this.isTabSelected(index),
+                      })}
+                    >
                       {tab}
                     </a>
                   </Tab>
@@ -148,7 +171,7 @@ class Profile extends React.Component {
               </TabList>
 
               <TabPanel>
-                <Timeline person={person} />
+                <Timeline events={person.events()} />
               </TabPanel>
             </Tabs>
           </div>

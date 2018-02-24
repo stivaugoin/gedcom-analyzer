@@ -1,12 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
+// @flow
+import * as React from "react";
 
-const propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-const Subtitle = ({ children }) => <div className="counter-info">{children}</div>;
-
-Subtitle.propTypes = propTypes;
+const Subtitle = (props: { children: React.Node }) => (
+  <div className="counter-info">{props.children}</div>
+);
 
 export default Subtitle;

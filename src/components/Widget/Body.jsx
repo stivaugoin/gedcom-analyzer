@@ -1,11 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
+// @flow
+import * as React from "react";
 
-const propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-const Body = ({ children }) => (
+const Body = (props: { children: React.Node }) => (
   <div
     className="widget-body"
     style={{
@@ -15,10 +11,8 @@ const Body = ({ children }) => (
       alignItems: "center",
     }}
   >
-    <div className="counter-w-info">{children}</div>
+    <div className="counter-w-info">{props.children}</div>
   </div>
 );
-
-Body.propTypes = propTypes;
 
 export default Body;

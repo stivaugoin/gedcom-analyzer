@@ -1,5 +1,5 @@
 import moment from "moment";
-import removeAccents from "remove-accents-diacritics";
+import removeAccents from "remove-accents";
 import leftPad from "left-pad";
 
 class Date {
@@ -92,13 +92,20 @@ class Date {
       ...december.en,
     ];
     return (
-      element.length > 0 && !Number.isInteger(parseInt(element, 10)) && months.includes(element)
+      element.length > 0 &&
+      !Number.isInteger(parseInt(element, 10)) &&
+      months.includes(element)
     );
   }
 
   isDay(element) {
     const isNumber = Number.isInteger(parseInt(element, 10));
-    return element.length > 0 && element.length <= 2 && isNumber && parseInt(element, 10) <= 31;
+    return (
+      element.length > 0 &&
+      element.length <= 2 &&
+      isNumber &&
+      parseInt(element, 10) <= 31
+    );
   }
 
   convert() {
@@ -151,7 +158,9 @@ class Date {
 
   isFebruary(month) {
     const clean = removeAccents.remove(month).toLowerCase();
-    return ["fevrier", "fevr", "fev", "feb", "febr", "february"].includes(clean);
+    return ["fevrier", "fevr", "fev", "feb", "febr", "february"].includes(
+      clean
+    );
   }
 
   getMonth(month) {

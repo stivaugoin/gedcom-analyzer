@@ -15,7 +15,9 @@ export const uploadFile = (event, callback) => {
   }
 
   if (!input.files) {
-    throw new Error("This browser does not support the `files` property of the file input.");
+    throw new Error(
+      "This browser does not support the `files` property of the file input."
+    );
   }
 
   if (input.files[0]) {
@@ -45,10 +47,13 @@ export const uploadFile = (event, callback) => {
 
 export const getFilename = () => window.localStorage.getItem("filename");
 
-export const getPeople = () => {
-  const peopleRaw = window.localStorage.getItem("people");
-  return new People(JSON.parse(peopleRaw));
-};
+export const getPeople = () =>
+  new Promise(resolve => {
+    setTimeout(() => {
+      const peopleRaw = window.localStorage.getItem("people");
+      resolve(new People(JSON.parse(peopleRaw)));
+    }, 100);
+  });
 
 export const getPerson = pointer => {
   const peopleRaw = window.localStorage.getItem("people");

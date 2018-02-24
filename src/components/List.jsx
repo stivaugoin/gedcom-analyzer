@@ -1,21 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// @flow
+import * as React from "react";
+import styled from "styled-components";
 
-const propTypes = {
-  children: PropTypes.node.isRequired,
-};
+const UnorderedList = styled.ul`
+  list-style: none,
+  padding: 0
+`;
 
-const List = ({ children }) => (
-  <ul
-    style={{
-      listStyle: 'none',
-      padding: '0',
-    }}
-  >
-    {children}
-  </ul>
+const List = (props: { children: React.Node }) => (
+  <UnorderedList>{props.children}</UnorderedList>
 );
-
-List.propTypes = propTypes;
 
 export default List;

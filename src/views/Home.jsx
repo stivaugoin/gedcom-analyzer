@@ -1,20 +1,24 @@
+// @flow
 import React from "react";
-import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 
 import { getFilename, uploadFile } from "../helpers/localstorage";
 
-const propTypes = {
-  history: PropTypes.shape().isRequired,
-};
-
-const onFileLoaded = (event, history) => {
+const onFileLoaded = (event, history: { push: Function }) => {
   uploadFile(event, () => {
     history.push("/dashboard");
   });
 };
 
-const Home = ({ history }) => {
+type Props = {
+  history: {
+    push: Function,
+  },
+};
+
+const Home = (props: Props) => {
+  const { history } = props;
+
   if (getFilename()) {
     return <Redirect to="/dashboard" />;
   }
@@ -42,7 +46,5 @@ const Home = ({ history }) => {
     </main>
   );
 };
-
-Home.propTypes = propTypes;
 
 export default Home;
