@@ -1,20 +1,11 @@
-/* eslint-disable no-script-url */
+// @flow
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React from "react";
+import { Link } from "react-router-dom";
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-
-const propTypes = {
-  hide: PropTypes.bool,
-};
-
-const defaultProps = {
-  hide: false,
-};
-
-const Sidebar = ({ hide }) => {
-  if (hide) {
-    return '';
+const Sidebar = (props: { hide?: boolean }) => {
+  if (props.hide) {
+    return "";
   }
 
   return (
@@ -28,7 +19,7 @@ const Sidebar = ({ hide }) => {
             </Link>
           </li>
           <li className="">
-            <a href="javascript:void(0);">
+            <a href="/">
               <i className="list-icon feather feather-user" />
               <span>People</span>
             </a>
@@ -44,7 +35,8 @@ const Sidebar = ({ hide }) => {
   );
 };
 
-Sidebar.propTypes = propTypes;
-Sidebar.defaultProps = defaultProps;
+Sidebar.defaultProps = {
+  hide: false,
+};
 
 export default Sidebar;

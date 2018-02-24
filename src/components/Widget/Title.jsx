@@ -1,12 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
+// @flow
+import * as React from "react";
 
-const propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-const Title = ({ children }) => <div className="counter-title color-color-scheme">{children}</div>;
-
-Title.propTypes = propTypes;
+const Title = (props: { children: React.Node }) => (
+  <div className="counter-title color-color-scheme">{props.children}</div>
+);
 
 export default Title;

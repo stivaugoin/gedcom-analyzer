@@ -1,43 +1,52 @@
-import React from "react";
-import PropTypes from "prop-types";
+// @flow
+import * as React from "react";
 import moment from "moment";
 import accents from "remove-accents";
 
 import { Person } from "../../classes";
 import { getPeople } from "../../helpers/localstorage";
 
-const propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
+type Props = {
+  history: {
+    push: Function
+  }
 };
 
-class List extends React.Component {
-  constructor(props) {
+type State = {
+  isLoading: boolean,
+  list: Array<{}>,
+  people: Array<{}>
+};
+
+class List extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
-    this.state = {
-      isLoading: true,
-    };
-
-    this.fetchData = this.fetchData.bind(this);
-    this.onChangeFilter = this.onChangeFilter.bind(this);
+    (this: any).onChangeFilter = this.onChangeFilter.bind(this);
   }
 
-  componentWillMount() {
-    this.fetchData();
+  state = {
+    isLoading: true,
+    people: [],
+    list: []
+  };
+
+  async componentDidMount() {
+    await this.fetchData();
   }
 
-  onChangeFilter(event) {
+  onChangeFilter(event: SyntheticInputEvent<>) {
     const filter = accents.remove(event.target.value.toLowerCase());
 
     if (filter) {
-      const list = this.people.filter(p => {
+      const list = this.state.people.filter(p => {
         const person = new Person(p);
 
         const name = accents.remove(person.name.toLowerCase());
-        const birthPlace = person.birthPlace && accents.remove(person.birthPlace.toLowerCase());
-        const deathPlace = person.deathPlace && accents.remove(person.deathPlace.toLowerCase());
+        const birthPlace =
+          person.birthPlace && accents.remove(person.birthPlace.toLowerCase());
+        const deathPlace =
+          person.deathPlace && accents.remove(person.deathPlace.toLowerCase());
 
         return (
           name.includes(filter) ||
@@ -48,18 +57,17 @@ class List extends React.Component {
 
       this.setState({ list });
     } else {
-      this.setState({ list: this.people });
+      this.setState({ list: this.state.people });
     }
   }
 
   async fetchData() {
-    const people = await getPeople().people;
-
-    this.people = people;
+    const people = await getPeople();
 
     this.setState({
       isLoading: false,
-      list: people,
+      people: people.people,
+      list: people.people
     });
   }
 
@@ -104,7 +112,9 @@ class List extends React.Component {
                       <tr
                         key={person.pointer}
                         onClick={() => {
-                          this.props.history.push(`/people/profile/${person.pointer}`);
+                          this.props.history.push(
+                            `/people/profile/${person.pointer}`
+                          );
                         }}
                       >
                         <td>
@@ -116,14 +126,20 @@ class List extends React.Component {
                           </span>
                         </td>
                         <td>
-                          {person.birthDate && moment(person.birthDate).format("LL")}
+                          {person.birthDate &&
+                            moment(person.birthDate).format("LL")}
                           <br />
-                          <span className="text-muted">{person.birthPlace}</span>
+                          <span className="text-muted">
+                            {person.birthPlace}
+                          </span>
                         </td>
                         <td>
-                          {person.deathDate && moment(person.deathDate).format("LL")}
+                          {person.deathDate &&
+                            moment(person.deathDate).format("LL")}
                           <br />
-                          <span className="text-muted">{person.deathPlace}</span>
+                          <span className="text-muted">
+                            {person.deathPlace}
+                          </span>
                         </td>
                       </tr>
                     );
@@ -137,7 +153,5 @@ class List extends React.Component {
     );
   }
 }
-
-List.propTypes = propTypes;
 
 export default List;

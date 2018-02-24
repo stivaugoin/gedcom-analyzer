@@ -1,22 +1,11 @@
 module.exports = {
   parserOptions: {
     ecmaFeatures: {
-      jsx: true
-    }
+      jsx: true,
+    },
   },
-  plugins: [
-    "react"
-  ],
-  extends: [
-    "eslint-config-airbnb",
-    "prettier"
-  ],
-  env: {
-    "browser": true
-  },
-  globals: {
-    "server": false,
-    "browser": false,
-    "expect": false
-  }
+  parser: "babel-eslint",
+  plugins: ["react", "prettier"],
+  extends: ["eslint-config-airbnb", "prettier"],
+  rules: { "prettier/prettier": "error" },
 };

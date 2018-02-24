@@ -1,3 +1,4 @@
+// @flow
 import Body from "./Body";
 import Header from "./Header";
 import Subtitle from "./Subtitle";
