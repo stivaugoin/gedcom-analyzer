@@ -19,20 +19,13 @@
 ## Getting started
 
 1. Clone this repo, `git clone git@github.com:stivaugoin/gedcom-analyzer.git`
-2. Go to project's root directory, `cd <your project name>`
+2. Go to project's root directory, `cd gedcom-analyzer`
 3. Run `yarn` to install dependencies
+4. Run `yarn start` to start application
 
 ## Scripts
 
-* Start application: `yarn start`
-* Build application: `yarn build`
-* Test application: `yarn test`
-
-* Build CSS: `yarn build-css`
-* Watch CSS: `yarn watch-css`
-
-* Start flow: `yarn flow`
-* Flow Coverage: `yarn flow:coverage`
+See `package.json`
 
 ## Contributing
 
