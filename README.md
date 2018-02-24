@@ -11,10 +11,6 @@
 
 * [Node](https://nodejs.org) (it is recommendd to install it via [NVM](https://github.com/creationix/nvm))
 * [Yarn](https://yarnpkg.com/)
-* VSCode extensions
-  * [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-  * [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-  * [Flow Language Support](https://marketplace.visualstudio.com/items?itemName=flowtype.flow-for-vscode)
 
 ## Getting started
 
@@ -27,6 +23,23 @@
 
 See `package.json`
 
+## Flow
+
+This project use [Flow](https://flow.org) to checks code for errors through static type annotations.
+
+* Run checker: `yarn flow`
+* Run coverage: `yarn flow:coverage`
+
+See [Flow documentation](https://flow.org/en/docs/) for more information.
+
 ## Contributing
 
 **Never** commit directly on master, instead use branches and pull requests.
+
+This projet use [Prettier](https://prettier.io/) to format code.
+
+We recommend using VSCode with these extensions:
+
+* [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+* [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+* [Flow Language Support](https://marketplace.visualstudio.com/items?itemName=flowtype.flow-for-vscode)
