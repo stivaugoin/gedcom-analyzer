@@ -71,10 +71,6 @@ class People {
     return (ages[half - 1] + ages[half]) / 2.0;
   }
 
-  getErrors() {
-    return this.people.filter(person => new Person(person).isError());
-  }
-
   getPlacesCount() {
     const placesMap = new Map();
 
