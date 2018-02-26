@@ -1,5 +1,6 @@
 import TreeParser from "./TreeParser";
 import PersonParser from "./PersonParser";
+import { findTags, getPlaceDate } from "./helpers";
 
 class FamilyParser extends TreeParser {
   constructor(raw, family) {
@@ -26,20 +27,20 @@ class FamilyParser extends TreeParser {
   }
 
   get wedding() {
-    const weddings = this.findTags(this.family.tree, "MARR")[0];
+    const weddings = findTags(this.family.tree, "MARR")[0];
 
     if (!weddings || Object.keys(weddings).length === 0) {
       return {};
     }
 
-    const husbandPointer = this.findTags(this.family.tree, "HUSB")[0].data;
+    const husbandPointer = findTags(this.family.tree, "HUSB")[0].data;
     const husband = new PersonParser(this.raw, this.findPerson(husbandPointer));
-    const wifePointer = this.findTags(this.family.tree, "WIFE")[0].data;
+    const wifePointer = findTags(this.family.tree, "WIFE")[0].data;
     const wife = new PersonParser(this.raw, this.findPerson(wifePointer));
 
     return {
       pointer: this.pointer,
-      ...this.getPlaceDate(weddings.tree),
+      ...getPlaceDate(weddings.tree),
       husband: {
         pointer: husbandPointer,
         ...husband.namePrefered,
@@ -52,7 +53,7 @@ class FamilyParser extends TreeParser {
   }
 
   get children() {
-    const children = this.findTags(this.family.tree, "CHIL");
+    const children = findTags(this.family.tree, "CHIL");
 
     if (!children || children.length === 0) {
       return [];
@@ -67,18 +68,22 @@ class FamilyParser extends TreeParser {
   get parents() {
     const result = [];
     const fatherPointer =
-      this.findTags(this.family.tree, "HUSB")[0] && this.findTags(this.family.tree, "HUSB")[0].data;
+      findTags(this.family.tree, "HUSB")[0] &&
+      findTags(this.family.tree, "HUSB")[0].data;
     if (fatherPointer) {
-      const father = new PersonParser(this.raw, this.findPerson(fatherPointer)).namePrefered;
+      const father = new PersonParser(this.raw, this.findPerson(fatherPointer))
+        .namePrefered;
       father.relation = "father";
       father.pointer = fatherPointer;
       result.push(father);
     }
 
     const motherPointer =
-      this.findTags(this.family.tree, "WIFE")[0] && this.findTags(this.family.tree, "WIFE")[0].data;
+      findTags(this.family.tree, "WIFE")[0] &&
+      findTags(this.family.tree, "WIFE")[0].data;
     if (motherPointer) {
-      const mother = new PersonParser(this.raw, this.findPerson(motherPointer)).namePrefered;
+      const mother = new PersonParser(this.raw, this.findPerson(motherPointer))
+        .namePrefered;
       mother.relation = "mother";
       mother.pointer = motherPointer;
       result.push(mother);

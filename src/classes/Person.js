@@ -12,12 +12,18 @@ class Person {
     this.person = person;
   }
 
+  /**
+   * Get the pointer of the person
+   *
+   * @readonly
+   * @memberof Person
+   */
   get pointer() {
     return this.person.pointer;
   }
 
   /**
-   * Get the prefered complete name
+   * Get the prefered complete name of the person
    *
    * @readonly
    * @memberof Person
@@ -26,13 +32,19 @@ class Person {
     return this.person.names[0].complete;
   }
 
+  /**
+   * Get the sex of the person
+   *
+   * @readonly
+   * @memberof Person
+   */
   get sex() {
     return this.person.sex;
   }
 
   /**
    * Get the birthdate.
-   * Returns undefined if not exists
+   * Returns undefined if birth not exists
    *
    * @readonly
    * @memberof Person
@@ -43,7 +55,7 @@ class Person {
 
   /**
    * Get the year of birth
-   * Returns undefined if birthdate not exists
+   * Returns undefined if birth not exists
    *
    * @readonly
    * @memberof Person
@@ -52,33 +64,79 @@ class Person {
     return this.birthDate && moment(this.birthDate).format("YYYY");
   }
 
+  /**
+   * Get the place of birth
+   * Returns undefined if birth not exists
+   *
+   * @readonly
+   * @memberof Person
+   */
   get birthPlace() {
     return this.person.birth && this.person.birth.place;
   }
 
+  /**
+   * Get the date of wedding
+   *
+   * @readonly
+   * @memberof Person
+   */
   get weddingDate() {
-    return this.person.weddings && this.person.weddings[0] && this.person.weddings[0].date;
+    return (
+      this.person.weddings &&
+      this.person.weddings[0] &&
+      this.person.weddings[0].date
+    );
   }
 
+  /**
+   * Get the place of wedding
+   *
+   * @readonly
+   * @memberof Person
+   */
   get weddingPlace() {
-    return this.person.weddings && this.person.weddings[0] && this.person.weddings[0].place;
+    return (
+      this.person.weddings &&
+      this.person.weddings[0] &&
+      this.person.weddings[0].place
+    );
   }
 
+  /**
+   * Get the date of death
+   *
+   * @readonly
+   * @memberof Person
+   */
   get deathDate() {
     return this.person.death && this.person.death.date;
   }
 
+  /**
+   * Get the year of death
+   *
+   * @readonly
+   * @memberof Person
+   */
   get deathYear() {
     return this.deathDate && moment(this.deathDate).format("YYYY");
   }
 
+  /**
+   * Get the place of death
+   *
+   * @readonly
+   * @memberof Person
+   */
   get deathPlace() {
     return this.person.death && this.person.death.place;
   }
 
   get format() {
-    return `${this.name} (${this.birthYear || ""}${this.deathYear ? "-" : ""}${this.deathYear ||
-      ""})`;
+    return `${this.name} (${this.birthYear || ""}${
+      this.deathYear ? "-" : ""
+    }${this.deathYear || ""})`;
   }
 
   get mother() {
@@ -87,7 +145,11 @@ class Person {
       this.person.parents.length > 0 &&
       this.person.parents.find(parent => parent.relation === "mother");
 
-    return mother && getPerson(mother.pointer);
+    if (mother) {
+      return getPerson(mother.pointer);
+    }
+
+    return {};
   }
 
   get father() {
@@ -96,7 +158,11 @@ class Person {
       this.person.parents.length > 0 &&
       this.person.parents.find(parent => parent.relation === "father");
 
-    return father && getPerson(father.pointer);
+    if (father) {
+      return getPerson(father.pointer);
+    }
+
+    return {};
   }
 
   age(precision = "year") {
@@ -113,18 +179,6 @@ class Person {
     }
 
     return null;
-  }
-
-  isError() {
-    if (!this.birthDate || !this.deathDate) {
-      return false;
-    }
-
-    if (moment(this.birthDate).isSameOrAfter(moment(this.deathDate))) {
-      return true;
-    }
-
-    return false;
   }
 
   events() {

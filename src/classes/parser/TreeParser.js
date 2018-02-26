@@ -1,4 +1,4 @@
-import Date from "../Dates";
+import { findTags } from "./helpers";
 
 class TreeParser {
   constructor(raw) {
@@ -9,48 +9,13 @@ class TreeParser {
     return this.raw.filter(r => r.tag === "INDI");
   }
 
-  findTags(data, tag) {
-    const d = data.filter(el => el.tag === tag);
-
-    if (d.length > 0) {
-      return d.map(el => {
-        const result = {};
-        if (el.data) result.data = el.data;
-        if (el.tree && el.tree.length > 0) result.tree = el.tree;
-        return result;
-      });
-    }
-    return [];
-  }
-
-  getPlaceDate(tree) {
-    const place = this.findTags(tree, "PLAC");
-    const date = this.findTags(tree, "DATE");
-
-    if (!place.length && !date.length) {
-      return {};
-    }
-
-    const result = {};
-    if (place.length) {
-      result.place = place[0] && place[0].data;
-    }
-    if (date.length) {
-      // Format date
-      const d = date[0] && date[0].data;
-      // result.date = d;
-      result.date = new Date(d).format();
-    }
-    return result;
-  }
-
-  getChildren(pointer) {
+  getChildren(pointer: string) {
     const individual = this.getIndividual(pointer);
     if (!individual) {
       return [];
     }
 
-    const tags = this.findTags(individual.tree, "FAMS");
+    const tags = findTags(individual.tree, "FAMS");
     if (!tags || tags.length === 0) {
       return [];
     }
@@ -59,7 +24,7 @@ class TreeParser {
     tags.forEach(tag => {
       const familyPointer = tag.data;
       const family = this.getFamily(familyPointer);
-      const childs = this.findTags(family.tree, "CHIL");
+      const childs = findTags(family.tree, "CHIL");
 
       if (childs && childs.length > 0) {
         childs.forEach(child => {
