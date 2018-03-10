@@ -1,17 +1,26 @@
 // @flow
 import * as React from "react";
 
+import { Person } from "../../classes";
+import type { Person as PersonType } from "../../types/person";
+
 import Event from "./Event";
 
-const Timeline = (props: {
-  events: Array<{ name: string, place: string, date: string }>,
-}) => (
+type Props = {
+  person: PersonType,
+};
+
+const getEvents = (person: PersonType) => new Person(person).events;
+
+const Timeline = (props: Props) => (
   <div className="tab-content">
     <div className="tab-pane active">
       <div className="widget-user-activities">
-        {props.events.map(event => {
+        {getEvents(props.person).map(event => {
           const { name, place, date } = event;
-          return Event({ name, place, date });
+          return (
+            <Event key={`${name}-${date || ""}`} {...{ name, place, date }} />
+          );
         })}
       </div>
     </div>

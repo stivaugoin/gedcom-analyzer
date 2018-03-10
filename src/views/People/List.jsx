@@ -1,101 +1,127 @@
 // @flow
-import * as React from "react";
+import React, { Fragment } from "react";
 import moment from "moment";
-import accents from "remove-accents";
 
-import { Person } from "../../classes";
-import { getPeople } from "../../helpers/localstorage";
+import db from "../../api/db";
+import type { Person as PersonType } from "../../types/person";
+
+import Button from "../../components/Button";
 
 type Props = {
   history: {
-    push: Function
-  }
+    push: Function,
+  },
 };
 
 type State = {
   isLoading: boolean,
-  list: Array<{}>,
-  people: Array<{}>
+  people: Array<PersonType>,
 };
 
 class List extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    (this: any).onChangeFilter = this.onChangeFilter.bind(this);
+    (this: any).onClear = this.onClear.bind(this);
+    (this: any).onSearch = this.onSearch.bind(this);
+    (this: any).searchAll = this.searchAll.bind(this);
   }
 
   state = {
     isLoading: true,
     people: [],
-    list: []
   };
 
-  async componentDidMount() {
-    await this.fetchData();
+  componentDidMount() {
+    this.search.focus();
+    this.searchAll();
   }
 
-  onChangeFilter(event: SyntheticInputEvent<>) {
-    const filter = accents.remove(event.target.value.toLowerCase());
+  onClear() {
+    this.search.value = "";
+    this.search.focus();
+    this.searchAll();
+  }
 
-    if (filter) {
-      const list = this.state.people.filter(p => {
-        const person = new Person(p);
+  onSearch(event: any) {
+    event.preventDefault();
+    const { value } = this.search;
 
-        const name = accents.remove(person.name.toLowerCase());
-        const birthPlace =
-          person.birthPlace && accents.remove(person.birthPlace.toLowerCase());
-        const deathPlace =
-          person.deathPlace && accents.remove(person.deathPlace.toLowerCase());
+    this.setState({ isLoading: true });
 
-        return (
-          name.includes(filter) ||
-          (birthPlace && birthPlace.includes(filter)) ||
-          (deathPlace && deathPlace.includes(filter))
-        );
-      });
-
-      this.setState({ list });
+    if (!value) {
+      this.searchAll();
     } else {
-      this.setState({ list: this.state.people });
+      Promise.all([
+        db.people
+          .where("fname")
+          .startsWithIgnoreCase(value)
+          .toArray(),
+        db.people
+          .where("lname")
+          .startsWithIgnoreCase(value)
+          .toArray(),
+        db.people
+          .where("name")
+          .startsWithIgnoreCase(value)
+          .toArray(),
+      ]).then(results => {
+        const [fname, lname, name] = results;
+        const peopleMap = new Map();
+        const people = [];
+
+        [...fname, ...lname, ...name].forEach(result =>
+          peopleMap.set(result.pointer, result)
+        );
+        peopleMap.forEach(person => people.push({ ...person }));
+        this.setState({ isLoading: false, people });
+      });
     }
   }
 
-  async fetchData() {
-    const people = await getPeople();
+  search: any;
 
-    this.setState({
-      isLoading: false,
-      people: people.people,
-      list: people.people
-    });
+  searchAll() {
+    db.people
+      .orderBy("birthDate")
+      .reverse()
+      .toArray(people => this.setState({ isLoading: false, people }));
   }
 
   render() {
-    const { isLoading, list } = this.state;
-
-    if (isLoading) {
-      return <h1>Loading...</h1>;
-    }
+    console.log("List - State", this.state);
+    const { isLoading, people } = this.state;
 
     return (
       <div className="widget-list row">
         <div className="col-md-12 widget-holder">
           <div className="widget-bg">
             <div className="widget-heading clearfix">
-              <h5>List of people</h5>
+              <h5>Person&apos;s list</h5>
             </div>
 
             <div className="widget-body clearfix">
-              <div className="form-group row">
-                <div className="col-md-4">
-                  <input
-                    className="form-control"
-                    placeholder="Search"
-                    onChange={this.onChangeFilter}
-                  />
+              <form onSubmit={this.onSearch}>
+                <div className="form-group row">
+                  <div className="col-md-4">
+                    <input
+                      className="form-control"
+                      placeholder="Search"
+                      ref={input => {
+                        this.search = input;
+                      }}
+                    />
+                  </div>
+                  <div className="col-md-2">
+                    <Button
+                      title="Search"
+                      onClick={this.onSearch}
+                      color="primary"
+                    />{" "}
+                    <Button title="Clear" onClick={this.onClear} />
+                  </div>
                 </div>
-              </div>
+              </form>
               <table className="table table-striped table-hover">
                 <thead>
                   <tr>
@@ -105,45 +131,52 @@ class List extends React.Component<Props, State> {
                   </tr>
                 </thead>
                 <tbody>
-                  {list.map(p => {
-                    const person = new Person(p);
-
-                    return (
-                      <tr
-                        key={person.pointer}
-                        onClick={() => {
-                          this.props.history.push(
-                            `/people/profile/${person.pointer}`
-                          );
-                        }}
-                      >
-                        <td>
-                          {person.name}
-                          <br />
-                          <span className="text-muted">
+                  {isLoading && (
+                    <tr>
+                      <td colSpan="3">Loading...</td>
+                    </tr>
+                  )}
+                  {people.map((person: PersonType) => (
+                    <tr
+                      key={person.pointer}
+                      onClick={() => {
+                        this.props.history.push(
+                          `/people/profile/${person.pointer}`
+                        );
+                      }}
+                    >
+                      <td>
+                        {person.name}
+                        <br />
+                        <span className="text-muted">
+                          <Fragment>
                             {person.sex === "M" ? "Men" : "Women"}
-                            {person.age() && ` - ${person.age()} years`}
-                          </span>
-                        </td>
-                        <td>
+                            {person.age && ` - ${person.age} years`}
+                          </Fragment>
+                        </span>
+                      </td>
+                      <td>
+                        <Fragment>
                           {person.birthDate &&
                             moment(person.birthDate).format("LL")}
                           <br />
                           <span className="text-muted">
-                            {person.birthPlace}
+                            {person.birth.place}
                           </span>
-                        </td>
-                        <td>
+                        </Fragment>
+                      </td>
+                      <td>
+                        <Fragment>
                           {person.deathDate &&
                             moment(person.deathDate).format("LL")}
                           <br />
                           <span className="text-muted">
-                            {person.deathPlace}
+                            {person.death.place}
                           </span>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                        </Fragment>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>

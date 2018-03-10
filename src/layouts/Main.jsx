@@ -1,49 +1,63 @@
-import React from "react";
-import PropTypes from "prop-types";
+// @flow
+import * as React from "react";
 import { Redirect } from "react-router-dom";
 
-import { clearLocalstorage, getFilename } from "../helpers/localstorage";
+import db from "../api/db";
 
-import CurrentFile from "../components/CurrentFile";
+import Button from "../components/Button";
 import Sidebar from "../components/Sidebar";
 
-const propTypes = {
-  component: PropTypes.node.isRequired,
-  history: PropTypes.shape({
-    replace: PropTypes.func.isRequired,
-  }).isRequired,
+type Props = {
+  component: any,
+  history: { replace: Function },
 };
 
-const Main = class extends React.Component {
-  constructor(props) {
+type State = {
+  filename: string,
+  isLoading: boolean,
+  redirect: boolean,
+};
+
+const Main = class extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
-    this.state = {
-      filename: "",
-      isLoading: true,
-    };
-
-    this.clearFile = this.clearFile.bind(this);
+    (this: any).clearFile = this.clearFile.bind(this);
   }
 
-  componentWillMount() {
-    this.setState({
-      filename: getFilename(),
-      isLoading: false,
+  state = {
+    filename: "",
+    isLoading: true,
+    redirect: false,
+  };
+
+  componentDidMount() {
+    db.meta.get("filename").then(result => {
+      const filename = result.value;
+
+      if (!filename) {
+        this.setState({ redirect: true, isLoading: false });
+      } else {
+        this.setState({ filename, isLoading: false });
+      }
     });
   }
 
   clearFile() {
-    this.setState({ filename: "" });
-    clearLocalstorage();
-    this.props.history.replace("/");
+    db.meta
+      .clear()
+      .then(() => db.people.clear())
+      .then(() => db.places.clear())
+      .finally(() => this.props.history.replace("/"));
   }
 
   render() {
-    const { component, ...otherProps } = this.props;
-    const { filename, isLoading } = this.state;
+    console.log("Main - State", this.state);
 
-    if (!getFilename()) {
+    const { component, ...otherProps } = this.props;
+    const { filename, redirect } = this.state;
+
+    if (redirect) {
       return <Redirect to="/" />;
     }
 
@@ -52,7 +66,25 @@ const Main = class extends React.Component {
         <Sidebar />
 
         <main className="main-wrapper clearfix">
-          <CurrentFile filename={filename} isLoading={isLoading} onClickClose={this.clearFile} />
+          <div className="row page-title clearfix">
+            <div className="page-title-left">
+              <p className="page-title-description mr-0 mr-r-20 d-none d-md-inline-block">
+                Current file
+              </p>
+              <h6 className="page-title-heading mr-0">{filename}</h6>
+            </div>
+            <div className="page-title-right d-none d-sm-inline-flex">
+              <div className="d-none d-md-inline-flex justify-center align-items-center">
+                <Button
+                  color="primary"
+                  icon="x"
+                  onClick={this.clearFile}
+                  title="Close"
+                  small
+                />
+              </div>
+            </div>
+          </div>
 
           {React.cloneElement(component, otherProps)}
         </main>
@@ -60,7 +92,5 @@ const Main = class extends React.Component {
     );
   }
 };
-
-Main.propTypes = propTypes;
 
 export default Main;

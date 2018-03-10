@@ -1,9 +1,10 @@
+// @flow
 import removeAccents from "remove-accents";
 
-export const isYear = element =>
+export const isYear = (element: string): boolean =>
   element.length === 4 && Number.isInteger(parseInt(element, 10));
 
-export const isMonth = element => {
+export const isMonth = (element: string): boolean => {
   const january = {
     en: ["january", "jan"],
     fr: ["janvier", "jan"],
@@ -86,7 +87,7 @@ export const isMonth = element => {
   );
 };
 
-export const isDay = element => {
+export const isDay = (element: string): boolean => {
   const isNumber = Number.isInteger(parseInt(element, 10));
   return (
     element.length > 0 &&
@@ -96,67 +97,67 @@ export const isDay = element => {
   );
 };
 
-export const isJanuary = month => {
+export const isJanuary = (month: string): boolean => {
   const clean = removeAccents.remove(month).toLowerCase();
   return ["janvier", "jan", "january"].includes(clean);
 };
 
-export const isFebruary = month => {
+export const isFebruary = (month: string): boolean => {
   const clean = removeAccents.remove(month).toLowerCase();
   return ["fevrier", "fevr", "fev", "feb", "febr", "february"].includes(clean);
 };
 
-export const isMarch = month => {
+export const isMarch = (month: string): boolean => {
   const clean = removeAccents.remove(month).toLowerCase();
   return ["mars", "mar", "march"].includes(clean);
 };
 
-export const isApril = month => {
+export const isApril = (month: string): boolean => {
   const clean = removeAccents.remove(month).toLowerCase();
   return ["avril", "avr", "apr", "april"].includes(clean);
 };
 
-export const isMay = month => {
+export const isMay = (month: string): boolean => {
   const clean = removeAccents.remove(month).toLowerCase();
   return ["mai", "may"].includes(clean);
 };
 
-export const isJune = month => {
+export const isJune = (month: string): boolean => {
   const clean = removeAccents.remove(month).toLowerCase();
   return ["juin", "june", "jun"].includes(clean);
 };
 
-export const isJuly = month => {
+export const isJuly = (month: string): boolean => {
   const clean = removeAccents.remove(month).toLowerCase();
   return ["juillet", "jui", "juil", "july", "jul"].includes(clean);
 };
 
-export const isAugust = month => {
+export const isAugust = (month: string): boolean => {
   const clean = removeAccents.remove(month).toLowerCase();
   return ["aout", "aou", "august", "aug"].includes(clean);
 };
 
-export const isSeptember = month => {
+export const isSeptember = (month: string): boolean => {
   const clean = removeAccents.remove(month).toLowerCase();
   return ["septembre", "sept", "september", "sep"].includes(clean);
 };
 
-export const isOctober = month => {
+export const isOctober = (month: string): boolean => {
   const clean = removeAccents.remove(month).toLowerCase();
   return ["octobre", "oct", "october"].includes(clean);
 };
 
-export const isNovember = month => {
+export const isNovember = (month: string): boolean => {
   const clean = removeAccents.remove(month).toLowerCase();
   return ["novembre", "nov", "november"].includes(clean);
 };
 
-export const isDecember = month => {
+export const isDecember = (month: string): boolean => {
   const clean = removeAccents.remove(month).toLowerCase();
   return ["decembre", "dec", "december"].includes(clean);
 };
 
-export const getMonth = month => {
+export const getMonth = (month: string): number | null => {
   if (isJanuary(month)) {
     return 0;
   }
@@ -193,5 +194,5 @@ export const getMonth = month => {
   if (isDecember(month)) {
     return 11;
   }
-  return month;
+  return null;
 };

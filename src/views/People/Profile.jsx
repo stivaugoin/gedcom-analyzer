@@ -1,93 +1,78 @@
+// @flow
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import PropTypes from "prop-types";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import { Link } from "react-router-dom";
 import classnames from "classnames";
 
-import { getPerson } from "../../helpers/localstorage";
+import db from "../../api/db";
+import { Person } from "../../classes";
+import personDefaultValue from "../../api/person/defaultValues";
+import type { Person as PersonType } from "../../api/person/types";
 
 import Timeline from "../../components/Timeline";
+import ParentDetails from "./ParentDetails";
 
 import profileBg from "../../assets/profile-bg.jpg";
 import iconMen from "../../assets/men.jpg";
 import iconWomen from "../../assets/women.jpg";
 
-const renderParentInfo = (
-  pointer,
-  name,
-  birthYear = "????",
-  deathYear = "????"
-) => (
-  <div>
-    <Link to={`/people/profile/${pointer}`}>{name}</Link>
-    <small className="mr-l-5">
-      ({birthYear} - {deathYear})
-    </small>
-  </div>
-);
-
-const indicator = (title, subtitle, size) => (
-  <div
-    className={`${size} d-flex flex-column justify-content-center align-items-center py-4`}
-  >
-    <h6 className="my-0">
-      <span className="counter">{title}</span>
-    </h6>
-    <small>{subtitle}</small>
-  </div>
-);
-
-const propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      pointer: PropTypes.string,
-    }),
-  }).isRequired,
+type Props = {
+  match: { params: { pointer: string } },
 };
 
-class Profile extends React.Component {
-  constructor(props) {
+type State = {
+  isLoading: boolean,
+  selectedTab: number,
+  person: PersonType,
+};
+
+class Profile extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
-    this.tabItems = ["History"];
+    (this: any).tabItems = ["History"];
 
-    this.state = {
-      isLoading: true,
-      selectedTab: 0,
-    };
-
-    this.onChangeTab = this.onChangeTab.bind(this);
-    this.isTabSelected = this.isTabSelected.bind(this);
-    this.fetchData = this.fetchData.bind(this);
+    (this: any).onChangeTab = this.onChangeTab.bind(this);
+    (this: any).tabIsSelected = this.tabIsSelected.bind(this);
+    (this: any).getPerson = this.getPerson.bind(this);
   }
 
-  async componentDidMount() {
-    await this.fetchData();
+  state = {
+    isLoading: true,
+    selectedTab: 0,
+    person: personDefaultValue,
+  };
+
+  componentDidMount() {
+    const { pointer } = this.props.match.params;
+    this.getPerson(pointer);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({ person: getPerson(nextProps.match.params.pointer) });
+  componentWillReceiveProps(nextProps: Props) {
+    this.setState({ isLoading: true });
+
+    const { pointer } = nextProps.match.params;
+    this.getPerson(pointer);
   }
 
-  onChangeTab(index) {
+  onChangeTab(index: number) {
     this.setState({ selectedTab: index });
   }
 
-  isTabSelected(tabIndex) {
-    return tabIndex === this.state.selectedTab;
-  }
-
-  async fetchData() {
-    const { pointer } = this.props.match.params;
-
-    const person = await getPerson(pointer);
-    this.setState({
-      isLoading: false,
-      person,
+  getPerson(pointer: string) {
+    db.people.get(pointer).then((person: PersonType) => {
+      this.setState({ isLoading: false, person });
     });
   }
 
+  tabItems: Array<string>;
+
+  tabIsSelected(tabIndex: number) {
+    return tabIndex === this.state.selectedTab;
+  }
+
   render() {
+    console.log("Profile - State", this.state);
     const { isLoading, person } = this.state;
 
     if (isLoading) {
@@ -96,25 +81,12 @@ class Profile extends React.Component {
 
     const icon = person.sex === "M" ? iconMen : iconWomen;
 
-    const { father } = person;
-    const fatherLink =
-      father &&
-      renderParentInfo(
-        father.pointer,
-        father.name,
-        father.birthYear,
-        father.deathYear
-      );
+    const { birthYear, deathYear } = new Person(person);
 
-    const { mother } = person;
-    const motherLink =
-      mother &&
-      renderParentInfo(
-        mother.pointer,
-        mother.name,
-        mother.birthYear,
-        mother.deathYear
-      );
+    const mother = person.parents.find(parent => parent.relation === "mother");
+    const motherPointer = mother && mother.pointer;
+    const father = person.parents.find(parent => parent.relation === "father");
+    const fatherPointer = father && father.pointer;
 
     return (
       <div className="widget-list">
@@ -133,21 +105,16 @@ class Profile extends React.Component {
                     </figure>
                     <h6 className="h3 profile-user-name">{person.name}</h6>
                     <small>
-                      ({person.birthYear || "????"} -{" "}
-                      {person.deathYear || "????"})
+                      ({birthYear} - {deathYear})
                     </small>
                   </div>
 
-                  {person.father && (
-                    <div className="row columns-border-bw border-top">
-                      {indicator(fatherLink, "Father", "col-12")}
-                    </div>
+                  {motherPointer && (
+                    <ParentDetails pointer={motherPointer} title="Mother" />
                   )}
 
-                  {person.mother && (
-                    <div className="row columns-border-bw border-top">
-                      {indicator(motherLink, "Mother", "col-12")}
-                    </div>
+                  {fatherPointer && (
+                    <ParentDetails pointer={fatherPointer} title="Father" />
                   )}
                 </div>
               </div>
@@ -161,7 +128,7 @@ class Profile extends React.Component {
                   <Tab key={tab} className="nav-item">
                     <a
                       className={classnames("nav-link", {
-                        active: this.isTabSelected(index),
+                        active: this.tabIsSelected(index),
                       })}
                     >
                       {tab}
@@ -171,7 +138,7 @@ class Profile extends React.Component {
               </TabList>
 
               <TabPanel>
-                <Timeline events={person.events()} />
+                <Timeline person={person} />
               </TabPanel>
             </Tabs>
           </div>
@@ -180,7 +147,5 @@ class Profile extends React.Component {
     );
   }
 }
-
-Profile.propTypes = propTypes;
 
 export default Profile;
