@@ -1,20 +1,19 @@
+// @flow
 import moment from "moment";
 import removeAccents from "remove-accents";
 import leftPad from "left-pad";
 
 import { getMonth, isYear, isMonth, isDay } from "../helpers/dates";
 
-class Date {
-  constructor(raw) {
-    this.raw = raw;
+class Dates {
+  date: string;
+
+  constructor(date: string) {
+    this.date = date;
   }
 
-  isValid() {
-    return moment(this.raw).isValid();
-  }
-
-  convert() {
-    const dateArray = this.raw.split(" ");
+  format(): string | null {
+    const dateArray = this.date.split(" ");
 
     let year;
     let month;
@@ -55,11 +54,6 @@ class Date {
 
     return null;
   }
-
-  format() {
-    this.date = this.convert();
-    return this.date;
-  }
 }
 
-export default Date;
+export default Dates;

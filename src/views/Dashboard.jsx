@@ -3,66 +3,73 @@ import * as React from "react";
 import CountUp from "react-countup";
 
 import { Person } from "../classes";
-import { getPeople } from "../helpers/localstorage";
 
 import Widget from "../components/Widget";
+import db from "../api/db";
+
+type Props = {};
 
 type State = {
   isLoading: boolean,
-  people: { list: Array<{}>, count: number },
-  placeCount: number,
+  peopleCount: number,
+  placesCount: number,
   longestLife: { name: string, age: number },
   shortestLife: { name: string, age: number },
-  mostPopularPlace: { name: string, count: number }
+  mostPopularPlace: { name: string, count: number },
 };
 
-class Dashboard extends React.Component<{}, State> {
+class Dashboard extends React.Component<Props, State> {
   state = {
     isLoading: true,
-    people: { list: [], count: 0 },
-    placeCount: 0,
+    peopleCount: 0,
+    placesCount: 0,
     longestLife: { name: "", age: 0 },
     shortestLife: { name: "", age: 0 },
-    mostPopularPlace: { name: "", count: 0 }
+    mostPopularPlace: { name: "", count: 0 },
   };
 
-  async componentDidMount() {
-    await this.fetchData();
-  }
+  componentDidMount() {
+    Promise.all([
+      db.people.count(),
+      db.places.count(),
+      db.people.orderBy("age").first(),
+      db.people.orderBy("age").last(),
+      db.places.orderBy("count").last(),
+    ]).then(results => {
+      const [
+        peopleCount,
+        placesCount,
+        youngestPerson,
+        oldestPerson,
+        mostPopularPlace,
+      ] = results;
 
-  async fetchData() {
-    const people = await getPeople();
-
-    this.setState({
-      isLoading: false,
-      people: {
-        list: people.people,
-        count: people.people.length
-      },
-      placeCount: people.getPlacesCount().length,
-      longestLife: {
-        name: new Person(people.getLongestLife()).format,
-        age: people.getLongestLife().age
-      },
-      shortestLife: {
-        name: new Person(people.getShortestLife()).format,
-        age: people.getShortestLife().age
-      },
-      mostPopularPlace: {
-        name: people.getMostPopularPlace().name,
-        count: people.getMostPopularPlace().count
-      }
+      this.setState({
+        isLoading: false,
+        peopleCount,
+        placesCount,
+        longestLife: {
+          name: new Person(oldestPerson).format,
+          age: oldestPerson.age,
+        },
+        shortestLife: {
+          name: new Person(youngestPerson).format,
+          age: youngestPerson.age,
+        },
+        mostPopularPlace,
+      });
     });
   }
 
   render() {
+    console.log("Dashboard - State", this.state);
     const {
       isLoading,
+      peopleCount,
+      placesCount,
       longestLife,
+      shortestLife,
       mostPopularPlace,
-      placeCount,
-      people,
-      shortestLife
     } = this.state;
 
     if (isLoading) {
@@ -79,8 +86,8 @@ class Dashboard extends React.Component<{}, State> {
                   <span className="counter">
                     <CountUp
                       start={0}
-                      end={people.count}
-                      duration={1.5}
+                      end={peopleCount}
+                      duration={1}
                       useEasing
                       useGrouping
                       separator=" "
@@ -100,8 +107,8 @@ class Dashboard extends React.Component<{}, State> {
                   <span className="counter">
                     <CountUp
                       start={0}
-                      end={placeCount}
-                      duration={1.5}
+                      end={placesCount}
+                      duration={1}
                       useEasing
                       useGrouping
                       separator=" "
@@ -127,7 +134,7 @@ class Dashboard extends React.Component<{}, State> {
                 <CountUp
                   start={0}
                   end={longestLife.age}
-                  duration={1.5}
+                  duration={1}
                   useEasing
                   useGrouping
                   separator=" "

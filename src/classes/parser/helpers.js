@@ -1,11 +1,9 @@
 // @flow
-import Date from "../Dates";
+import Dates from "../Dates";
 
-const findTags = (
-  data: Array<{ tag: string }>,
-  tag: string
-): Array<{ data: string, tree: Array<{ tag: string }> }> => {
-  const d = data.filter((el: { tag: string }) => el.tag === tag);
+type dataType = Array<{ tag: string, tree: Array<any> }>;
+const findTags = (data: dataType, tag: string): Array<any> => {
+  const d = data.filter(el => el.tag === tag);
 
   if (d.length > 0) {
     return d.map(el => {
@@ -18,7 +16,7 @@ const findTags = (
   return [];
 };
 
-const getPlaceDate = (tree: Array<{ tag: string }>) => {
+const getPlaceDate = (tree: Array<any>): { date?: ?string, place?: string } => {
   const place = findTags(tree, "PLAC");
   const date = findTags(tree, "DATE");
 
@@ -32,7 +30,7 @@ const getPlaceDate = (tree: Array<{ tag: string }>) => {
   }
   if (date.length) {
     const d = date[0] && date[0].data;
-    result.date = new Date(d).format();
+    result.date = new Dates(d).format();
   }
   return result;
 };

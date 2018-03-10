@@ -1,201 +1,59 @@
+// @flow
 import moment from "moment";
 
-import { getPerson } from "../helpers/localstorage";
+import type { Person as PersonType } from "../types/person";
 
-/**
- *
- *
- * @class Person
- */
 class Person {
-  constructor(person) {
+  person: PersonType;
+
+  constructor(person: PersonType) {
     this.person = person;
   }
 
-  /**
-   * Get the pointer of the person
-   *
-   * @readonly
-   * @memberof Person
-   */
-  get pointer() {
-    return this.person.pointer;
+  get name(): string {
+    return `${this.person.names[0].fname} ${this.person.names[0].lname}`;
   }
 
-  /**
-   * Get the prefered complete name of the person
-   *
-   * @readonly
-   * @memberof Person
-   */
-  get name() {
-    return this.person.names[0].complete;
-  }
-
-  /**
-   * Get the sex of the person
-   *
-   * @readonly
-   * @memberof Person
-   */
-  get sex() {
-    return this.person.sex;
-  }
-
-  /**
-   * Get the birthdate.
-   * Returns undefined if birth not exists
-   *
-   * @readonly
-   * @memberof Person
-   */
-  get birthDate() {
-    return this.person.birth && this.person.birth.date;
-  }
-
-  /**
-   * Get the year of birth
-   * Returns undefined if birth not exists
-   *
-   * @readonly
-   * @memberof Person
-   */
-  get birthYear() {
-    return this.birthDate && moment(this.birthDate).format("YYYY");
-  }
-
-  /**
-   * Get the place of birth
-   * Returns undefined if birth not exists
-   *
-   * @readonly
-   * @memberof Person
-   */
-  get birthPlace() {
-    return this.person.birth && this.person.birth.place;
-  }
-
-  /**
-   * Get the date of wedding
-   *
-   * @readonly
-   * @memberof Person
-   */
-  get weddingDate() {
-    return (
-      this.person.weddings &&
-      this.person.weddings[0] &&
-      this.person.weddings[0].date
-    );
-  }
-
-  /**
-   * Get the place of wedding
-   *
-   * @readonly
-   * @memberof Person
-   */
-  get weddingPlace() {
-    return (
-      this.person.weddings &&
-      this.person.weddings[0] &&
-      this.person.weddings[0].place
-    );
-  }
-
-  /**
-   * Get the date of death
-   *
-   * @readonly
-   * @memberof Person
-   */
-  get deathDate() {
-    return this.person.death && this.person.death.date;
-  }
-
-  /**
-   * Get the year of death
-   *
-   * @readonly
-   * @memberof Person
-   */
-  get deathYear() {
-    return this.deathDate && moment(this.deathDate).format("YYYY");
-  }
-
-  /**
-   * Get the place of death
-   *
-   * @readonly
-   * @memberof Person
-   */
-  get deathPlace() {
-    return this.person.death && this.person.death.place;
-  }
-
-  get format() {
-    return `${this.name} (${this.birthYear || ""}${
-      this.deathYear ? "-" : ""
-    }${this.deathYear || ""})`;
-  }
-
-  get mother() {
-    const mother =
-      this.person.parents &&
-      this.person.parents.length > 0 &&
-      this.person.parents.find(parent => parent.relation === "mother");
-
-    if (mother) {
-      return getPerson(mother.pointer);
+  get birthYear(): string {
+    if (!this.person.birthDate) {
+      return "????";
     }
 
-    return {};
+    return moment(this.person.birthDate).format("YYYY");
   }
 
-  get father() {
-    const father =
-      this.person.parents &&
-      this.person.parents.length > 0 &&
-      this.person.parents.find(parent => parent.relation === "father");
-
-    if (father) {
-      return getPerson(father.pointer);
+  get deathYear(): string {
+    if (!this.person.deathDate) {
+      return "????";
     }
 
-    return {};
+    return moment(this.person.deathDate).format("YYYY");
   }
 
-  age(precision = "year") {
-    if (!this.birthDate || !this.deathDate) {
-      return null;
-    }
-
-    if (moment(this.birthDate).isSameOrAfter(moment(this.deathDate))) {
-      return null;
-    }
-
-    if (precision === "year") {
-      return moment(this.deathDate).diff(this.birthDate, "year");
-    }
-
-    return null;
+  get format(): string {
+    return `${this.name} (${this.birthYear} - ${this.deathYear})`;
   }
 
-  events() {
+  get events(): Array<{ name: string, place?: string, date?: string }> {
     const events = [];
-    Object.keys(this.person)
-      .filter(key => ["birth", "death", "weddings"].includes(key))
-      .forEach(key => {
-        if (key === "weddings") {
-          this.person.weddings.forEach(event => {
-            events.push({ name: "wedding", ...event });
-          });
-        } else {
-          events.push({ name: key, ...this.person[key] });
-        }
-      });
 
-    return events.sort((a, b) => new Date(a.date) - new Date(b.date));
+    if (this.person.birth && Object.keys(this.person.birth).length > 0) {
+      events.push({ name: "birth", ...this.person.birth });
+    }
+
+    if (this.person.death && Object.keys(this.person.death).length > 0) {
+      events.push({ name: "death", ...this.person.death });
+    }
+
+    if (this.person.weddings && this.person.weddings.length > 0) {
+      this.person.weddings.forEach(event => {
+        events.push({ name: "wedding", ...event });
+      });
+    }
+
+    return events.sort(
+      (a, b) => new Date(a.date || "") - new Date(b.date || "")
+    );
   }
 }
 
