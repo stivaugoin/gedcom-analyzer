@@ -72,7 +72,6 @@ class Profile extends React.Component<Props, State> {
   }
 
   render() {
-    console.log("Profile - State", this.state);
     const { isLoading, person } = this.state;
 
     if (isLoading) {

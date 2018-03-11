@@ -47,7 +47,6 @@ const Home = class extends React.Component<Props, State> {
   }
 
   render() {
-    console.log("Home - state", this.state);
     const { isLoading, redirect } = this.state;
 
     if (isLoading) {

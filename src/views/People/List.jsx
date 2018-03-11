@@ -89,7 +89,6 @@ class List extends React.Component<Props, State> {
   }
 
   render() {
-    console.log("List - State", this.state);
     const { isLoading, people } = this.state;
 
     return (

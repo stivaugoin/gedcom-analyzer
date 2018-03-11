@@ -52,8 +52,6 @@ const Main = class extends React.Component<Props, State> {
   }
 
   render() {
-    console.log("Main - State", this.state);
-
     const { component, ...otherProps } = this.props;
     const { filename, redirect } = this.state;
 
