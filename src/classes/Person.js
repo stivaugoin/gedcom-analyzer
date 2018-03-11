@@ -1,7 +1,7 @@
 // @flow
 import moment from "moment";
 
-import type { Person as PersonType } from "../types/person";
+import type { Person as PersonType } from "../api/person/types";
 
 class Person {
   person: PersonType;

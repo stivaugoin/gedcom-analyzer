@@ -3,7 +3,7 @@ import React, { Fragment } from "react";
 import moment from "moment";
 
 import db from "../../api/db";
-import type { Person as PersonType } from "../../types/person";
+import type { Person as PersonType } from "../../api/person/types";
 
 import Button from "../../components/Button";
 

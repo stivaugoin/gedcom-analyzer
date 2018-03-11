@@ -2,7 +2,7 @@
 import * as React from "react";
 
 import { Person } from "../../classes";
-import type { Person as PersonType } from "../../types/person";
+import type { Person as PersonType } from "../../api/person/types";
 
 import Event from "./Event";
 
