@@ -36,7 +36,7 @@ class MostPopularPlace extends React.Component<{}, State> {
     const { isLoading, name, value } = this.state;
     return (
       <Widget size="col-md-6">
-        <Header title="Most popular place" icon="feather feather-user" dark />
+        <Header title="Most popular place" icon="feather feather-map-pin" />
         <Body>
           {isLoading ? (
             <Title>

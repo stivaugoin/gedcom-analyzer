@@ -38,7 +38,7 @@ class ShortestLifetime extends React.Component<{}, State> {
     const { isLoading, name, value } = this.state;
     return (
       <Widget size="col-md-3">
-        <Header title="Shortest lifetime" icon="feather feather-user" dark />
+        <Header title="Shortest lifetime" icon="feather feather-user" />
         <Body>
           {isLoading && (
             <Title>
