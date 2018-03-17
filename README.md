@@ -12,6 +12,10 @@
 * [Node](https://nodejs.org) (it is recommendd to install it via [NVM](https://github.com/creationix/nvm))
 * [Yarn](https://yarnpkg.com/)
 
+### For release team only
+
+* [GREN](https://github.com/github-tools/github-release-notes)
+
 ## Getting started
 
 1. Clone this repo, `git clone git@github.com:stivaugoin/gedcom-analyzer.git`
@@ -31,6 +35,15 @@ This project use [Flow](https://flow.org) to checks code for errors through stat
 * Run coverage: `yarn flow:coverage`
 
 See [Flow documentation](https://flow.org/en/docs/) for more information.
+
+## Create a release
+
+This project use [GREN](https://github.com/github-tools/github-release-notes) to generate changelog and release.
+
+1. Create a normal tag: `git tag <tagname>` (Always start tag name by `v`)
+2. Push tag to remote: `git push origin <tagname>`
+3. Generate release on Github: `gren release` (add `-P` to generate a pre-release)
+4. Generate changelog: `gren changelog -o` (`-o` is for `override`)
 
 ## Contributing
 
