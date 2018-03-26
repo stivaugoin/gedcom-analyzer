@@ -28,11 +28,22 @@ const getPlaceDate = (tree: Array<any>): { date?: ?string, place?: string } => {
   if (place.length) {
     result.place = place[0] && place[0].data;
   }
-  if (date.length) {
-    const d = date[0] && date[0].data;
-    result.date = new Dates(d).format();
+  if (date.length && date[0] && date[0].data) {
+    result.date = new Dates(date[0].data).format();
   }
   return result;
 };
 
-export { findTags, getPlaceDate };
+const addCoord = (event, places) => {
+  const coord = places.find(p => p.name === event.place);
+  if (coord) {
+    return {
+      ...event,
+      lat: coord.lat,
+      lng: coord.lng,
+    };
+  }
+  return { ...event };
+};
+
+export { findTags, addCoord, getPlaceDate };

@@ -1,11 +1,15 @@
+// @flow
 import gedcom from "parse-gedcom";
 import geocoder from "geocoder-geojson";
 
 import db from "./db";
-import TreeParser from "../classes/parser/TreeParser";
-import PersonParser from "../classes/parser/PersonParser";
 
-const uploadFile = (input, callback) => {
+import Person from "./classes/Person";
+import Tree from "./classes/Tree";
+import Family from "./classes/Family";
+import { addCoord } from "../classes/parser/helpers";
+
+const uploadFile = (input, callback: Function) => {
   if (typeof window.FileReader !== "function") {
     throw new Error("The file API isn't supported on this browser.");
   }
@@ -29,57 +33,91 @@ const uploadFile = (input, callback) => {
       const { result } = fileContent.currentTarget;
       const dataParsed = gedcom.parse(result);
 
-      const tree = new TreeParser(dataParsed);
+      const tree = new Tree(dataParsed);
 
-      // People
-      const people = tree.getPeople().map(person => {
-        const info = new PersonParser(dataParsed, person).format();
-
-        return {
-          ...info,
-          birthDate: info.birth && info.birth.date,
-          deathDate: info.death && info.death.date,
-        };
-      });
-
-      // Places
-      const placesMap = new Map();
-      tree.getPlaces().forEach(place => {
-        const existingPlace = placesMap.get(place);
-
-        if (existingPlace) {
-          placesMap.set(place, existingPlace + 1);
-        } else {
-          placesMap.set(place, 1);
-        }
-      });
-
+      /** **********************************************************************
+       * PLACES
+       ********************************************************************** */
       const places = [];
 
       // eslint-disable-next-line no-restricted-syntax
-      for (const value of placesMap) {
-        const [place, count] = value;
+      for (const place of tree.places) {
+        const { name, count } = place;
 
         // eslint-disable-next-line no-await-in-loop
-        const geojson = await geocoder.google(place);
+        const geojson = await geocoder.google(name);
 
         if (geojson.features.length) {
           const { coordinates } = geojson.features[0].geometry;
           const [lng, lat] = coordinates;
 
           places.push({
-            name: place,
+            name,
             count,
             lng,
             lat,
           });
         } else {
           places.push({
-            name: place,
+            name,
             count,
           });
         }
       }
+
+      console.log("Places", places);
+
+      /** **********************************************************************
+       * PEOPLE
+       ********************************************************************** */
+      const people = tree.people.map(p => {
+        const person = new Person(p);
+
+        const info = {
+          pointer: person.pointer,
+          sex: person.sex,
+          names: person.names,
+          name: `${person.names[0].fname} ${person.names[0].lname}`,
+          fname: person.names[0].fname,
+          lname: person.names[0].lname,
+          age: person.age,
+          birth: addCoord(person.birth, places),
+          birthDate: person.birth && person.birth.date,
+          baptem: addCoord(person.baptem, places),
+          residences: person.residences.map(residence =>
+            addCoord(residence, places)
+          ),
+          death: addCoord(person.death, places),
+          deathDate: person.death && person.death.date,
+          buried: addCoord(person.buried, places),
+          children: [],
+          weddings: [],
+          parents: [],
+        };
+
+        // Family as Spouse
+        person.fams.forEach(family => {
+          const fams = new Family(tree.find(family));
+          const { wedding } = fams;
+          wedding.spouse =
+            wedding.husband === person.pointer ? wedding.wife : wedding.husband;
+          const { husband, wife, ...rest } = wedding;
+          info.weddings.push(addCoord(rest, places));
+
+          info.children = [...info.children, ...fams.children];
+        });
+
+        // Family as Child
+        if (person.famc) {
+          // Parents
+          const famc = new Family(tree.find(person.famc));
+          info.parents = famc.parents;
+        }
+
+        return info;
+      });
+
+      console.log("People", people);
 
       Promise.all([
         db.meta.add({ name: "filename", value: filename }),
