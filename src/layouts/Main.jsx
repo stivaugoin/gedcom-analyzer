@@ -44,11 +44,15 @@ const Main = class extends React.Component<Props, State> {
   }
 
   clearFile() {
-    db.meta
-      .clear()
-      .then(() => db.people.clear())
-      .then(() => db.places.clear())
-      .finally(() => this.props.history.replace("/"));
+    Promise.all([
+      db.meta.clear(),
+      db.people.clear(),
+      db.places.clear(),
+      db.sources.clear(),
+      db.statistics.clear(),
+    ]).then(() => {
+      this.props.history.replace("/");
+    });
   }
 
   render() {

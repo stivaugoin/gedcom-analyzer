@@ -12,7 +12,7 @@ class Dates {
     this.date = date;
   }
 
-  format(): string | null {
+  format(): string {
     const dateArray = this.date.split(" ");
 
     let year;
@@ -52,7 +52,7 @@ class Dates {
       return date.format("YYYY-MM-DD");
     }
 
-    return null;
+    return "";
   }
 }
 

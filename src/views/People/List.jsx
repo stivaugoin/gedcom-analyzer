@@ -160,7 +160,7 @@ class List extends React.Component<Props, State> {
                             moment(person.birthDate).format("LL")}
                           <br />
                           <span className="text-muted">
-                            {person.birth.place}
+                            {person.birth.place && person.birth.place.name}
                           </span>
                         </Fragment>
                       </td>
@@ -170,7 +170,7 @@ class List extends React.Component<Props, State> {
                             moment(person.deathDate).format("LL")}
                           <br />
                           <span className="text-muted">
-                            {person.death.place}
+                            {person.death.place && person.death.place.name}
                           </span>
                         </Fragment>
                       </td>
