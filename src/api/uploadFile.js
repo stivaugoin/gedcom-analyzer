@@ -4,12 +4,9 @@ import geocoder from "geocoder-geojson";
 
 import db from "./db";
 
-import Person from "./classes/Person";
-import Tree from "./classes/Tree";
-import Family from "./classes/Family";
-import { addCoord } from "../classes/parser/helpers";
+import { addDetails, Family, Person, Source, Tree } from "../parser";
 
-const uploadFile = (input, callback: Function) => {
+const uploadFile = (input: any, callback: Function) => {
   if (typeof window.FileReader !== "function") {
     throw new Error("The file API isn't supported on this browser.");
   }
@@ -34,6 +31,20 @@ const uploadFile = (input, callback: Function) => {
       const dataParsed = gedcom.parse(result);
 
       const tree = new Tree(dataParsed);
+
+      /** **********************************************************************
+       * SOURCES
+       ********************************************************************** */
+      const sources = tree.sources.map(s => {
+        const { pointer, name } = new Source(s);
+
+        return {
+          pointer,
+          name,
+        };
+      });
+
+      console.log("Sources", sources);
 
       /** **********************************************************************
        * PLACES
@@ -81,15 +92,15 @@ const uploadFile = (input, callback: Function) => {
           fname: person.names[0].fname,
           lname: person.names[0].lname,
           age: person.age,
-          birth: addCoord(person.birth, places),
+          birth: addDetails(person.birth, { places, sources }),
           birthDate: person.birth && person.birth.date,
-          baptem: addCoord(person.baptem, places),
+          baptism: addDetails(person.baptism, { places, sources }),
           residences: person.residences.map(residence =>
-            addCoord(residence, places)
+            addDetails(residence, { places, sources })
           ),
-          death: addCoord(person.death, places),
+          death: addDetails(person.death, { places, sources }),
           deathDate: person.death && person.death.date,
-          buried: addCoord(person.buried, places),
+          buried: addDetails(person.buried, { places, sources }),
           children: [],
           weddings: [],
           parents: [],
@@ -102,7 +113,7 @@ const uploadFile = (input, callback: Function) => {
           wedding.spouse =
             wedding.husband === person.pointer ? wedding.wife : wedding.husband;
           const { husband, wife, ...rest } = wedding;
-          info.weddings.push(addCoord(rest, places));
+          info.weddings.push(addDetails(rest, { places, sources }));
 
           info.children = [...info.children, ...fams.children];
         });
@@ -119,10 +130,120 @@ const uploadFile = (input, callback: Function) => {
 
       console.log("People", people);
 
+      /** **********************************************************************
+       * STATISTIC
+       ********************************************************************** */
+      const statistics = {
+        events: {},
+        people: {},
+        places: {},
+        sources: {},
+      };
+
+      const events = [
+        "baptism",
+        "birth",
+        "buried",
+        "death",
+        "residences",
+        "weddings",
+      ];
+      // Build basic structure
+      Object.keys(statistics).forEach(statistic => {
+        if (statistic === "events") {
+          events.forEach(event => {
+            statistics.events[event] = {};
+          });
+        }
+
+        if (statistic === "people") {
+          ["total", "men", "women", "withParents"].forEach(detail => {
+            statistics.people[detail] = 0;
+          });
+        }
+
+        if (statistic === "places") {
+          ["total"].forEach(detail => {
+            statistics.places[detail] = 0;
+          });
+
+          ["country"].forEach(detail => {
+            statistics.places[detail] = [];
+          });
+        }
+      });
+
+      people.forEach(person => {
+        statistics.people.total += 1;
+
+        Object.keys(person).forEach(key => {
+          if (
+            key === "baptism" ||
+            key === "birth" ||
+            key === "buried" ||
+            key === "death"
+          ) {
+            if (person[key] && Object.keys(person[key]).length > 0) {
+              if (!statistics.events[key].total) {
+                statistics.events[key].total = 0;
+              }
+              statistics.events[key].total += 1;
+
+              Object.keys(person[key]).forEach(k => {
+                if (!statistics.events[key][k]) {
+                  statistics.events[key][k] = 0;
+                }
+                statistics.events[key][k] += 1;
+              });
+            }
+          }
+
+          if (key === "residences" || key === "weddings") {
+            if (Array.isArray(person[key]) && person[key].length > 0) {
+              if (!statistics.events[key].atLeastOne) {
+                statistics.events[key].atLeastOne = 0;
+              }
+              statistics.events[key].atLeastOne += 1;
+            }
+
+            person[key].forEach(event => {
+              if (!statistics.events[key].total) {
+                statistics.events[key].total = 0;
+              }
+              statistics.events[key].total += 1;
+
+              Object.keys(event).forEach(k => {
+                if (!statistics.events[key][k]) {
+                  statistics.events[key][k] = 0;
+                }
+                statistics.events[key][k] += 1;
+              });
+            });
+          }
+        });
+
+        // People
+        if (person.sex === "M") {
+          statistics.people.men += 1;
+        }
+
+        if (person.sex === "F") {
+          statistics.people.women += 1;
+        }
+
+        if (person.parents && person.parents.length > 0) {
+          statistics.people.withParents += 1;
+        }
+      });
+
+      console.log(statistics);
+
       Promise.all([
         db.meta.add({ name: "filename", value: filename }),
         db.people.bulkAdd(people),
         db.places.bulkAdd(places),
+        db.sources.bulkAdd(sources),
+        db.statistics.add(statistics),
       ]).then(() => {
         callback();
       });

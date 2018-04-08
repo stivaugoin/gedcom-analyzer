@@ -6,6 +6,8 @@ db.version(1).stores({
   people: "pointer,birthDate,deathDate,age,name,fname,lname",
   places: "++id,name,count",
   meta: "name",
+  sources: "pointer,name",
+  statistics: "++id",
 });
 
 export default db;

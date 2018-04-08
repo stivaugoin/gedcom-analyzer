@@ -2,6 +2,7 @@
 import moment from "moment";
 
 import type { Person as PersonType } from "../api/person/types";
+import type { Place } from "../api/place/types";
 
 class Person {
   person: PersonType;
@@ -34,7 +35,7 @@ class Person {
     return `${this.name} (${this.birthYear} - ${this.deathYear})`;
   }
 
-  get events(): Array<{ name: string, place?: string, date?: string }> {
+  get events(): Array<{ name: string, place?: Place, date?: string }> {
     const events = [];
 
     if (this.person.birth && Object.keys(this.person.birth).length > 0) {

@@ -1,15 +1,14 @@
 // @flow
 
-type Wedding = {
-  pointer?: string,
-  date?: ?string,
-  place?: ?string,
-  husband?: string,
-  wife?: string,
-  spouse?: string,
-};
+import type { Parent, Wedding } from "../family/types";
+import type { Place } from "../place/types";
+import type { Source } from "../source/types";
 
-type Weddings = Array<Wedding>;
+type Residence = {
+  place?: Place,
+  date?: string,
+  source?: Source,
+};
 
 type Person = {
   pointer: string,
@@ -18,13 +17,15 @@ type Person = {
   name: string,
   fname: string,
   lname: string,
-  birth: { date?: string, place?: string },
-  death: { date?: string, place?: string },
+  birth: { date?: string, place?: Place },
+  buried: { date?: string, place?: Place },
+  baptism: { date?: string, place?: Place },
+  death: { date?: string, place?: Place },
   age: number | null,
-  residences: Array<{}>,
-  weddings: Weddings,
+  residences: Array<Residence>,
+  weddings: Array<Wedding>,
   children: Array<string>,
-  parents: Array<{ pointer: string, relation: "father" | "mother" }>,
+  parents: Array<Parent>,
 };
 
-export type { Person, Wedding, Weddings };
+export type { Person, Residence };

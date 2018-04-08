@@ -1,7 +1,10 @@
 // @flow
 import moment from "moment";
 
-import { findTags, getPlaceDate } from "../../classes/parser/helpers";
+import { findTags, getEventDetails } from "./helpers";
+
+import type { Place } from "../api/place/types";
+import type { Residence } from "../api/person/types";
 
 class Person {
   person: any;
@@ -35,40 +38,40 @@ class Person {
     }));
   }
 
-  get birth(): { date?: ?string, place?: string } {
+  get birth(): { date?: string, place?: Place } {
     const tags = findTags(this.person.tree, "BIRT");
     if (!tags || tags.length === 0 || !tags[0].tree) {
       return {};
     }
 
-    return getPlaceDate(tags[0].tree);
+    return getEventDetails(tags[0].tree);
   }
 
-  get baptem(): { date?: ?string, place?: string } {
+  get baptism(): { date?: string, place?: Place } {
     const tags = findTags(this.person.tree, "BAPM");
     if (!tags || tags.length === 0 || !tags[0].tree) {
       return {};
     }
 
-    return getPlaceDate(tags[0].tree);
+    return getEventDetails(tags[0].tree);
   }
 
-  get buried(): { date?: ?string, place?: string } {
+  get buried(): { date?: string, place?: Place } {
     const tags = findTags(this.person.tree, "BURI");
     if (!tags || tags.length === 0 || !tags[0].tree) {
       return {};
     }
 
-    return getPlaceDate(tags[0].tree);
+    return getEventDetails(tags[0].tree);
   }
 
-  get death(): { date?: ?string, place?: string } {
+  get death(): { date?: string, place?: Place } {
     const tags = findTags(this.person.tree, "DEAT");
     if (!tags || tags.length === 0 || !tags[0].tree) {
       return {};
     }
 
-    return getPlaceDate(tags[0].tree);
+    return getEventDetails(tags[0].tree);
   }
 
   get age(): number | null {
@@ -90,7 +93,7 @@ class Person {
     return deathDate.diff(birthDate, "year");
   }
 
-  get residences(): Array<{ date?: ?string, place?: string }> {
+  get residences(): Array<Residence> {
     const tags = findTags(this.person.tree, "RESI");
     if (!tags || tags.length === 0) {
       return [];
@@ -98,7 +101,7 @@ class Person {
 
     return tags.map(tag => {
       if (tag.tree) {
-        return getPlaceDate(tag.tree);
+        return getEventDetails(tag.tree);
       }
       return tag.data;
     });

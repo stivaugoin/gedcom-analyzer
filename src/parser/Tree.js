@@ -1,12 +1,12 @@
 // @flow
-import { findTags } from "../../classes/parser/helpers";
+import { findTags } from "./helpers";
 
 const INDIVIDUAL = "INDI";
 const FAMILY = "FAM";
 const SOURCE = "SOUR";
 
 class Tree {
-  tree: any; // TODO
+  tree: any;
 
   constructor(tree: any) {
     this.tree = tree;

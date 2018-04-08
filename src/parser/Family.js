@@ -1,32 +1,21 @@
 // @flow
-import TreeParser from "./TreeParser";
-import { findTags, getPlaceDate } from "./helpers";
-import type { Wedding as WeddingType } from "../../api/person/types";
 
-class FamilyParser extends TreeParser {
-  raw: any;
+import { findTags, getEventDetails } from "./helpers";
+
+import type { Parent, Wedding } from "../api/family/types";
+
+class Family {
   family: any;
 
-  constructor(raw: any, family: any) {
-    super();
-
-    this.raw = raw;
+  constructor(family: any) {
     this.family = family;
-
-    if (!this.isFamily()) {
-      throw new Error(`${this.pointer} is not a Family`);
-    }
-  }
-
-  isFamily(): boolean {
-    return this.family.tag === "FAM";
   }
 
   get pointer(): string {
     return this.family.pointer.slice(1, -1);
   }
 
-  get wedding(): WeddingType {
+  get wedding(): Wedding {
     const weddings = findTags(this.family.tree, "MARR")[0];
 
     if (!weddings || Object.keys(weddings).length === 0) {
@@ -38,7 +27,7 @@ class FamilyParser extends TreeParser {
 
     return {
       pointer: this.pointer,
-      ...getPlaceDate(weddings.tree),
+      ...getEventDetails(weddings.tree),
       husband: husbandPointer.slice(1, -1),
       wife: wifePointer.slice(1, -1),
     };
@@ -54,7 +43,7 @@ class FamilyParser extends TreeParser {
     return children.map(child => child.data.slice(1, -1));
   }
 
-  get parents(): Array<{ pointer: string, relation: "father" | "mother" }> {
+  get parents(): Array<Parent> {
     const result = [];
 
     const tagHusb = findTags(this.family.tree, "HUSB")[0];
@@ -77,4 +66,4 @@ class FamilyParser extends TreeParser {
   }
 }
 
-export default FamilyParser;
+export default Family;
