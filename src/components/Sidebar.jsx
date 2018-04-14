@@ -11,13 +11,19 @@ const Sidebar = (props: { hide?: boolean }) => {
     <aside className="site-sidebar">
       <nav className="sidebar-nav">
         <ul className="nav in side-menu">
-          <li className="current-page">
+          <li>
             <Link to="/dashboard">
               <i className="list-icon feather feather-home" />
               <span>Dashboard</span>
             </Link>
           </li>
-          <li className="">
+          <li>
+            <Link to="/reports">
+              <i className="list-icon feather feather-activity" />
+              <span>Reports</span>
+            </Link>
+          </li>
+          <li>
             <a href="/">
               <i className="list-icon feather feather-user" />
               <span>People</span>
