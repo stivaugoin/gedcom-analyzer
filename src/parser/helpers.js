@@ -25,11 +25,11 @@ const getEventDetails = (
 ): {
   date?: string,
   place?: Place,
-  source?: Source,
+  sources?: Array<Source>,
 } => {
   const place = findTags(tree, "PLAC");
   const date = findTags(tree, "DATE");
-  const source = findTags(tree, "SOUR");
+  const sources = findTags(tree, "SOUR");
 
   const result = {};
 
@@ -40,9 +40,18 @@ const getEventDetails = (
   if (date.length && date[0] && date[0].data) {
     result.date = new Dates(date[0].data).format();
   }
-  if (source.length && source[0] && source[0].data) {
-    result.source = {};
-    result.source.pointer = source[0] && source[0].data.slice(1, -1);
+
+  if (sources.length > 0) {
+    const allSources = sources.map(
+      source =>
+        source.data && {
+          pointer: source.data.slice(1, -1),
+        }
+    );
+
+    if (allSources.filter(source => source).length > 0) {
+      result.sources = allSources.filter(source => source);
+    }
   }
 
   return result;
@@ -53,9 +62,6 @@ const addDetails = (event, { places = [], sources = [] }): Object => {
   const result = event;
   const coord =
     places && places.find(p => event.place && event.place.name === p.name);
-  const source =
-    sources &&
-    sources.find(s => event.source && event.source.pointer === s.pointer);
 
   if (coord) {
     result.place = {
@@ -65,13 +71,24 @@ const addDetails = (event, { places = [], sources = [] }): Object => {
     };
   }
 
-  if (source) {
-    result.source = {
-      ...event.source,
-      name: source.name,
-    };
+  if (event.sources && event.sources.length > 0 && sources.length > 0) {
+    result.sources = event.sources.map(eventSource => {
+      const source = sources.find(
+        s => eventSource && eventSource.pointer === s.pointer
+      );
+
+      if (source) {
+        return {
+          ...eventSource,
+          name: source.name,
+        };
+      }
+
+      return {};
+    });
   }
-  return { ...event };
+
+  return { ...result };
 };
 
 export { findTags, addDetails, getEventDetails };

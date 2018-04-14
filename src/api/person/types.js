@@ -7,7 +7,7 @@ import type { Source } from "../source/types";
 type Residence = {
   place?: Place,
   date?: string,
-  source?: Source,
+  sources?: Array<Source>,
 };
 
 type Person = {
@@ -17,10 +17,10 @@ type Person = {
   name: string,
   fname: string,
   lname: string,
-  birth: { date?: string, place?: Place },
-  buried: { date?: string, place?: Place },
-  baptism: { date?: string, place?: Place },
-  death: { date?: string, place?: Place },
+  birth: { date?: string, place?: Place, sources?: Array<Source> },
+  buried: { date?: string, place?: Place, sources?: Array<Source> },
+  baptism: { date?: string, place?: Place, sources?: Array<Source> },
+  death: { date?: string, place?: Place, sources?: Array<Source> },
   age: number | null,
   residences: Array<Residence>,
   weddings: Array<Wedding>,

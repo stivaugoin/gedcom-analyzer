@@ -134,20 +134,25 @@ const uploadFile = (input: any, callback: Function) => {
        * STATISTIC
        ********************************************************************** */
       const statistics = {
+        id: 1,
         events: {},
         people: {},
         places: {},
         sources: {},
       };
 
-      const events = [
-        "baptism",
-        "birth",
-        "buried",
-        "death",
-        "residences",
-        "weddings",
+      const events = ["baptism", "birth", "buried", "death", "weddings"];
+
+      const infos = [
+        "atLeastOneSource",
+        "date",
+        "men",
+        "moreThanOneSource",
+        "place",
+        "total",
+        "women",
       ];
+
       // Build basic structure
       Object.keys(statistics).forEach(statistic => {
         if (statistic === "events") {
@@ -176,49 +181,68 @@ const uploadFile = (input: any, callback: Function) => {
       people.forEach(person => {
         statistics.people.total += 1;
 
-        Object.keys(person).forEach(key => {
+        Object.keys(person).forEach(event => {
           if (
-            key === "baptism" ||
-            key === "birth" ||
-            key === "buried" ||
-            key === "death"
+            event === "baptism" ||
+            event === "birth" ||
+            event === "buried" ||
+            event === "death"
           ) {
-            if (person[key] && Object.keys(person[key]).length > 0) {
-              if (!statistics.events[key].total) {
-                statistics.events[key].total = 0;
-              }
-              statistics.events[key].total += 1;
-
-              Object.keys(person[key]).forEach(k => {
-                if (!statistics.events[key][k]) {
-                  statistics.events[key][k] = 0;
+            if (person[event] && Object.keys(person[event]).length > 0) {
+              // Initialize indicators at 0
+              infos.forEach(info => {
+                if (!statistics.events[event][info]) {
+                  statistics.events[event][info] = 0;
                 }
-                statistics.events[key][k] += 1;
+              });
+
+              statistics.events[event].total += 1;
+              statistics.events[event].men += person.sex === "M" ? 1 : 0;
+              statistics.events[event].women += person.sex === "F" ? 1 : 0;
+
+              Object.keys(person[event]).forEach(info => {
+                if (info === "sources") {
+                  // $FlowFixMe
+                  if (person[event][info] && person[event][info].length > 0) {
+                    statistics.events[event].atLeastOneSource += 1;
+                  }
+                  // $FlowFixMe
+                  if (person[event][info] && person[event][info].length > 1) {
+                    statistics.events[event].moreThanOneSource += 1;
+                  }
+                } else {
+                  statistics.events[event][info] += 1;
+                }
               });
             }
           }
 
-          if (key === "residences" || key === "weddings") {
-            if (Array.isArray(person[key]) && person[key].length > 0) {
-              if (!statistics.events[key].atLeastOne) {
-                statistics.events[key].atLeastOne = 0;
+          if (event === "weddings") {
+            // Initialize indicators at 0
+            infos.forEach(info => {
+              if (!statistics.events[event][info]) {
+                statistics.events[event][info] = 0;
               }
-              statistics.events[key].atLeastOne += 1;
-            }
-
-            person[key].forEach(event => {
-              if (!statistics.events[key].total) {
-                statistics.events[key].total = 0;
-              }
-              statistics.events[key].total += 1;
-
-              Object.keys(event).forEach(k => {
-                if (!statistics.events[key][k]) {
-                  statistics.events[key][k] = 0;
-                }
-                statistics.events[key][k] += 1;
-              });
             });
+
+            if (person[event].length > 0) {
+              statistics.events[event].total += 1;
+              statistics.events[event].men += person.sex === "M" ? 1 : 0;
+              statistics.events[event].women += person.sex === "F" ? 1 : 0;
+
+              if (person[event].some(e => e.date)) {
+                statistics.events[event].date += 1;
+              }
+              if (person[event].some(e => e.place)) {
+                statistics.events[event].place += 1;
+              }
+              if (person[event].some(e => e.sources && e.sources.length > 0)) {
+                statistics.events[event].atLeastOneSource += 1;
+              }
+              if (person[event].some(e => e.sources && e.sources.length > 1)) {
+                statistics.events[event].moreThanOneSource += 1;
+              }
+            }
           }
         });
 

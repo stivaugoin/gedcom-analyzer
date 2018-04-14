@@ -6,6 +6,7 @@ import { Main, People } from "./layouts";
 import Dashboard from "./views/Dashboard";
 import Home from "./views/Home";
 import Navbar from "./components/Navbar";
+import Reports from "./views/Reports";
 
 import "./styles/style.css";
 import "./styles/vendors/feather-icons/feather.css";
@@ -21,6 +22,12 @@ const App = () => (
               path="/dashboard"
               render={routeProps => (
                 <Main {...routeProps} component={<Dashboard />} />
+              )}
+            />
+            <Route
+              path="/reports"
+              render={routeProps => (
+                <Main {...routeProps} component={<Reports />} />
               )}
             />
             <Route

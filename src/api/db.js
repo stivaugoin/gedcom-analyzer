@@ -7,7 +7,7 @@ db.version(1).stores({
   places: "++id,name,count",
   meta: "name",
   sources: "pointer,name",
-  statistics: "++id",
+  statistics: "id",
 });
 
 export default db;
