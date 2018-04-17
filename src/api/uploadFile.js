@@ -1,6 +1,5 @@
 // @flow
 import gedcom from "parse-gedcom";
-import geocoder from "geocoder-geojson";
 
 import db from "./db";
 
@@ -55,25 +54,10 @@ const uploadFile = (input: any, callback: Function) => {
       for (const place of tree.places) {
         const { name, count } = place;
 
-        // eslint-disable-next-line no-await-in-loop
-        const geojson = await geocoder.google(name);
-
-        if (geojson.features.length) {
-          const { coordinates } = geojson.features[0].geometry;
-          const [lng, lat] = coordinates;
-
-          places.push({
-            name,
-            count,
-            lng,
-            lat,
-          });
-        } else {
-          places.push({
-            name,
-            count,
-          });
-        }
+        places.push({
+          name,
+          count,
+        });
       }
 
       console.log("Places", places);

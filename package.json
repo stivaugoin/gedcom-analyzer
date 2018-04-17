@@ -6,24 +6,20 @@
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch",
     "start": "react-scripts start",
+    "now-start": "serve --single ./build",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
     "flow": "flow",
     "flow:status": "flow status",
-    "flow:stop": "flow stop",
-    "flow:coverage":
-      "flow-coverage-report -i 'src/**/*.js' -i 'src/**/*.jsx' -x 'src/test/**' -t html -t json -t text --threshold 50"
+    "flow:stop": "flow stop"
   },
   "dependencies": {
-    "bootstrap": "4.0.0-beta.2",
+    "bootstrap": "4.0.0",
     "classnames": "^2.2.5",
     "dexie": "^2.0.1",
     "fs": "^0.0.1-security",
-    "geocoder-geojson": "^1.11.0",
     "left-pad": "^1.2.0",
     "moment": "^2.20.1",
-    "node-geocoder": "^3.22.0",
     "node-sass-chokidar": "^0.0.3",
     "parse-gedcom": "^1.0.3",
     "prop-types": "^15.6.0",
@@ -38,6 +34,7 @@
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "remove-accents": "^0.4.2",
+    "serve": "^6.5.5",
     "styled-components": "^3.1.6"
   },
   "devDependencies": {
