@@ -4,99 +4,6 @@ import removeAccents from "remove-accents";
 export const isYear = (element: string): boolean =>
   element.length === 4 && Number.isInteger(parseInt(element, 10));
 
-export const isMonth = (element: string): boolean => {
-  const january = {
-    en: ["january", "jan"],
-    fr: ["janvier", "jan"],
-  };
-  const february = {
-    en: ["february", "feb"],
-    fr: ["fevrier", "fev"],
-  };
-  const march = {
-    en: ["march", "mar"],
-    fr: ["mars", "mar"],
-  };
-  const april = {
-    en: ["april", "apr"],
-    fr: ["avril", "avr"],
-  };
-  const may = {
-    en: ["may"],
-    fr: ["mai"],
-  };
-  const june = {
-    en: ["june", "jun"],
-    fr: ["juin"],
-  };
-  const july = {
-    en: ["july", "jul"],
-    fr: ["juillet", "jui"],
-  };
-  const august = {
-    en: ["august", "aug"],
-    fr: ["aout", "aou"],
-  };
-  const september = {
-    en: ["september", "sep", "sept"],
-    fr: ["septembre", "sep", "sept"],
-  };
-  const october = {
-    en: ["october", "oct"],
-    fr: ["octobre", "oct"],
-  };
-  const november = {
-    en: ["november", "nov"],
-    fr: ["novembre", "nov"],
-  };
-  const december = {
-    en: ["december", "dec"],
-    fr: ["decembre", "dec"],
-  };
-
-  const months = [
-    ...january.fr,
-    ...january.en,
-    ...february.fr,
-    ...february.en,
-    ...march.fr,
-    ...march.en,
-    ...april.fr,
-    ...april.en,
-    ...may.fr,
-    ...may.en,
-    ...june.fr,
-    ...june.en,
-    ...july.fr,
-    ...july.en,
-    ...august.fr,
-    ...august.en,
-    ...september.fr,
-    ...september.en,
-    ...october.fr,
-    ...october.en,
-    ...november.fr,
-    ...november.en,
-    ...december.fr,
-    ...december.en,
-  ];
-  return (
-    element.length > 0 &&
-    !Number.isInteger(parseInt(element, 10)) &&
-    months.includes(element)
-  );
-};
-
-export const isDay = (element: string): boolean => {
-  const isNumber = Number.isInteger(parseInt(element, 10));
-  return (
-    element.length > 0 &&
-    element.length <= 2 &&
-    isNumber &&
-    parseInt(element, 10) <= 31
-  );
-};
-
 export const isJanuary = (month: string): boolean => {
   const clean = removeAccents.remove(month).toLowerCase();
   return ["janvier", "jan", "january"].includes(clean);
@@ -155,6 +62,37 @@ export const isNovember = (month: string): boolean => {
 export const isDecember = (month: string): boolean => {
   const clean = removeAccents.remove(month).toLowerCase();
   return ["decembre", "dec", "december"].includes(clean);
+};
+
+export const isMonth = (element: string): boolean => {
+  if (element.length === 0 || Number.isInteger(parseInt(element, 10))) {
+    return false;
+  }
+
+  return (
+    isJanuary(element) ||
+    isFebruary(element) ||
+    isMarch(element) ||
+    isApril(element) ||
+    isMay(element) ||
+    isJune(element) ||
+    isJuly(element) ||
+    isAugust(element) ||
+    isSeptember(element) ||
+    isOctober(element) ||
+    isNovember(element) ||
+    isDecember(element)
+  );
+};
+
+export const isDay = (element: string): boolean => {
+  const isNumber = Number.isInteger(parseInt(element, 10));
+  return (
+    element.length > 0 &&
+    element.length <= 2 &&
+    isNumber &&
+    parseInt(element, 10) <= 31
+  );
 };
 
 export const getMonth = (month: string): number | null => {
