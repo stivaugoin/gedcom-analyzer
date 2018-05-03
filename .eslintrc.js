@@ -9,6 +9,7 @@ module.exports = {
   extends: ["eslint-config-airbnb", "prettier"],
   rules: {
     "prettier/prettier": "error",
+    "react/prefer-stateless-function": 0,
     "jsx-a11y/anchor-is-valid": [
       "error",
       {

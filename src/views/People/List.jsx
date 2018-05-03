@@ -1,183 +1,152 @@
 // @flow
-import React, { Fragment } from "react";
-import moment from "moment";
+import React from "react";
 
 import db from "../../api/db";
 import type { Person as PersonType } from "../../api/person/types";
 
-import Button from "../../components/Button";
+import Details from "./Details";
+import Pager from "../../components/Pager";
+import Total from "./Total";
 
-type Props = {
-  history: {
-    push: Function,
-  },
-};
+type Props = {};
 
 type State = {
+  currentPage: number,
   isLoading: boolean,
+  itemsPerPage: number,
+  list: Array<PersonType>,
   people: Array<PersonType>,
 };
 
-class List extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-
-    (this: any).onClear = this.onClear.bind(this);
-    (this: any).onSearch = this.onSearch.bind(this);
-    (this: any).searchAll = this.searchAll.bind(this);
-  }
-
+class PeopleList extends React.Component<Props, State> {
   state = {
+    currentPage: 1,
     isLoading: true,
+    itemsPerPage: 10,
     people: [],
+    list: [],
   };
 
   componentDidMount() {
-    this.search.focus();
     this.searchAll();
   }
 
-  onClear() {
-    this.search.value = "";
-    this.search.focus();
-    this.searchAll();
-  }
+  searchAll = () => {
+    const { currentPage, itemsPerPage } = this.state;
 
-  onSearch(event: any) {
-    event.preventDefault();
-    const { value } = this.search;
+    db.people.reverse().toArray(people => {
+      const sortedPeople = people.sort((a, b) => {
+        if (!a.birthDate && b.birthDate) {
+          return 1;
+        }
+        if (a.birthDate && !b.birthDate) {
+          return -1;
+        }
+        if (a.birthDate < b.birthDate) {
+          return 1;
+        }
+        if (a.birthDate > b.birthDate) {
+          return -1;
+        }
 
-    this.setState({ isLoading: true });
-
-    if (!value) {
-      this.searchAll();
-    } else {
-      Promise.all([
-        db.people
-          .where("fname")
-          .startsWithIgnoreCase(value)
-          .toArray(),
-        db.people
-          .where("lname")
-          .startsWithIgnoreCase(value)
-          .toArray(),
-        db.people
-          .where("name")
-          .startsWithIgnoreCase(value)
-          .toArray(),
-      ]).then(results => {
-        const [fname, lname, name] = results;
-        const peopleMap = new Map();
-        const people = [];
-
-        [...fname, ...lname, ...name].forEach(result =>
-          peopleMap.set(result.pointer, result)
-        );
-        peopleMap.forEach(person => people.push({ ...person }));
-        this.setState({ isLoading: false, people });
+        return 0;
       });
-    }
-  }
 
-  search: any;
+      this.setState({
+        isLoading: false,
+        people: sortedPeople,
+        list: sortedPeople.slice(currentPage - 1, itemsPerPage),
+      });
+    });
+  };
 
-  searchAll() {
-    db.people
-      .orderBy("birthDate")
-      .reverse()
-      .toArray(people => this.setState({ isLoading: false, people }));
-  }
+  handlePageDown = () => {
+    const { currentPage, itemsPerPage } = this.state;
+
+    const newPage = currentPage - 1;
+
+    this.setState({
+      currentPage: newPage,
+      list: this.state.people.slice(
+        (newPage - 1) * itemsPerPage,
+        newPage * itemsPerPage
+      ),
+    });
+  };
+
+  handlePageUp = () => {
+    const { currentPage, itemsPerPage } = this.state;
+
+    const newPage = currentPage + 1;
+
+    this.setState({
+      currentPage: newPage,
+      list: this.state.people.slice(
+        (newPage - 1) * itemsPerPage,
+        newPage * itemsPerPage
+      ),
+    });
+  };
 
   render() {
-    const { isLoading, people } = this.state;
+    const { currentPage, isLoading, itemsPerPage, list, people } = this.state;
 
     return (
       <div className="widget-list row">
         <div className="col-md-12 widget-holder">
           <div className="widget-bg">
-            <div className="widget-heading clearfix">
+            <div className="widget-heading">
               <h5>Person&apos;s list</h5>
             </div>
 
-            <div className="widget-body clearfix">
-              <form onSubmit={this.onSearch}>
-                <div className="form-group row">
-                  <div className="col-md-4">
-                    <input
-                      className="form-control"
-                      placeholder="Search"
-                      ref={input => {
-                        this.search = input;
-                      }}
-                    />
-                  </div>
-                  <div className="col-md-2">
-                    <Button
-                      title="Search"
-                      onClick={this.onSearch}
-                      color="primary"
-                    />{" "}
-                    <Button title="Clear" onClick={this.onClear} />
-                  </div>
-                </div>
-              </form>
-              <table className="table table-striped table-hover">
+            <div className="widget-body">
+              <table className="table table-striped table-bordered">
                 <thead>
                   <tr>
                     <th>Name</th>
-                    <th>Birth</th>
-                    <th>Death</th>
+                    <th style={{ textAlign: "center" }}>Birth</th>
+                    <th style={{ textAlign: "center" }}>Marriage</th>
+                    <th style={{ textAlign: "center" }}>Death</th>
+                    <th style={{ textAlign: "center" }}>Summary</th>
                   </tr>
                 </thead>
                 <tbody>
                   {isLoading && (
                     <tr>
-                      <td colSpan="3">Loading...</td>
+                      <td colSpan="5">Loading...</td>
                     </tr>
                   )}
-                  {people.map((person: PersonType) => (
-                    <tr
-                      key={person.pointer}
-                      onClick={() => {
-                        this.props.history.push(
-                          `/people/profile/${person.pointer}`
-                        );
-                      }}
-                    >
-                      <td>
-                        {person.name}
-                        <br />
-                        <span className="text-muted">
-                          <Fragment>
-                            {person.sex === "M" ? "Men" : "Women"}
-                            {person.age && ` - ${person.age} years`}
-                          </Fragment>
-                        </span>
+                  {list.map(person => (
+                    <tr key={person.pointer}>
+                      <td
+                        className="fs-18 vertical-middle"
+                        style={{ width: 500 }}
+                      >
+                        {person.lname.toUpperCase()}, {person.fname}
+                      </td>
+                      <td className="vertical-middle">
+                        <Details data={person.birth} />
+                      </td>
+                      <td className="vertical-middle">
+                        <Details data={person.weddings} />
+                      </td>
+                      <td className="vertical-middle">
+                        <Details data={person.death || {}} />
                       </td>
                       <td>
-                        <Fragment>
-                          {person.birthDate &&
-                            moment(person.birthDate).format("LL")}
-                          <br />
-                          <span className="text-muted">
-                            {person.birth.place && person.birth.place.name}
-                          </span>
-                        </Fragment>
-                      </td>
-                      <td>
-                        <Fragment>
-                          {person.deathDate &&
-                            moment(person.deathDate).format("LL")}
-                          <br />
-                          <span className="text-muted">
-                            {person.death.place && person.death.place.name}
-                          </span>
-                        </Fragment>
+                        <Total person={person} />
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
+
+              <Pager
+                disableNext={people.length / itemsPerPage < currentPage}
+                disablePrevious={currentPage === 1}
+                onClickNext={this.handlePageUp}
+                onClickPrevious={this.handlePageDown}
+              />
             </div>
           </div>
         </div>
@@ -186,4 +155,4 @@ class List extends React.Component<Props, State> {
   }
 }
 
-export default List;
+export default PeopleList;

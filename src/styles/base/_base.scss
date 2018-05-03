@@ -53,7 +53,11 @@ canvas {
   font-size: rem(24);
 }
 
-.small, small { color: $text-muted; font-size: 85%; }
+.small,
+small {
+  color: $text-muted;
+  font-size: 85%;
+}
 
 .small.list-icon {
   font-size: 18px;
@@ -70,7 +74,9 @@ a {
   }
 }
 
-iframe { border: 0 }
+iframe {
+  border: 0;
+}
 
 input:focus,
 select:focus,
@@ -85,7 +91,8 @@ button:focus,
   outline: none;
 }
 
-input, textarea {
+input,
+textarea {
   letter-spacing: 0;
 }
 
@@ -93,8 +100,18 @@ img {
   max-width: 100%;
 }
 
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
   margin: rem(20) 0 rem(10);
   font-weight: 400;
   letter-spacing: $headings-letter-spacing;
@@ -109,9 +126,15 @@ h1, h2, h3, h4, h5, h6,
   }
 }
 
-h6 { font-weight: 500 }
-p { margin-bottom: em(20, $font-size-base-px) }
-a { transition: $transition-base }
+h6 {
+  font-weight: 500;
+}
+p {
+  margin-bottom: em(20, $font-size-base-px);
+}
+a {
+  transition: $transition-base;
+}
 
 .blockquote,
 blockquote {
@@ -126,8 +149,10 @@ blockquote {
     font-size: 75%;
     font-weight: 500;
   }
-  small:before, footer:before, small:before {
-    content: '\2014 \00A0';
+  small:before,
+  footer:before,
+  small:before {
+    content: "\2014 \00A0";
   }
 
   &.blockquote-reverse {
@@ -175,13 +200,25 @@ dd {
 }
 
 .headings-font-family,
-.heading-font-family { font-family: $headings-font-family }
-.content-font-family { font-family: $font-family-base }
-.sub-heading-font-family { font-family: $tertiary-font-family }
-.content-font-size { font-size: $font-size-base }
-.headings-color { color: $headings-color !important }
+.heading-font-family {
+  font-family: $headings-font-family;
+}
+.content-font-family {
+  font-family: $font-family-base;
+}
+.sub-heading-font-family {
+  font-family: $tertiary-font-family;
+}
+.content-font-size {
+  font-size: $font-size-base;
+}
+.headings-color {
+  color: $headings-color !important;
+}
 
-.headings-letter-spacing { letter-spacing: $headings-letter-spacing !important }
+.headings-letter-spacing {
+  letter-spacing: $headings-letter-spacing !important;
+}
 
 .wrapper {
   position: relative;
@@ -200,24 +237,47 @@ dd {
 
 .text-inverse {
   &,
-  h1,h2,h3,h4,h5,h6,,
-  .h1,.h2,.h3,.h4,.h5,.h6, .list-icon, small,
-  a:not(.btn), a:not(.btn):hover {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  ,
+  .h1,
+  .h2,
+  .h3,
+  .h4,
+  .h5,
+  .h6,
+  .list-icon,
+  small,
+  a:not(.btn),
+  a:not(.btn):hover {
     color: white !important;
   }
   .text-muted {
-    color: rgba(255, 255, 255, .5) !important;
+    color: rgba(255, 255, 255, 0.5) !important;
   }
 }
 
-
 /* Material Icons
 ========================*/
-.material-icons { position: relative; }
-.material-icons.md-18 { font-size: rem(18); }
-.material-icons.md-24 { font-size: rem(24); }
-.material-icons.md-36 { font-size: rem(36); }
-.material-icons.md-48 { font-size: rem(48); }
+.material-icons {
+  position: relative;
+}
+.material-icons.md-18 {
+  font-size: rem(18);
+}
+.material-icons.md-24 {
+  font-size: rem(24);
+}
+.material-icons.md-36 {
+  font-size: rem(36);
+}
+.material-icons.md-48 {
+  font-size: rem(48);
+}
 
 .user-char-image {
   border-radius: 100px;
@@ -236,7 +296,7 @@ dd {
 ========================*/
 .main-wrapper {
   overflow: hidden;
-  padding: 0 $wrapper-pd-x rem(120);
+  padding: 0 $wrapper-pd-x;
   background: $body-bg;
 
   .sidebar-expand & {
@@ -266,7 +326,6 @@ dd {
   }
 }
 
-
 /* Site Footer
 ========================*/
 .footer {
@@ -288,30 +347,48 @@ dd {
   }
 }
 
-
 /* Thumbnail Image Sizes
 =======================*/
 [class*="thumb"] {
   display: inline-block;
 }
-img, .user-char-image {
-  .thumb-xxs & { @include size(35px) }
-  .thumb-xs & { @include size(40px) }
-  .thumb-xs2 & { @include size(50px) }
-  .thumb-sm & { @include size(60px) }
-  .thumb-sm2 & { @include size(70px) }
-  .thumb-md & { @include size(110px) }
-  .thumb-md2 & { @include size(120px) }
-  .thumb-lg & { @include size(180px) }
+img,
+.user-char-image {
+  .thumb-xxs & {
+    @include size(35px);
+  }
+  .thumb-xs & {
+    @include size(40px);
+  }
+  .thumb-xs2 & {
+    @include size(50px);
+  }
+  .thumb-sm & {
+    @include size(60px);
+  }
+  .thumb-sm2 & {
+    @include size(70px);
+  }
+  .thumb-md & {
+    @include size(110px);
+  }
+  .thumb-md2 & {
+    @include size(120px);
+  }
+  .thumb-lg & {
+    @include size(180px);
+  }
 }
 
 img {
   .thumb-xs &,
   .thumb-sm &,
   .thumb-md &,
-  .thumb-lg & { height: auto; max-width: 999px }
+  .thumb-lg & {
+    height: auto;
+    max-width: 999px;
+  }
 }
-
 
 /* User Status
 ========================*/
@@ -327,25 +404,43 @@ img {
     box-shadow: 0 0 0 2px $widget-bg;
   }
 
-  &[class*="thumb-xs"]::after { right: rem(4); }
-  &[class*="thumb-xs2"]::after { right: rem(6); }
-  &[class*="thumb-sm"]::after { right: rem(8); }
-  &[class*="thumb-md"]::after { right: rem(12); top: rem(12) }
-  &[class*="thumb-lg"]::after { right: rem(20); }
+  &[class*="thumb-xs"]::after {
+    right: rem(4);
+  }
+  &[class*="thumb-xs2"]::after {
+    right: rem(6);
+  }
+  &[class*="thumb-sm"]::after {
+    right: rem(8);
+  }
+  &[class*="thumb-md"]::after {
+    right: rem(12);
+    top: rem(12);
+  }
+  &[class*="thumb-lg"]::after {
+    right: rem(20);
+  }
 }
 
-.user--offline:after { background: $gray-300 }
-.user--online:after { background: $success }
-.user--away:after { background: $warning }
-.user--busy:after { background: $danger }
-
+.user--offline:after {
+  background: $gray-300;
+}
+.user--online:after {
+  background: $success;
+}
+.user--away:after {
+  background: $warning;
+}
+.user--busy:after {
+  background: $danger;
+}
 
 /* Waves Effect on Click
 ========================*/
 .ripple {
   position: relative;
   overflow: hidden;
-  transform: translate3d(0,0,0);
+  transform: translate3d(0, 0, 0);
 
   &::after {
     content: "";
@@ -357,21 +452,20 @@ img {
     padding: 0;
     border: 0;
     pointer-events: none;
-    background-image: radial-gradient(circle, #000 10%,transparent 10.01%);
+    background-image: radial-gradient(circle, #000 10%, transparent 10.01%);
     background-repeat: no-repeat;
     background-position: 50%;
-    transform: scale(10,10);
+    transform: scale(10, 10);
     opacity: 0;
-    transition: transform .5s, opacity 1s;
+    transition: transform 0.5s, opacity 1s;
   }
 
   &:active::after {
-    transform: scale(0,0);
-    opacity: .1;
+    transform: scale(0, 0);
+    opacity: 0.1;
     transition: 0s;
   }
 }
-
 
 /* Pulse Effect
 ========================*/
@@ -382,7 +476,7 @@ img {
   border-radius: 50%;
   background: $primary;
   cursor: pointer;
-  box-shadow: 0 0 0 rgba(204,169,44, 0.6);
+  box-shadow: 0 0 0 rgba(204, 169, 44, 0.6);
   animation: pulse-status 1s infinite;
   position: absolute;
   top: 50%;
@@ -392,20 +486,32 @@ img {
   transform: translateY(-50%);
 
   &:hover {
-    animation: none
+    animation: none;
   }
 }
 
 @-webkit-keyframes pulse-status {
-  0% { box-shadow: 0 0 0 0 rgba(204,169,44, 0.6)  }
-  70% { box-shadow: 0 0 0 10px rgba(204,169,44, 0)  }
-  100% { box-shadow: 0 0 0 0 rgba(204,169,44, 0)  }
+  0% {
+    box-shadow: 0 0 0 0 rgba(204, 169, 44, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(204, 169, 44, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(204, 169, 44, 0);
+  }
 }
 
 @keyframes pulse-status {
-  0% { box-shadow: 0 0 0 0 rgba(204,169,44, 0.6)  }
-  70% { box-shadow: 0 0 0 10px rgba(204,169,44, 0)  }
-  100% { box-shadow: 0 0 0 0 rgba(204,169,44, 0)  }
+  0% {
+    box-shadow: 0 0 0 0 rgba(204, 169, 44, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(204, 169, 44, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(204, 169, 44, 0);
+  }
 }
 
 /* Dropdown
@@ -416,9 +522,9 @@ img {
   }
   .caret {
     &:before {
-      content: '\e928';
-      font-family: 'feather';
-      font-feature-settings: 'liga';
+      content: "\e928";
+      font-family: "feather";
+      font-feature-settings: "liga";
       vertical-align: middle;
       font-size: 16px;
       width: 1em;
@@ -439,7 +545,9 @@ img {
 
 .dropdown-menu > .selected > a,
 .dropdown-menu > .active > a {
-  &, &:hover, &:focus {
+  &,
+  &:hover,
+  &:focus {
     background: $primary;
     color: #fff;
     outline: none;
@@ -469,7 +577,7 @@ img {
     order: 1;
     margin-left: auto;
     display: inline-flex;
-    justify-content: center;;
+    justify-content: center;
     align-items: center;
     background: #fff;
     border-radius: 100px;
@@ -482,17 +590,21 @@ img {
 /* Main Content Area
 ========================*/
 .img-thumbnail {
-  padding: .125em;
+  padding: 0.125em;
   background: #fff;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.075);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075);
 }
 
 /* Hover Helper
 ========================*/
 .hover-item {
   display: none;
-  @include mobile { display: block }
-  @include tablet { display: block }
+  @include mobile {
+    display: block;
+  }
+  @include tablet {
+    display: block;
+  }
 }
 
 .hover-parent:hover .hover-item {
@@ -512,7 +624,7 @@ img {
   }
   &:before,
   &:after {
-    content: '';
+    content: "";
     flex: 1;
     height: 1px;
     border-top: 1px solid $theme-border-color;
@@ -522,19 +634,35 @@ img {
 
 /* Icons
 ========================*/
-[class*='size-icon'] {
+[class*="size-icon"] {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.size-icon-20 { @include size( rem(20) ); }
-.size-icon-30 { @include size( rem(30) ); }
-.size-icon-40 { @include size( rem(40) ); }
-.size-icon-50 { @include size( rem(50) ); }
-.size-icon-60 { @include size( rem(60) ); }
-.size-icon-70 { @include size( rem(70) ); }
-.size-icon-80 { @include size( rem(80) ); }
-.size-icon-90 { @include size( rem(90) ); }
+.size-icon-20 {
+  @include size( rem(20) );
+}
+.size-icon-30 {
+  @include size( rem(30) );
+}
+.size-icon-40 {
+  @include size( rem(40) );
+}
+.size-icon-50 {
+  @include size( rem(50) );
+}
+.size-icon-60 {
+  @include size( rem(60) );
+}
+.size-icon-70 {
+  @include size( rem(70) );
+}
+.size-icon-80 {
+  @include size( rem(80) );
+}
+.size-icon-90 {
+  @include size( rem(90) );
+}
 
 /* Star Ratings
 ========================*/
@@ -545,8 +673,8 @@ img {
   vertical-align: middle;
   span::before,
   &:before {
-    content: '\e9bf\e9bf\e9bf\e9bf\e9bf';
-    font-family: 'feather';
+    content: "\e9bf\e9bf\e9bf\e9bf\e9bf";
+    font-family: "feather";
     color: $color-scheme;
   }
   &:before {
@@ -564,15 +692,19 @@ img {
     &:before,
     span::before {
       letter-spacing: inherit;
-      font-family: 'Material Icons';
+      font-family: "Material Icons";
       font-weight: normal;
-      content: 'star star star star star';
+      content: "star star star star star";
       vertical-align: baseline;
       text-rendering: optimizeLegibility;
-      font-feature-settings: 'liga';
+      font-feature-settings: "liga";
     }
-    &:before { color: $text-muted }
-    span::before { color: $warning }
+    &:before {
+      color: $text-muted;
+    }
+    span::before {
+      color: $warning;
+    }
   }
 }
 
@@ -581,6 +713,6 @@ img {
 figure {
   position: relative;
   .featured {
-    @include position(absolute, 1em null null -.5em);
+    @include position(absolute, 1em null null -0.5em);
   }
 }
