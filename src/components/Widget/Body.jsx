@@ -1,18 +1,28 @@
 // @flow
 import * as React from "react";
 
-const Body = (props: { children: React.Node }) => (
-  <div
-    className="widget-body"
-    style={{
-      height: "127px",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-    }}
-  >
-    <div className="counter-w-info">{props.children}</div>
-  </div>
-);
+type Props = {
+  children: React.Node,
+};
+
+class Body extends React.PureComponent<Props> {
+  render() {
+    const { children } = this.props;
+
+    return (
+      <div
+        className="widget-body"
+        style={{
+          height: "127px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <div className="counter-w-info">{children}</div>
+      </div>
+    );
+  }
+}
 
 export default Body;

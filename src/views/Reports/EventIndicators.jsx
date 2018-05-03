@@ -19,46 +19,52 @@ type Props = {
   },
 };
 
-const EventIndicators = ({ isLoading, name, nbPeople, indicator }: Props) => (
-  <div className="widget-list row mr-b-30">
-    <MainIndicators
-      isLoading={isLoading}
-      name={name}
-      nbEvents={indicator.total}
-      nbMen={indicator.men}
-      nbPeople={nbPeople}
-      nbWomen={indicator.women}
-    />
-    <Diagrams />
-    <Indicator
-      icon="calendar"
-      isLoading={isLoading}
-      name="date"
-      nbEvents={indicator.date}
-      nbTotal={indicator.total}
-    />
-    <Indicator
-      icon="map-pin"
-      isLoading={isLoading}
-      name="place"
-      nbEvents={indicator.place}
-      nbTotal={indicator.total}
-    />
-    <Indicator
-      icon="bookmark"
-      isLoading={isLoading}
-      name="at least one source"
-      nbEvents={indicator.atLeastOneSource}
-      nbTotal={indicator.total}
-    />
-    <Indicator
-      icon="bookmark"
-      isLoading={isLoading}
-      name="more than one source"
-      nbEvents={indicator.moreThanOneSource}
-      nbTotal={indicator.total}
-    />
-  </div>
-);
+const EventIndicators = class extends React.PureComponent<Props> {
+  render() {
+    const { isLoading, name, nbPeople, indicator } = this.props;
+
+    return (
+      <div className="widget-list row mr-b-30">
+        <MainIndicators
+          isLoading={isLoading}
+          name={name}
+          nbEvents={indicator.total}
+          nbMen={indicator.men}
+          nbPeople={nbPeople}
+          nbWomen={indicator.women}
+        />
+        <Diagrams />
+        <Indicator
+          icon="calendar"
+          isLoading={isLoading}
+          name="date"
+          nbEvents={indicator.date}
+          nbTotal={indicator.total}
+        />
+        <Indicator
+          icon="map-pin"
+          isLoading={isLoading}
+          name="place"
+          nbEvents={indicator.place}
+          nbTotal={indicator.total}
+        />
+        <Indicator
+          icon="bookmark"
+          isLoading={isLoading}
+          name="at least one source"
+          nbEvents={indicator.atLeastOneSource}
+          nbTotal={indicator.total}
+        />
+        <Indicator
+          icon="bookmark"
+          isLoading={isLoading}
+          name="more than one source"
+          nbEvents={indicator.moreThanOneSource}
+          nbTotal={indicator.total}
+        />
+      </div>
+    );
+  }
+};
 
 export default EventIndicators;

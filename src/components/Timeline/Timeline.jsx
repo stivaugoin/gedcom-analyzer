@@ -12,19 +12,28 @@ type Props = {
 
 const getEvents = (person: PersonType) => new Person(person).events;
 
-const Timeline = (props: Props) => (
-  <div className="tab-content">
-    <div className="tab-pane active">
-      <div className="widget-user-activities">
-        {getEvents(props.person).map(event => {
-          const { name, place, date } = event;
-          return (
-            <Event key={`${name}-${date || ""}`} {...{ name, place, date }} />
-          );
-        })}
+const Timeline = class extends React.Component<Props> {
+  render() {
+    const { person } = this.props;
+
+    return (
+      <div className="tab-content">
+        <div className="tab-pane active">
+          <div className="widget-user-activities">
+            {getEvents(person).map(event => {
+              const { name, place, date } = event;
+              return (
+                <Event
+                  key={`${name}-${date || ""}`}
+                  {...{ name, place, date }}
+                />
+              );
+            })}
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-);
+    );
+  }
+};
 
 export default Timeline;

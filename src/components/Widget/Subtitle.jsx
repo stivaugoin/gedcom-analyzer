@@ -1,8 +1,16 @@
 // @flow
 import * as React from "react";
 
-const Subtitle = (props: { children: React.Node }) => (
-  <div className="counter-info">{props.children}</div>
-);
+type Props = {
+  children: React.Node,
+};
+
+class Subtitle extends React.PureComponent<Props> {
+  render() {
+    const { children } = this.props;
+
+    return <div className="counter-info">{children}</div>;
+  }
+}
 
 export default Subtitle;

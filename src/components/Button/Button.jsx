@@ -11,31 +11,38 @@ type Props = {
   title?: string,
 };
 
-const defaultProps = {
-  color: "default",
-  icon: "",
-  rounded: false,
-  small: false,
-  title: "",
-};
+class Button extends React.PureComponent<Props> {
+  defaultProps = {
+    color: "default",
+    icon: "",
+    rounded: false,
+    small: false,
+    title: "",
+  };
 
-const Button = (props: Props) => {
-  const { color = "default", icon, onClick, rounded, small, title } = props;
+  render() {
+    const {
+      color = "default",
+      icon,
+      onClick,
+      rounded,
+      small,
+      title,
+    } = this.props;
 
-  const smallClass = "btn-sm fs-11 fw-400";
+    const smallClass = "btn-sm fs-11 fw-400";
 
-  const classNames = classnames(`btn btn-${color}`, small && smallClass, {
-    "btn-rounded": rounded,
-  });
+    const classNames = classnames(`btn btn-${color}`, small && smallClass, {
+      "btn-rounded": rounded,
+    });
 
-  return (
-    <button className={classNames} onClick={onClick}>
-      {!!icon && <i className={`feather feather-${icon} mr-r-5`} />}
-      {!!title && title}
-    </button>
-  );
-};
-
-Button.defaultProps = defaultProps;
+    return (
+      <button className={classNames} onClick={onClick}>
+        {!!icon && <i className={`feather feather-${icon} mr-r-5`} />}
+        {!!title && title}
+      </button>
+    );
+  }
+}
 
 export default Button;

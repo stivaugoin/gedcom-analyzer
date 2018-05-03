@@ -32,20 +32,23 @@ function getColorClass(percent) {
   return "bg-danger";
 }
 
-const Total = ({ person }: Props) => {
-  const percent = calculatePercent(person);
+const Total = class extends React.Component<Props> {
+  render() {
+    const { person } = this.props;
+    const percent = calculatePercent(person);
 
-  return (
-    <div className="progress progress-lg">
-      <div
-        className={`progress-bar ${getColorClass(percent)}`}
-        style={{ width: `${percent}%` }}
-        role="progressbar"
-      >
-        {percent}%
+    return (
+      <div className="progress progress-lg">
+        <div
+          className={`progress-bar ${getColorClass(percent)}`}
+          style={{ width: `${percent}%` }}
+          role="progressbar"
+        >
+          {percent}%
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default Total;

@@ -1,17 +1,21 @@
 // @flow
-import React from "react";
+import * as React from "react";
 
-const Diagrams = () => (
-  <div className="widget-holder widget-full-content widget-full-height col-xl-6">
-    <div className="widget-bg">
-      <div
-        className="widget-body d-flex flex-column justify-content-center align-items-center fs-42"
-        style={{ height: "100%" }}
-      >
-        Diagrams
+const Diagrams = class extends React.PureComponent<{}> {
+  render() {
+    return (
+      <div className="widget-holder widget-full-content widget-full-height col-xl-6">
+        <div className="widget-bg">
+          <div
+            className="widget-body d-flex flex-column justify-content-center align-items-center fs-42"
+            style={{ height: "100%" }}
+          >
+            Diagrams
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-);
+    );
+  }
+};
 
 export default Diagrams;
