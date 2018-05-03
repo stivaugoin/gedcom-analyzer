@@ -11,37 +11,41 @@ import Reports from "./views/Reports";
 import "./styles/style.css";
 import "./styles/vendors/feather-icons/feather.css";
 
-const App = () => (
-  <BrowserRouter>
-    <div className="header-dark sidebar-light sidebar-expand">
-      <div id="wrapper" className="wrapper">
-        <Navbar />
-        <div className="content-wrapper">
-          <Switch>
-            <Route
-              path="/dashboard"
-              render={routeProps => (
-                <Main {...routeProps} component={<Dashboard />} />
-              )}
-            />
-            <Route
-              path="/reports"
-              render={routeProps => (
-                <Main {...routeProps} component={<Reports />} />
-              )}
-            />
-            <Route
-              path="/people"
-              render={routeProps => (
-                <Main {...routeProps} component={<People />} />
-              )}
-            />
-            <Route path="/" component={Home} />
-          </Switch>
+class App extends React.Component<{}> {
+  render() {
+    return (
+      <BrowserRouter>
+        <div className="header-dark sidebar-light sidebar-expand">
+          <div id="wrapper" className="wrapper">
+            <Navbar />
+            <div className="content-wrapper">
+              <Switch>
+                <Route
+                  path="/dashboard"
+                  render={routeProps => (
+                    <Main {...routeProps} component={<Dashboard />} />
+                  )}
+                />
+                <Route
+                  path="/reports"
+                  render={routeProps => (
+                    <Main {...routeProps} component={<Reports />} />
+                  )}
+                />
+                <Route
+                  path="/people"
+                  render={routeProps => (
+                    <Main {...routeProps} component={<People />} />
+                  )}
+                />
+                <Route path="/" component={Home} />
+              </Switch>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </BrowserRouter>
-);
+      </BrowserRouter>
+    );
+  }
+}
 
 export default App;

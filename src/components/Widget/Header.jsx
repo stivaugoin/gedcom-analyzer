@@ -2,20 +2,31 @@
 import React from "react";
 import classnames from "classnames";
 
-const defaultProps = {
-  dark: false,
-  icon: "",
+type Props = {
+  dark?: boolean,
+  icon?: string,
+  title: string,
 };
+class Header extends React.PureComponent<Props> {
+  defaultProps = {
+    dark: false,
+    icon: "",
+  };
 
-const Header = (props: { dark?: boolean, icon?: string, title: string }) => (
-  <div
-    className={classnames("widget-heading", { "bg-color-scheme": props.dark })}
-  >
-    <span className="widget-title my-0 fs-12 fw-600">{props.title}</span>
-    {props.icon && <i className={`widget-heading-icon ${props.icon}`} />}
-  </div>
-);
+  render() {
+    const { dark, icon, title } = this.props;
 
-Header.defaultProps = defaultProps;
+    return (
+      <div
+        className={classnames("widget-heading", {
+          "bg-color-scheme": dark,
+        })}
+      >
+        <span className="widget-title my-0 fs-12 fw-600">{title}</span>
+        {icon && <i className={`widget-heading-icon ${icon}`} />}
+      </div>
+    );
+  }
+}
 
 export default Header;

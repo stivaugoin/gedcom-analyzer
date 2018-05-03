@@ -1,8 +1,16 @@
 // @flow
 import * as React from "react";
 
-const Title = (props: { children: React.Node }) => (
-  <div className="counter-title color-color-scheme">{props.children}</div>
-);
+type Props = {
+  children: React.Node,
+};
+
+class Title extends React.PureComponent<Props> {
+  render() {
+    const { children } = this.props;
+
+    return <div className="counter-title color-color-scheme">{children}</div>;
+  }
+}
 
 export default Title;

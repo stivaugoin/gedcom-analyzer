@@ -8,17 +8,20 @@ type Props = {
   value: string,
 };
 
-const IconWithTooltip = ({ className, value }: Props) => {
-  const id = uuidv4();
+class IconWithTooltip extends React.Component<Props> {
+  render() {
+    const { className, value } = this.props;
+    const id = uuidv4();
 
-  return (
-    <Fragment>
-      <i className={className} data-tip data-for={id} />
-      <ReactTooltip id={id} place="top" type="dark" effect="solid">
-        <span>{value}</span>
-      </ReactTooltip>
-    </Fragment>
-  );
-};
+    return (
+      <Fragment>
+        <i className={className} data-tip data-for={id} />
+        <ReactTooltip id={id} place="top" type="dark" effect="solid">
+          <span>{value}</span>
+        </ReactTooltip>
+      </Fragment>
+    );
+  }
+}
 
 export default IconWithTooltip;

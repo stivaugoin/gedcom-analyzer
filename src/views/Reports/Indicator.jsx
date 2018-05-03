@@ -15,44 +15,48 @@ type Props = {
   nbEvents: number,
 };
 
-const defaultProps = {
-  isLoading: false,
-};
+class Indicator extends React.PureComponent<Props> {
+  defaultProps = {
+    isLoading: false,
+  };
 
-const Indicator = ({ icon, isLoading, name, nbEvents, nbTotal }: Props) => (
-  <div className="widget-holder widget-sm widget-border-radius col-md-6 col-xl-3">
-    <div className="widget-bg">
-      <div className="widget-heading bg-color-scheme">
-        <span className="widget-title my-0 fs-16 fw-600">
-          {capitalize(name)}
-        </span>
-        <i className={`widget-heading-icon feather feather-${icon}`} />
-      </div>
+  render() {
+    const { icon, isLoading, name, nbEvents, nbTotal } = this.props;
 
-      <div className="widget-body">
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <div className="counter-w-info">
-            <div
-              className={`counter-title ${getClassNamePercent(
-                percent(nbEvents, nbTotal)
-              )}`}
-            >
-              <span className="counter" id="counter-1">
-                {nbTotal === 0 ? 0 : percent(nbEvents, nbTotal)}
-              </span>%
-            </div>
-            <div className="counter-info">
-              {nbEvents || 0} / {nbTotal || 0} people
-            </div>
+    return (
+      <div className="widget-holder widget-sm widget-border-radius col-md-6 col-xl-3">
+        <div className="widget-bg">
+          <div className="widget-heading bg-color-scheme">
+            <span className="widget-title my-0 fs-16 fw-600">
+              {capitalize(name)}
+            </span>
+            <i className={`widget-heading-icon feather feather-${icon}`} />
           </div>
-        )}
-      </div>
-    </div>
-  </div>
-);
 
-Indicator.defaultProps = defaultProps;
+          <div className="widget-body">
+            {isLoading ? (
+              <Loading />
+            ) : (
+              <div className="counter-w-info">
+                <div
+                  className={`counter-title ${getClassNamePercent(
+                    percent(nbEvents, nbTotal)
+                  )}`}
+                >
+                  <span className="counter" id="counter-1">
+                    {nbTotal === 0 ? 0 : percent(nbEvents, nbTotal)}
+                  </span>%
+                </div>
+                <div className="counter-info">
+                  {nbEvents || 0} / {nbTotal || 0} people
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
 
 export default Indicator;

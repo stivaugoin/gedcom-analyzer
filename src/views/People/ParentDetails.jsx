@@ -21,7 +21,7 @@ type State = {
   },
 };
 
-const ParentDetails = class extends React.Component<Props, State> {
+class ParentDetails extends React.Component<Props, State> {
   state = {
     isLoading: true,
     person: {
@@ -70,6 +70,6 @@ const ParentDetails = class extends React.Component<Props, State> {
       </div>
     );
   }
-};
+}
 
 export default ParentDetails;

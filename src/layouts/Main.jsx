@@ -14,11 +14,10 @@ type Props = {
 
 type State = {
   filename: string,
-  isLoading: boolean,
   redirect: boolean,
 };
 
-const Main = class extends React.Component<Props, State> {
+class Main extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
@@ -27,7 +26,6 @@ const Main = class extends React.Component<Props, State> {
 
   state = {
     filename: "",
-    isLoading: true,
     redirect: false,
   };
 
@@ -36,9 +34,9 @@ const Main = class extends React.Component<Props, State> {
       const filename = result.value;
 
       if (!filename) {
-        this.setState({ redirect: true, isLoading: false });
+        this.setState({ redirect: true });
       } else {
-        this.setState({ filename, isLoading: false });
+        this.setState({ filename });
       }
     });
   }
@@ -93,6 +91,6 @@ const Main = class extends React.Component<Props, State> {
       </React.Fragment>
     );
   }
-};
+}
 
 export default Main;
