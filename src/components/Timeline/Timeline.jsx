@@ -12,7 +12,7 @@ type Props = {
 
 const getEvents = (person: PersonType) => new Person(person).events;
 
-const Timeline = class extends React.Component<Props> {
+class Timeline extends React.Component<Props> {
   render() {
     const { person } = this.props;
 
@@ -34,6 +34,6 @@ const Timeline = class extends React.Component<Props> {
       </div>
     );
   }
-};
+}
 
 export default Timeline;

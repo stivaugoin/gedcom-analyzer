@@ -15,7 +15,7 @@ type Props = {
   nbEvents: number,
 };
 
-const Indicator = class extends React.PureComponent<Props> {
+class Indicator extends React.PureComponent<Props> {
   defaultProps = {
     isLoading: false,
   };
@@ -57,6 +57,6 @@ const Indicator = class extends React.PureComponent<Props> {
       </div>
     );
   }
-};
+}
 
 export default Indicator;

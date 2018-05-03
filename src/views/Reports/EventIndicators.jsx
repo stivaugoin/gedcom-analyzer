@@ -19,7 +19,7 @@ type Props = {
   },
 };
 
-const EventIndicators = class extends React.PureComponent<Props> {
+class EventIndicators extends React.PureComponent<Props> {
   render() {
     const { isLoading, name, nbPeople, indicator } = this.props;
 
@@ -65,6 +65,6 @@ const EventIndicators = class extends React.PureComponent<Props> {
       </div>
     );
   }
-};
+}
 
 export default EventIndicators;

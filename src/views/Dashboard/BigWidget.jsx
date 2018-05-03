@@ -11,7 +11,7 @@ type Props = {
   value: number,
 };
 
-const BigWidget = class extends React.PureComponent<Props> {
+class BigWidget extends React.PureComponent<Props> {
   render() {
     const { isLoading, size, title, value } = this.props;
 
@@ -47,6 +47,6 @@ const BigWidget = class extends React.PureComponent<Props> {
       </div>
     );
   }
-};
+}
 
 export default BigWidget;

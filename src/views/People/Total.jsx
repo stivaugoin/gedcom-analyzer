@@ -32,7 +32,7 @@ function getColorClass(percent) {
   return "bg-danger";
 }
 
-const Total = class extends React.Component<Props> {
+class Total extends React.Component<Props> {
   render() {
     const { person } = this.props;
     const percent = calculatePercent(person);
@@ -49,6 +49,6 @@ const Total = class extends React.Component<Props> {
       </div>
     );
   }
-};
+}
 
 export default Total;

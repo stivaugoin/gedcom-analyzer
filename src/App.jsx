@@ -11,7 +11,7 @@ import Reports from "./views/Reports";
 import "./styles/style.css";
 import "./styles/vendors/feather-icons/feather.css";
 
-const App = class extends React.Component<{}> {
+class App extends React.Component<{}> {
   render() {
     return (
       <BrowserRouter>
@@ -46,6 +46,6 @@ const App = class extends React.Component<{}> {
       </BrowserRouter>
     );
   }
-};
+}
 
 export default App;

@@ -16,7 +16,7 @@ type State = {
   redirect: boolean,
 };
 
-const Home = class extends React.Component<Props, State> {
+class Home extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
@@ -75,6 +75,6 @@ const Home = class extends React.Component<Props, State> {
       </main>
     );
   }
-};
+}
 
 export default Home;

@@ -8,7 +8,7 @@ type Props = {
   value: string,
 };
 
-const IconWithTooltip = class extends React.Component<Props> {
+class IconWithTooltip extends React.Component<Props> {
   render() {
     const { className, value } = this.props;
     const id = uuidv4();
@@ -22,6 +22,6 @@ const IconWithTooltip = class extends React.Component<Props> {
       </Fragment>
     );
   }
-};
+}
 
 export default IconWithTooltip;

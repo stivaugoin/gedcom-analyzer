@@ -1,7 +1,7 @@
 // @flow
 import * as React from "react";
 
-const Navbar = class extends React.PureComponent<{}> {
+class Navbar extends React.PureComponent<{}> {
   render() {
     return (
       <div id="wrapper" className="wrapper">
@@ -18,6 +18,6 @@ const Navbar = class extends React.PureComponent<{}> {
       </div>
     );
   }
-};
+}
 
 export default Navbar;

@@ -10,7 +10,7 @@ type Props = {
   date: string,
 };
 
-const Event = class extends React.PureComponent<Props> {
+class Event extends React.PureComponent<Props> {
   defaultProps = {
     place: {},
   };
@@ -35,6 +35,6 @@ const Event = class extends React.PureComponent<Props> {
       </div>
     );
   }
-};
+}
 
 export default Event;

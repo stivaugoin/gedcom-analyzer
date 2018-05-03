@@ -16,7 +16,7 @@ type Props = {
   nbWomen: number,
 };
 
-const MainIndicators = class extends React.Component<Props> {
+class MainIndicators extends React.Component<Props> {
   defaultProps = {
     isLoading: false,
   };
@@ -89,6 +89,6 @@ const MainIndicators = class extends React.Component<Props> {
       </div>
     );
   }
-};
+}
 
 export default MainIndicators;

@@ -7,7 +7,7 @@ import UniquePlaces from "./UniquePlaces";
 import ShortestLifetime from "./ShortestLifetime";
 import MostPopularPlace from "./MostPopularPlace";
 
-const Dashboard = class extends React.PureComponent<{}> {
+class Dashboard extends React.PureComponent<{}> {
   render() {
     return (
       <div className="widget-list row">
@@ -19,6 +19,6 @@ const Dashboard = class extends React.PureComponent<{}> {
       </div>
     );
   }
-};
+}
 
 export default Dashboard;

@@ -1,7 +1,7 @@
 // @flow
 import * as React from "react";
 
-const Diagrams = class extends React.PureComponent<{}> {
+class Diagrams extends React.PureComponent<{}> {
   render() {
     return (
       <div className="widget-holder widget-full-content widget-full-height col-xl-6">
@@ -16,6 +16,6 @@ const Diagrams = class extends React.PureComponent<{}> {
       </div>
     );
   }
-};
+}
 
 export default Diagrams;
