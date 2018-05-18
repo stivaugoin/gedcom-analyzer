@@ -1,6 +1,5 @@
 {
   "name": "gedcom-analyzer",
-  "version": "1.0.0-alpha3",
   "private": true,
   "scripts": {
     "build-css": "node-sass-chokidar src/ -o src/",
@@ -9,9 +8,7 @@
     "now-start": "serve --single ./build",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "flow": "flow",
-    "flow:status": "flow status",
-    "flow:stop": "flow stop"
+    "flow": "flow"
   },
   "dependencies": {
     "bootstrap": "4.0.0",
