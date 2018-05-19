@@ -29,14 +29,6 @@ class MainIndicators extends React.Component<Props> {
         <div className="widget-bg">
           <div className="widget-heading widget-heading-border">
             <h5 className="widget-title">{capitalize(name)} mentions</h5>
-            <div className="widget-actions">
-              <a
-                href="/todo"
-                className="badge bg-primary-contrast px-3 cursor-pointer heading-font-family"
-              >
-                See all mentions
-              </a>
-            </div>
           </div>
           <div className="widget-body">
             <div className="counter-gradient" style={{ height: "188px" }}>
