@@ -1,4 +1,5 @@
 {
   "name": "gedcom",
-  "alias": ["gedcom.stiv.io"]
+  "alias": ["gedcom.stiv.io"],
+  "public": "false"
 }

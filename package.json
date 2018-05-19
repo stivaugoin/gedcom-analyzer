@@ -6,6 +6,7 @@
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch",
     "start": "react-scripts start",
     "now-start": "serve --single ./build",
+    "deploy": "now && now alias && now rm gedcom --safe --yes",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "flow": "flow"
