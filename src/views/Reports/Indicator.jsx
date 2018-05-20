@@ -16,7 +16,7 @@ type Props = {
 };
 
 class Indicator extends React.PureComponent<Props> {
-  defaultProps = {
+  static defaultProps = {
     isLoading: false,
   };
 

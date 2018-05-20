@@ -12,7 +12,7 @@ type Props = {
 };
 
 class Button extends React.PureComponent<Props> {
-  defaultProps = {
+  static defaultProps = {
     color: "default",
     icon: "",
     rounded: false,

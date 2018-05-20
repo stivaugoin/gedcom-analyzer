@@ -8,7 +8,7 @@ type Props = {
   title: string,
 };
 class Header extends React.PureComponent<Props> {
-  defaultProps = {
+  static defaultProps = {
     dark: false,
     icon: "",
   };

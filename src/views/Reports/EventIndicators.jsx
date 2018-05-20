@@ -1,6 +1,5 @@
 import React from "react";
 
-import Diagrams from "./Diagrams";
 import Indicator from "./Indicator";
 import MainIndicators from "./MainIndicators";
 
@@ -33,7 +32,6 @@ class EventIndicators extends React.PureComponent<Props> {
           nbPeople={nbPeople}
           nbWomen={indicator.women}
         />
-        <Diagrams />
         <Indicator
           icon="calendar"
           isLoading={isLoading}

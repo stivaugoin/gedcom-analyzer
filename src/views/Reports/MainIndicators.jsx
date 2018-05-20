@@ -17,7 +17,7 @@ type Props = {
 };
 
 class MainIndicators extends React.Component<Props> {
-  defaultProps = {
+  static defaultProps = {
     isLoading: false,
   };
 
@@ -25,7 +25,7 @@ class MainIndicators extends React.Component<Props> {
     const { isLoading, name, nbEvents, nbMen, nbPeople, nbWomen } = this.props;
 
     return (
-      <div className="widget-holder widget-full-content widget-full-height col-xl-6">
+      <div className="widget-holder widget-full-content widget-full-height col-xl-12">
         <div className="widget-bg">
           <div className="widget-heading widget-heading-border">
             <h5 className="widget-title">{capitalize(name)} mentions</h5>

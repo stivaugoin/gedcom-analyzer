@@ -1,8 +1,5 @@
 # Gedcom Analyzer
 
-[![React](https://img.shields.io/badge/React-v16.2.0-blue.svg)](https://facebook.github.io/react-native/)
-[![React](https://img.shields.io/badge/React%20Router-v4.2.2-blue.svg)](https://facebook.github.io/react-native/)
-
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 **Gedcom Analyzer** is a web application that allows you to view the information of family trees in different ways.

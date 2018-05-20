@@ -11,7 +11,7 @@ type Props = {
 };
 
 class Event extends React.PureComponent<Props> {
-  defaultProps = {
+  static defaultProps = {
     place: {},
   };
 

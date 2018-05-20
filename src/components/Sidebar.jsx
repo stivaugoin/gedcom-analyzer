@@ -7,7 +7,7 @@ type Props = {
 };
 
 class Sidebar extends React.Component<Props> {
-  defaultProps = {
+  static defaultProps = {
     hide: false,
   };
 
@@ -35,15 +35,10 @@ class Sidebar extends React.Component<Props> {
               </Link>
             </li>
             <li>
-              <a href="/">
+              <Link to="/people/list">
                 <i className="list-icon feather feather-user" />
                 <span>People</span>
-              </a>
-              <ul className="list-unstyled sub-menu">
-                <li>
-                  <Link to="/people/list">List</Link>
-                </li>
-              </ul>
+              </Link>
             </li>
           </ul>
         </nav>
