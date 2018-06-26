@@ -9,7 +9,9 @@
     "deploy": "now && now alias && now rm gedcom --safe --yes",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "flow": "flow"
+    "flow": "flow",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "bootstrap": "4.0.0",
@@ -35,7 +37,8 @@
     "remove-accents": "^0.4.2",
     "serve": "^6.5.5",
     "styled-components": "^3.1.6",
-    "uuid": "^3.2.1"
+    "uuid": "^3.2.1",
+    "snyk": "^1.85.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",
@@ -50,5 +53,6 @@
     "flow-bin": "^0.66.0",
     "prettier": "1.10.2",
     "redux-devtools": "^3.4.1"
-  }
+  },
+  "snyk": true
 }
