@@ -12,7 +12,7 @@
     "flow": "flow"
   },
   "dependencies": {
-    "bootstrap": "4.0.0",
+    "bootstrap": "^4.1.2",
     "classnames": "^2.2.5",
     "dexie": "^2.0.1",
     "fs": "^0.0.1-security",
@@ -33,7 +33,7 @@
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "remove-accents": "^0.4.2",
-    "serve": "^6.5.5",
+    "serve": "^10.0.2",
     "styled-components": "^3.1.6",
     "uuid": "^3.2.1"
   },
